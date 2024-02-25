@@ -26,10 +26,13 @@ namespace CodeAddIn
     /// </summary>
     internal sealed partial class PackageIds
     {
+        public const int SolutionMenuGroup = 0x1021;
         public const int ProjectMenuGroup = 0x1020;
         public const int VsctMenuGroup = 0x0101;
+        public const int CommandSolutionRoot = 0x0105;
         public const int CommandCsharpRoot = 0x0102;
         public const int CommandProjectRoot = 0x0103;
+        public const int CommandVsctRoot = 0x0104;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPicSearch = 0x0003;
