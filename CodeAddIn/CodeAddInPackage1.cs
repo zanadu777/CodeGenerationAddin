@@ -15,8 +15,8 @@ namespace CodeAddIn
         public const string guidCodeAddInPackageString = "0efaee20-08e5-4944-8ba7-a3eec5165f91";
         public static Guid guidCodeAddInPackage = new Guid(guidCodeAddInPackageString);
 
-        public const string guidCodeAddInPackageCmdSetString = "66b2a8cf-1cdd-419e-8bff-11a781e955cf";
-        public static Guid guidCodeAddInPackageCmdSet = new Guid(guidCodeAddInPackageCmdSetString);
+        public const string CmdSetString = "66b2a8cf-1cdd-419e-8bff-11a781e955cf";
+        public static Guid CmdSet = new Guid(CmdSetString);
 
         public const string guidImagesString = "395cfe74-ce19-4c9e-9496-ec99590fa6c0";
         public static Guid guidImages = new Guid(guidImagesString);
@@ -26,7 +26,11 @@ namespace CodeAddIn
     /// </summary>
     internal sealed partial class PackageIds
     {
-        public const int SolutionMenuGroup = 0x1021;
+        public const int SolutionGroup = 0x1021;
+        public const int SolutionMenu = 0x0106;
+        public const int SolutionMenuGroup = 0x0107;
+        public const int CommandInspectSolution = 0x0108;
+        public const int CommandInspectSolution2 = 0x0109;
         public const int ProjectMenuGroup = 0x1020;
         public const int VsctMenuGroup = 0x0101;
         public const int CommandSolutionRoot = 0x0105;

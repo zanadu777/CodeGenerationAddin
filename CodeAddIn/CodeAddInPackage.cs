@@ -1,8 +1,16 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
+using CodeAddIn.Extensions;
+using CodeAddIn.Gui;
+using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
+using Microsoft.VisualStudio;
 
 namespace CodeAddIn
 {
@@ -47,8 +55,42 @@ namespace CodeAddIn
       // When initialized asynchronously, the current thread may be a background thread at this point.
       // Do any initialization that requires the UI thread after switching to the UI thread.
       await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-        await Command1.InitializeAsync(this);
+      await Command1.InitializeAsync(this);
+
+      var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+      commandService.AddCommand(PackageIds.CommandInspectSolution, this.ExecuteInspectSolution);
+      //if (commandService != null)
+      //{
+      //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
+      //  var menuItem = new MenuCommand(this.ExecuteInspectSolution, cmdId);
+      //  commandService.AddCommand(menuItem);
+      //}
+
     }
+
+    private void ExecuteInspectSolution(object sender, EventArgs e)
+    {
+      StringBuilder sb = new StringBuilder();
+      IVsSolution solution = (IVsSolution)GetService(typeof(SVsSolution));
+      var projects = solution.GetProjects();
+
+      foreach (var project in projects)
+      {
+        var name = project.GetProjectName();
+        sb.AppendLine(name);
+        var files = project.GetCSharpFiles();
+
+        foreach (var file in files)
+        {
+          sb.AppendLine($"    {file}");
+        }
+
+      }
+
+      var display = new TextDisplay {Text = sb.ToString()};
+      display.Show();
+    }
+
 
     #endregion
   }
