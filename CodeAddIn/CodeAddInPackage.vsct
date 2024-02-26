@@ -34,6 +34,10 @@
       <Group guid="CmdSet" id="VsctGroup" priority="0x0000">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
       </Group>
+    
+      <Group guid="CmdSet" id="VsctMenuGroup" priority="0x0000">
+        <Parent guid="CmdSet" id="VsctMenu"/>
+      </Group>
     </Groups>
     
     <Menus>
@@ -65,6 +69,14 @@
       </Menu>
 
       <!--VSCT-->
+    
+      <Menu guid="CmdSet" id="VsctMenu" priority="0x0100" type="Menu">
+        <Parent guid="CmdSet" id="VsctGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>VSCT Tasks</ButtonText>
+        </Strings>
+      </Menu>
     </Menus>
 
     <Buttons>
@@ -128,7 +140,15 @@
         <Parent guid="CmdSet" id="VsctGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Code VSCT</ButtonText>
+          <ButtonText>VSCT Info</ButtonText>
+        </Strings>
+      </Button>
+      
+      <Button guid="CmdSet" id="CommandVsctMenu1" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="VsctMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>VSCT Menu1</ButtonText>
         </Strings>
       </Button>
       
@@ -162,6 +182,10 @@
             <IdSymbol name="CommandCSharpMenu1" value="0x1117" />
       
       <IDSymbol name="VsctGroup" value="0x0101" />
+        <IDSymbol name="VsctMenu" value="0x1119" />
+          <IDSymbol name="VsctMenuGroup" value="0x1118" />
+            <IDSymbol name="CommandVsctMenu1" value="0x1120" />
+      
 
       <IDSymbol name="CommandSolutionRoot" value="0x0105" />
       <IDSymbol name="CommandCsharpRoot" value="0x0102" />
