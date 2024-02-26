@@ -27,6 +27,7 @@ namespace CodeAddIn
     internal sealed partial class PackageIds
     {
         public const int SolutionGroup = 0x1021;
+        public const int CommandSolutionInfo = 0x0111;
         public const int SolutionMenu = 0x0106;
         public const int SolutionMenuGroup = 0x0107;
         public const int CommandInspectSolution = 0x0108;

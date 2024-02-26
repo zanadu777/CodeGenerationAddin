@@ -36,10 +36,17 @@
     </Menus>
 
     <Buttons>
+
+      <Button guid="CmdSet" id="CommandSolutionInfo" priority="0x0000" type="Button">
+        <Parent guid="CmdSet" id="SolutionGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Solution Info </ButtonText>
+        </Strings>
+      </Button>
       
       
-      
-      <Button guid="CmdSet" id="CommandInspectSolution" priority="0x0000" type="Button">
+      <Button guid="CmdSet" id="CommandInspectSolution" priority="0x000" type="Button">
         <Parent guid="CmdSet" id="SolutionMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
@@ -91,6 +98,7 @@
 
     <GuidSymbol name="CmdSet" value="{66b2a8cf-1cdd-419e-8bff-11a781e955cf}">
       <IDSymbol name="SolutionGroup" value="0x1021" />
+        <IDSymbol name="CommandSolutionInfo" value="0x0111" />
         <IDSymbol name="SolutionMenu" value="0x0106" />
           <IDSymbol name="SolutionMenuGroup" value="0x0107" />
             <IDSymbol name="CommandInspectSolution" value="0x0108" />
