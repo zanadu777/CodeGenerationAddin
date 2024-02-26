@@ -82,7 +82,7 @@
     <VSCTCompile Include="CodeAddInPackage.vsct">
       <Generator>VsctGenerator</Generator>
       <ResourceName>Menus.ctmenu</ResourceName>
-      <LastGenOutput>CodeAddInPackage1.cs</LastGenOutput>
+      <LastGenOutput>CodeAddInPackage2.cs</LastGenOutput>
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
