@@ -32,8 +32,11 @@ namespace CodeAddIn
         public const int SolutionMenuGroup = 0x0107;
         public const int CommandInspectSolution = 0x0108;
         public const int CommandInspectSolution2 = 0x0109;
-        public const int ProjectMenuGroup = 0x1020;
-        public const int VsctMenuGroup = 0x0101;
+        public const int ProjectGroup = 0x1020;
+        public const int ProjectMenu = 0x1112;
+        public const int ProjectMenuGroup = 0x1113;
+        public const int ProjectMenu1 = 0x1114;
+        public const int VsctGroup = 0x0101;
         public const int CommandSolutionRoot = 0x0105;
         public const int CommandCsharpRoot = 0x0102;
         public const int CommandProjectRoot = 0x0103;

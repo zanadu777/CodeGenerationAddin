@@ -12,15 +12,19 @@
         <Parent guid="CmdSet" id="SolutionMenu"/>
       </Group>
 
-      <Group guid="CmdSet" id="ProjectMenuGroup" priority="0x0000">
+      <Group guid="CmdSet" id="ProjectGroup" priority="0x0000">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </Group>
 
-      <Group guid="CmdSet" id="CSharpMenuGroup" priority="0x0100">
+      <Group guid="CmdSet" id="ProjectMenuGroup" priority="0x0100">
+        <Parent guid="CmdSet" id="ProjectMenu"/>
+      </Group>
+
+      <Group guid="CmdSet" id="CSharpGroup" priority="0x0100">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
       </Group>
 
-      <Group guid="CmdSet" id="VsctMenuGroup" priority="0x0100">
+      <Group guid="CmdSet" id="VsctGroup" priority="0x0100">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
       </Group>
     </Groups>
@@ -31,6 +35,14 @@
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Code Solution</ButtonText>
+        </Strings>
+      </Menu>
+
+      <Menu guid="CmdSet" id="ProjectMenu" priority="0x0100" type="Menu">
+        <Parent guid="CmdSet" id="ProjectGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Project Tasks</ButtonText>
         </Strings>
       </Menu>
     </Menus>
@@ -45,7 +57,6 @@
         </Strings>
       </Button>
       
-      
       <Button guid="CmdSet" id="CommandInspectSolution" priority="0x000" type="Button">
         <Parent guid="CmdSet" id="SolutionMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
@@ -56,10 +67,19 @@
       
       
       <Button guid="CmdSet" id="CommandProjectRoot" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="ProjectGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Project Info</ButtonText>
+        </Strings>
+      </Button>
+
+
+      <Button guid="CmdSet" id="ProjectMenu1" priority="0x0000" type="Button">
         <Parent guid="CmdSet" id="ProjectMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Code Project</ButtonText>
+          <ButtonText>Project Menu 1 </ButtonText>
         </Strings>
       </Button>
       
@@ -67,7 +87,7 @@
       
       
       <Button guid="CmdSet" id="CommandCsharpRoot" priority="0x0100" type="Button">
-        <Parent guid="CmdSet" id="CSharpMenuGroup" />
+        <Parent guid="CmdSet" id="CSharpGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Code C#</ButtonText>
@@ -79,7 +99,7 @@
 
 
       <Button guid="CmdSet" id="CommandVsctRoot" priority="0x0100" type="Button">
-        <Parent guid="CmdSet" id="VsctMenuGroup" />
+        <Parent guid="CmdSet" id="VsctGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Code VSCT</ButtonText>
@@ -97,6 +117,7 @@
     <GuidSymbol name="guidCodeAddInPackage" value="{0efaee20-08e5-4944-8ba7-a3eec5165f91}" />
 
     <GuidSymbol name="CmdSet" value="{66b2a8cf-1cdd-419e-8bff-11a781e955cf}">
+      
       <IDSymbol name="SolutionGroup" value="0x1021" />
         <IDSymbol name="CommandSolutionInfo" value="0x0111" />
         <IDSymbol name="SolutionMenu" value="0x0106" />
@@ -104,9 +125,13 @@
             <IDSymbol name="CommandInspectSolution" value="0x0108" />
       <IDSymbol name="CommandInspectSolution2" value="0x0109" />
       
-      <IDSymbol name="ProjectMenuGroup" value="0x1020" />
-      <IdSymbol name="CSharpMenuGroup" value="0x0100" />
-      <IDSymbol name="VsctMenuGroup" value="0x0101" />
+      <IDSymbol name="ProjectGroup" value="0x1020" />
+        <IDSymbol name="ProjectMenu" value="0x1112" />
+          <IDSymbol name="ProjectMenuGroup" value="0x1113" />
+          <IDSymbol name="ProjectMenu1" value="0x1114" />
+      
+      <IdSymbol name="CSharpGroup" value="0x0100" />
+      <IDSymbol name="VsctGroup" value="0x0101" />
 
       <IDSymbol name="CommandSolutionRoot" value="0x0105" />
       <IDSymbol name="CommandCsharpRoot" value="0x0102" />
