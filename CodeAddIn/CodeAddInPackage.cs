@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading;
 using CodeAddIn.Extensions;
 using CodeAddIn.Gui;
+using CodeAddIn.Gui.InfoWindows;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio;
+using EnvDTE;
 
 namespace CodeAddIn
 {
@@ -59,6 +61,7 @@ namespace CodeAddIn
 
       var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
       commandService.AddCommand(PackageIds.CommandInspectSolution, this.ExecuteInspectSolution);
+      commandService.AddCommand(PackageIds.ProjectInfoCommand, this.ExecuteInspectProject);
       //if (commandService != null)
       //{
       //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
@@ -66,6 +69,17 @@ namespace CodeAddIn
       //  commandService.AddCommand(menuItem);
       //}
 
+    }
+
+    private void ExecuteInspectProject(object sender, EventArgs e)
+    {
+      DTE dte = (DTE)GetService(typeof(DTE));
+      Array projects = (Array)dte.ActiveSolutionProjects;
+      Project selectedProject = (Project)projects.GetValue(0);
+      string projectName = selectedProject.Name;
+
+      var display = new ProjectInfo();
+      display.Show();
     }
 
     private void ExecuteInspectSolution(object sender, EventArgs e)

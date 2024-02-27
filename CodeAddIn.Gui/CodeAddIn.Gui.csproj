@@ -48,10 +48,38 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="InfoWindows\CsharpInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InfoWindows\ProjectInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InfoWindows\SolutionInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InfoWindows\VsctInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TextDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="InfoWindows\CsharpInfo.xaml.cs">
+      <DependentUpon>CsharpInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InfoWindows\ProjectInfo.xaml.cs">
+      <DependentUpon>ProjectInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InfoWindows\SolutionInfo.xaml.cs">
+      <DependentUpon>SolutionInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InfoWindows\VsctInfo.xaml.cs">
+      <DependentUpon>VsctInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TextDisplay.xaml.cs">
       <DependentUpon>TextDisplay.xaml</DependentUpon>
     </Compile>
@@ -79,5 +107,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -98,7 +98,7 @@
       </Button>
       
       <!--Project-->
-      <Button guid="CmdSet" id="CommandProjectRoot" priority="0x0100" type="Button">
+      <Button guid="CmdSet" id="ProjectInfoCommand" priority="0x0100" type="Button">
         <Parent guid="CmdSet" id="ProjectGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
@@ -151,6 +151,14 @@
           <ButtonText>VSCT Menu1</ButtonText>
         </Strings>
       </Button>
+
+      <Button guid="CmdSet" id="CommandVsctMenu2" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="VsctMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>VSCT Menu2</ButtonText>
+        </Strings>
+      </Button>
       
     </Buttons>
 
@@ -172,6 +180,7 @@
       <IDSymbol name="CommandInspectSolution2" value="0x0109" />
       
       <IDSymbol name="ProjectGroup" value="0x1020" />
+        <IDSymbol name="ProjectInfoCommand" value="0x0103" />
         <IDSymbol name="ProjectMenu" value="0x1112" />
           <IDSymbol name="ProjectMenuGroup" value="0x1113" />
             <IDSymbol name="ProjectMenu1" value="0x1114" />
@@ -180,16 +189,18 @@
         <IdSymbol name="CSharpMenu" value="0x0115" />
           <IdSymbol name="CSharpMenuGroup" value="0x1116" />
             <IdSymbol name="CommandCSharpMenu1" value="0x1117" />
+            <IdSymbol name="CommandCSharpMenu1" value="0x1121" />
       
       <IDSymbol name="VsctGroup" value="0x0101" />
         <IDSymbol name="VsctMenu" value="0x1119" />
           <IDSymbol name="VsctMenuGroup" value="0x1118" />
             <IDSymbol name="CommandVsctMenu1" value="0x1120" />
+            <IDSymbol name="CommandVsctMenu2" value="0x1122" />
       
 
       <IDSymbol name="CommandSolutionRoot" value="0x0105" />
       <IDSymbol name="CommandCsharpRoot" value="0x0102" />
-      <IDSymbol name="CommandProjectRoot" value="0x0103" />
+      
       <IDSymbol name="CommandVsctRoot" value="0x0104" />
 
     </GuidSymbol>
