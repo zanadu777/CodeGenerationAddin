@@ -1,4 +1,5 @@
-﻿using EnvDTE;
+﻿using CodeModel;
+using EnvDTE;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,15 @@ namespace CodeAddIn.Extensions
         solution.SolutionBuild.Build(true);
       }
     }
+
+    public static List<DirtyClass> DirtyClasses(this EnvDTE.Solution solution)
+    {
+      List<DirtyClass> dirtyClasses = new List<DirtyClass>();
+      foreach (EnvDTE.Project project in solution.Projects)
+        dirtyClasses.AddRange(project.DirtyClasses());
+
+      return dirtyClasses;
+    }
+
   }
 }

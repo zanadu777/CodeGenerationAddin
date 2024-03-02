@@ -41,15 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttributeArgumentInfoData.cs" />
-    <Compile Include="AttributeInfoData.cs" />
-    <Compile Include="ClassInfoData.cs" />
-    <Compile Include="EventInfoData.cs" />
-    <Compile Include="FieldInfoData.cs" />
-    <Compile Include="MethodInfoData.cs" />
-    <Compile Include="ParameterInfoData.cs" />
+    <Compile Include="DirtyClass.cs" />
+    <Compile Include="InfoData\AttributeArgumentInfoData.cs" />
+    <Compile Include="InfoData\AttributeInfoData.cs" />
+    <Compile Include="InfoData\ClassInfoData.cs" />
+    <Compile Include="InfoData\EventInfoData.cs" />
+    <Compile Include="InfoData\FieldInfoData.cs" />
+    <Compile Include="InfoData\MethodInfoData.cs" />
+    <Compile Include="InfoData\ParameterInfoData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyInfoData.cs" />
+    <Compile Include="InfoData\PropertyInfoData.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

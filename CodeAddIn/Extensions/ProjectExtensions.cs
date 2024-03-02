@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using CodeModel;
 
 namespace CodeAddIn.Extensions
 {
@@ -114,6 +115,26 @@ namespace CodeAddIn.Extensions
         }
 
         return projectItems;
+      }
+
+      public static List<DirtyClass> DirtyClasses(this Project project)
+      {
+        List<DirtyClass> dirtyClasses = new List<DirtyClass>();
+        foreach (EnvDTE.ProjectItem item in project.ProjectItems)
+        {
+          if (item.IsDirty)
+          {
+            DirtyClass dirtyClass = new DirtyClass
+            {
+              Name = item.Name,
+              FullName = item.get_FileNames(1),
+              AssemblyName = new AssemblyName(item.ContainingProject.FullName),
+              LastModified = System.IO.File.GetLastWriteTime(item.get_FileNames(1))
+            };
+            dirtyClasses.Add(dirtyClass);
+          }
+        }
+        return dirtyClasses;
       }
 
 
