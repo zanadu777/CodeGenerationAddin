@@ -37,13 +37,13 @@ namespace CodeAddIn
         public const int ProjectMenu = 0x1112;
         public const int ProjectMenuGroup = 0x1113;
         public const int ProjectMenu1 = 0x1114;
+        public const int CsharpInfoCommand = 0x0102;
         public const int VsctGroup = 0x0101;
         public const int VsctMenu = 0x1119;
         public const int VsctMenuGroup = 0x1118;
         public const int CommandVsctMenu1 = 0x1120;
         public const int CommandVsctMenu2 = 0x1122;
         public const int CommandSolutionRoot = 0x0105;
-        public const int CommandCsharpRoot = 0x0102;
         public const int CommandVsctRoot = 0x0104;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;

@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace CodeAddIn.Extensions
 {
-  public static  class SolutionExtensions
+  public static class SolutionExtensions
   {
-
     public static void BuildIfDirty(this Solution solution)
     {
-      if (solution.SolutionBuild.LastBuildInfo != 0)
+      try
+      {
+        if (solution.SolutionBuild.LastBuildInfo != 0)
+        {
+          solution.SolutionBuild.Build(true);
+        }
+      }
+      catch (System.Runtime.InteropServices.COMException)
       {
         solution.SolutionBuild.Build(true);
       }

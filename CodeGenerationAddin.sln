@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAddIn", "CodeAddIn\Code
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAddIn.Gui", "CodeAddIn.Gui\CodeAddIn.Gui.csproj", "{5749D5C9-C47C-4AB1-8D81-C7CDF931CAB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeModel", "CodeModel\CodeModel.csproj", "{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{5749D5C9-C47C-4AB1-8D81-C7CDF931CAB4}.Release|arm64.Build.0 = Release|Any CPU
 		{5749D5C9-C47C-4AB1-8D81-C7CDF931CAB4}.Release|x86.ActiveCfg = Release|Any CPU
 		{5749D5C9-C47C-4AB1-8D81-C7CDF931CAB4}.Release|x86.Build.0 = Release|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Debug|arm64.Build.0 = Debug|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Debug|x86.Build.0 = Debug|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Release|arm64.ActiveCfg = Release|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Release|arm64.Build.0 = Release|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Release|x86.ActiveCfg = Release|Any CPU
+		{53E60414-9A5A-4DB2-B8CD-0A1AA676EE09}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

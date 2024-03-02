@@ -118,7 +118,7 @@
 
       <!--C#-->
       
-      <Button guid="CmdSet" id="CommandCsharpRoot" priority="0x0100" type="Button">
+      <Button guid="CmdSet" id="CsharpInfoCommand" priority="0x0100" type="Button">
         <Parent guid="CmdSet" id="CSharpGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
@@ -186,6 +186,7 @@
             <IDSymbol name="ProjectMenu1" value="0x1114" />
       
       <IdSymbol name="CSharpGroup" value="0x0100" />
+        <IDSymbol name="CsharpInfoCommand" value="0x0102" />
         <IdSymbol name="CSharpMenu" value="0x0115" />
           <IdSymbol name="CSharpMenuGroup" value="0x1116" />
             <IdSymbol name="CommandCSharpMenu1" value="0x1117" />
@@ -199,7 +200,7 @@
       
 
       <IDSymbol name="CommandSolutionRoot" value="0x0105" />
-      <IDSymbol name="CommandCsharpRoot" value="0x0102" />
+      
       
       <IDSymbol name="CommandVsctRoot" value="0x0104" />
 

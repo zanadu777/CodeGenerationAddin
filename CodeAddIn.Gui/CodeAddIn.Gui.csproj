@@ -68,12 +68,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="DesignTime\DesignTimeData.cs" />
     <Compile Include="InfoWindows\CsharpInfo.xaml.cs">
       <DependentUpon>CsharpInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InfoWindows\CsharpInfoVm.cs" />
     <Compile Include="InfoWindows\ProjectInfo.xaml.cs">
       <DependentUpon>ProjectInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InfoWindows\ProjectInfoVm.cs" />
     <Compile Include="InfoWindows\SolutionInfo.xaml.cs">
       <DependentUpon>SolutionInfo.xaml</DependentUpon>
     </Compile>

@@ -51,6 +51,22 @@ namespace CodeAddIn.Extensions
 
       public static List<Type> TypesInProject(this Project project)
       {
+        //project.DTE.Solution.BuildIfDirty();
+
+        //string outputDir = project.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
+        //string outputFileName = project.Properties.Item("OutputFileName").Value.ToString();
+        //string projectDir = System.IO.Path.GetDirectoryName(project.FullName);
+        //string assemblyPath = System.IO.Path.Combine(projectDir, outputDir, outputFileName);
+
+        Assembly assembly = project.ProjectAssembly();
+
+        Type[] types = assembly.GetTypes();
+
+        return new List<Type>(types);
+      }
+
+      public static Assembly ProjectAssembly(this Project project)
+      {
         project.DTE.Solution.BuildIfDirty();
 
         string outputDir = project.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
@@ -58,13 +74,8 @@ namespace CodeAddIn.Extensions
         string projectDir = System.IO.Path.GetDirectoryName(project.FullName);
         string assemblyPath = System.IO.Path.Combine(projectDir, outputDir, outputFileName);
 
-        Assembly assembly = Assembly.LoadFrom(assemblyPath);
-
-        Type[] types = assembly.GetTypes();
-
-        return new List<Type>(types);
+        return Assembly.LoadFrom(assemblyPath);
       }
-
 
       public static List<ProjectItem> ProjectItemsWithMultipleFiles(this Project project)
       {

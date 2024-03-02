@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeAddIn.Gui.InfoWindows"
+        xmlns:designTime="clr-namespace:CodeAddIn.Gui.DesignTime"
         mc:Ignorable="d"
-        Title="CsharpInfo" Height="450" Width="800">
+        Title="CsharpInfo" Height="450" Width="800" d:DataContext="{x:Static designTime:DesignTimeData.ClassInfoVm}">
     <Grid>
-        
-    </Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="30"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+      <TextBlock Text="{Binding ClassName}" Margin="4"/>
+  </Grid>
 </Window>

@@ -9,10 +9,13 @@ using System.Threading;
 using CodeAddIn.Extensions;
 using CodeAddIn.Gui;
 using CodeAddIn.Gui.InfoWindows;
+using CodeAddIn.Helpers;
+using CodeModel;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio;
 using EnvDTE;
+using EnvDTE80;
 
 namespace CodeAddIn
 {
@@ -62,6 +65,7 @@ namespace CodeAddIn
       var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
       commandService.AddCommand(PackageIds.CommandInspectSolution, this.ExecuteInspectSolution);
       commandService.AddCommand(PackageIds.ProjectInfoCommand, this.ExecuteInspectProject);
+      commandService.AddCommand(PackageIds.CsharpInfoCommand, this.ExecuteCsharpInfo);
       //if (commandService != null)
       //{
       //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
@@ -69,6 +73,41 @@ namespace CodeAddIn
       //  commandService.AddCommand(menuItem);
       //}
 
+      IsolatedStorageHelper.WriteToIsolatedStorage("key", "value");
+      var val = IsolatedStorageHelper.ReadFromIsolatedStorage("key");
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+      // This method is called when the package is being unloaded
+      if (disposing)
+      {
+        // Add your cleanup code here
+      }
+
+      base.Dispose(disposing);
+    }
+
+    private void ExecuteCsharpInfo(object sender, EventArgs e)
+    {
+      DTE dte = (DTE)GetService(typeof(DTE));
+      CodeClass2 selectedElement = dte.GetSelectedClass();
+      var factory = new CodeModelFactory();
+      var data = factory.CreateClassInfoData(selectedElement);
+      //var selectedType = dte.GetSelectedType();
+      var selectedProjectItem = dte.GetSelectedProjectItem();
+
+      if (selectedElement != null && selectedProjectItem != null )
+      {
+        string className = selectedElement.Name;
+        var csharpInfoVm = new CsharpInfoVm { ClassName = className};
+        var display = new CsharpInfo {DataContext= csharpInfoVm };
+       display.Show();
+      }
+      else
+      {
+        // No class is selected...
+      }
     }
 
     private void ExecuteInspectProject(object sender, EventArgs e)
@@ -76,9 +115,9 @@ namespace CodeAddIn
       DTE dte = (DTE)GetService(typeof(DTE));
       Array projects = (Array)dte.ActiveSolutionProjects;
       Project selectedProject = (Project)projects.GetValue(0);
-      string projectName = selectedProject.Name;
 
       var display = new ProjectInfo();
+      display.DataContext = new ProjectInfoVm{ ProjectName= selectedProject.Name };
       display.Show();
     }
 
