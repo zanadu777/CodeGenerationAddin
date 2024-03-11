@@ -128,9 +128,11 @@ namespace CodeAddIn.Extensions
             {
               Name = item.Name,
               FullName = item.get_FileNames(1),
-              AssemblyName = new AssemblyName(item.ContainingProject.FullName),
               LastModified = System.IO.File.GetLastWriteTime(item.get_FileNames(1))
             };
+
+            var projectFullName = item.ContainingProject.FullName ;
+            dirtyClass.AssemblyName = new AssemblyName(projectFullName);
             dirtyClasses.Add(dirtyClass);
           }
         }

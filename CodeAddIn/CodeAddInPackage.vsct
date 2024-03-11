@@ -1,42 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <Extern href="stdidcmd.h"/>
-  <Extern href="vsshlids.h"/>
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
   <Commands package="guidCodeAddInPackage">
     <Groups>
       <!--Solution--> 
       <Group guid="CmdSet" id="SolutionGroup" priority="0x0000">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
       </Group>
 
       <Group guid="CmdSet" id="SolutionMenuGroup" priority="0x0100">
-        <Parent guid="CmdSet" id="SolutionMenu"/>
+        <Parent guid="CmdSet" id="SolutionMenu" />
       </Group>
       <!--Project-->
       <Group guid="CmdSet" id="ProjectGroup" priority="0x0000">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
       </Group>
 
       <Group guid="CmdSet" id="ProjectMenuGroup" priority="0x0100">
-        <Parent guid="CmdSet" id="ProjectMenu"/>
+        <Parent guid="CmdSet" id="ProjectMenu" />
       </Group>
 
       <!--C#-->
       <Group guid="CmdSet" id="CSharpGroup" priority="0x0000">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
       </Group>
 
       <Group guid="CmdSet" id="CSharpMenuGroup" priority="0x0100">
-        <Parent guid="CmdSet" id="CSharpMenu"/>
+        <Parent guid="CmdSet" id="CSharpMenu" />
       </Group>
       
       <!--VSCT-->
       <Group guid="CmdSet" id="VsctGroup" priority="0x0000">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
       </Group>
     
       <Group guid="CmdSet" id="VsctMenuGroup" priority="0x0000">
-        <Parent guid="CmdSet" id="VsctMenu"/>
+        <Parent guid="CmdSet" id="VsctMenu" />
       </Group>
     </Groups>
     
@@ -94,6 +94,22 @@
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Inspect Solution 1</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="CmdSet" id="CommandShowModified" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="SolutionMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Show Modified Classes</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidCodeAddInPackageCmdSet" id="cmdidDirtyClassesToolWindowCommand" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages1" id="bmpPic1" />
+        <Strings>
+          <ButtonText>DirtyClassesToolWindow</ButtonText>
         </Strings>
       </Button>
       
@@ -160,10 +176,20 @@
         </Strings>
       </Button>
       
+
+      <Button guid="guidCodeAddInPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="guidImages2" id="bmpPic1" />
+        <Strings>
+          <ButtonText>ToolWindow1</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="guidImages" href="Resources\Command1.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
+      <Bitmap guid="guidImages" href="Resources\Command1.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages1" href="Resources\DirtyClassesToolWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages2" href="ToolWindows\Resources\ToolWindow1Command.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -177,7 +203,7 @@
         <IDSymbol name="SolutionMenu" value="0x0106" />
           <IDSymbol name="SolutionMenuGroup" value="0x0107" />
             <IDSymbol name="CommandInspectSolution" value="0x0108" />
-      <IDSymbol name="CommandInspectSolution2" value="0x0109" />
+            <IDSymbol name="CommandShowModified" value="0x0109" />
       
       <IDSymbol name="ProjectGroup" value="0x1020" />
         <IDSymbol name="ProjectInfoCommand" value="0x0103" />
@@ -206,7 +232,30 @@
 
     </GuidSymbol>
 
-    <GuidSymbol name="guidImages" value="{395cfe74-ce19-4c9e-9496-ec99590fa6c0}" >
+    <GuidSymbol name="guidImages" value="{395cfe74-ce19-4c9e-9496-ec99590fa6c0}">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{34effc17-2057-42cb-899e-32db5af80e56}" name="guidCodeAddInPackageCmdSet">
+      <IDSymbol value="256" name="cmdidDirtyClassesToolWindowCommand" />
+      <IDSymbol value="257" name="cmdidToolWindow1Command" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{f11455bc-75cd-4f46-9038-69f6ad07ab7d}" name="guidImages1">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{76d1a8b3-e326-4028-a17c-67b53b2ef693}" name="guidImages2">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

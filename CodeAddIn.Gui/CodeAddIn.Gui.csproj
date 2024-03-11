@@ -48,6 +48,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DIrtyClassesToolWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InfoWindows\CsharpInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -69,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="DesignTime\DesignTimeData.cs" />
+    <Compile Include="DIrtyClassesToolWindowControl.xaml.cs">
+      <DependentUpon>DIrtyClassesToolWindowControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InfoWindows\CsharpInfo.xaml.cs">
       <DependentUpon>CsharpInfo.xaml</DependentUpon>
     </Compile>
@@ -110,6 +117,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CodeModel\CodeModel.csproj">
+      <Project>{53e60414-9a5a-4db2-b8cd-0a1aa676ee09}</Project>
+      <Name>CodeModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

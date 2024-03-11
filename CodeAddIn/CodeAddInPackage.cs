@@ -16,6 +16,7 @@ using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio;
 using EnvDTE;
 using EnvDTE80;
+using System.Linq;
 
 namespace CodeAddIn
 {
@@ -39,6 +40,7 @@ namespace CodeAddIn
   [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
   [Guid(CodeAddInPackage.PackageGuidString)]
   [ProvideMenuResource("Menus.ctmenu", 1)]
+  [ProvideToolWindow(typeof(DirtyClassesToolWindow))]
   public sealed class CodeAddInPackage : AsyncPackage
   {
     /// <summary>
@@ -63,9 +65,11 @@ namespace CodeAddIn
       await Command1.InitializeAsync(this);
 
       var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+      commandService.AddCommand(PackageIds.CommandSolutionInfo, this.ExecuteSolutionInfo);
       commandService.AddCommand(PackageIds.CommandInspectSolution, this.ExecuteInspectSolution);
       commandService.AddCommand(PackageIds.ProjectInfoCommand, this.ExecuteInspectProject);
       commandService.AddCommand(PackageIds.CsharpInfoCommand, this.ExecuteCsharpInfo);
+      commandService.AddCommand(PackageIds.CommandShowModified, this.ExecuteShowModified);
       //if (commandService != null)
       //{
       //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
@@ -75,6 +79,34 @@ namespace CodeAddIn
 
       IsolatedStorageHelper.WriteToIsolatedStorage("key", "value");
       var val = IsolatedStorageHelper.ReadFromIsolatedStorage("key");
+      await DirtyClassesToolWindowCommand.InitializeAsync(this);
+        
+    }
+
+    private void ExecuteSolutionInfo(object sender, EventArgs e)
+    {
+       
+    }
+
+    private void ExecuteShowModified(object sender, EventArgs e)
+    {
+      var serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)Package.GetGlobalService(typeof(Microsoft.VisualStudio.OLE.Interop.IServiceProvider)));
+      var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
+      var allProjects = solution.GetAllProjects().ToList();
+      var allNames = allProjects.Select(h => h.GetProjectName()).ToList();
+      var filteredProjects = allProjects.Where(h =>   h.HasPhysicalLocation()).ToList();
+      var filteredNames = filteredProjects.Select(h => h.GetProjectName()).ToList();
+      //StringBuilder sb = new StringBuilder();
+      //DTE dte = (DTE)GetService(typeof(DTE));
+      //var solution = dte.Solution;
+      //var dirty = solution.DirtyClasses();
+      var window = this.FindToolWindow(typeof(DirtyClassesToolWindow), 0, true) as DirtyClassesToolWindow;
+      //if (null == window || null == window.Frame)
+      //  throw new NotSupportedException("Cannot create tool window");
+
+      //window.UpdateDirtyClasses(dirty);
+      IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+      ErrorHandler.ThrowOnFailure(windowFrame.Show());
     }
 
     protected override void Dispose(bool disposing)

@@ -20,6 +20,15 @@ namespace CodeAddIn
 
         public const string guidImagesString = "395cfe74-ce19-4c9e-9496-ec99590fa6c0";
         public static Guid guidImages = new Guid(guidImagesString);
+
+        public const string guidCodeAddInPackageCmdSetString = "34effc17-2057-42cb-899e-32db5af80e56";
+        public static Guid guidCodeAddInPackageCmdSet = new Guid(guidCodeAddInPackageCmdSetString);
+
+        public const string guidImages1String = "f11455bc-75cd-4f46-9038-69f6ad07ab7d";
+        public static Guid guidImages1 = new Guid(guidImages1String);
+
+        public const string guidImages2String = "76d1a8b3-e326-4028-a17c-67b53b2ef693";
+        public static Guid guidImages2 = new Guid(guidImages2String);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -31,7 +40,7 @@ namespace CodeAddIn
         public const int SolutionMenu = 0x0106;
         public const int SolutionMenuGroup = 0x0107;
         public const int CommandInspectSolution = 0x0108;
-        public const int CommandInspectSolution2 = 0x0109;
+        public const int CommandShowModified = 0x0109;
         public const int ProjectGroup = 0x1020;
         public const int ProjectInfoCommand = 0x0103;
         public const int ProjectMenu = 0x1112;
@@ -51,5 +60,8 @@ namespace CodeAddIn
         public const int bmpPicX = 0x0004;
         public const int bmpPicArrows = 0x0005;
         public const int bmpPicStrikethrough = 0x0006;
+        public const int cmdidDirtyClassesToolWindowCommand = 0x0100;
+        public const int cmdidToolWindow1Command = 0x0101;
+      
     }
 }
