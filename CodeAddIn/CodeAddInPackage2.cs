@@ -62,6 +62,5 @@ namespace CodeAddIn
         public const int bmpPicStrikethrough = 0x0006;
         public const int cmdidDirtyClassesToolWindowCommand = 0x0100;
         public const int cmdidToolWindow1Command = 0x0101;
-      
     }
 }
