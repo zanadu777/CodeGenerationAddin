@@ -17,6 +17,8 @@ using Microsoft.VisualStudio;
 using EnvDTE;
 using EnvDTE80;
 using System.Linq;
+using CodeAddIn.ToolWindows;
+using CodeAddIn.VisualStudio;
 
 namespace CodeAddIn
 {
@@ -41,6 +43,7 @@ namespace CodeAddIn
   [Guid(CodeAddInPackage.PackageGuidString)]
   [ProvideMenuResource("Menus.ctmenu", 1)]
   [ProvideToolWindow(typeof(DirtyClassesToolWindow))]
+  [ProvideToolWindow(typeof(SolutionInfoToolWindow))]
   public sealed class CodeAddInPackage : AsyncPackage
   {
     /// <summary>
@@ -77,19 +80,66 @@ namespace CodeAddIn
       //  commandService.AddCommand(menuItem);
       //}
 
-      IsolatedStorageHelper.WriteToIsolatedStorage("key", "value");
-      var val = IsolatedStorageHelper.ReadFromIsolatedStorage("key");
       await DirtyClassesToolWindowCommand.InitializeAsync(this);
-        
+      await VS.InitializeAsync(this);
     }
 
     private void ExecuteSolutionInfo(object sender, EventArgs e)
     {
-       
+      //DTE dte = (DTE)GetService(typeof(DTE));
+      //SelectionEvents selectionEvents = dte.Events.SelectionEvents;
+      //selectionEvents.OnChange += SelectionChanged;
+      //{
+      //  var selectedElement = dte.GetSelectedClass();
+      //  var factory = new CodeModelFactory();
+      //  var data = factory.CreateClassInfoData(selectedElement);
+      //  //var selectedType = dte.GetSelectedType();
+      //  var selectedProjectItem = dte.GetSelectedProjectItem();
+
+      //  if (selectedElement != null && selectedProjectItem != null)
+      //  {
+      //    string className = selectedElement.Name;
+      //    var csharpInfoVm = new CsharpInfoVm { ClassName = className };
+      //    var display = new CsharpInfo { DataContext = csharpInfoVm };
+      //    display.Show();
+      //  }
+      //  else
+      //  {
+      //    // No class is selected...
+      //  }
+      //};
+      var window = this.FindToolWindow(typeof(SolutionInfoToolWindow), 0, true) as SolutionInfoToolWindow;
+ 
+      IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+      ErrorHandler.ThrowOnFailure(windowFrame.Show());
     }
+
+    //private void SelectionChanged()
+    //{
+    //  DTE dte = (DTE)GetService(typeof(DTE));
+    //  Window solutionExplorer = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);
+    //  UIHierarchy solutionExplorerHierarchy = (UIHierarchy)solutionExplorer.Object;
+
+ 
+    //  // Get selected items
+    //  Array selectedItems = (Array)solutionExplorerHierarchy.SelectedItems;
+    //  UIHierarchyItem selectedItem = selectedItems.Length > 0 ? (UIHierarchyItem)selectedItems.GetValue(0) : null;
+
+    //  if (selectedItem != null)
+    //  {
+    //    Debug.WriteLine( selectedItem.Name);
+    //    // Do something with the selected item
+    //    // For example, if it's a ProjectItem:
+    //    if (selectedItem.Object is ProjectItem projectItem)
+    //    {
+    //      // Do something with the project item
+    //    }
+    //  }
+    //}
 
     private void ExecuteShowModified(object sender, EventArgs e)
     {
+
       var serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)Package.GetGlobalService(typeof(Microsoft.VisualStudio.OLE.Interop.IServiceProvider)));
       var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
       var allProjects = solution.GetAllProjects().ToList();

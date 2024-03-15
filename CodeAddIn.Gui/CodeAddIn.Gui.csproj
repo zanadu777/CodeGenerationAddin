@@ -48,6 +48,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ToolWindowControls\ProjectInfoControl.xaml.cs">
+      <DependentUpon>ProjectInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindowControls\SolutionInfoControl.xaml.cs">
+      <DependentUpon>SolutionInfoControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="DIrtyClassesToolWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -93,6 +99,14 @@
     <Compile Include="TextDisplay.xaml.cs">
       <DependentUpon>TextDisplay.xaml</DependentUpon>
     </Compile>
+    <Page Include="ToolWindowControls\ProjectInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolWindowControls\SolutionInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -123,5 +137,6 @@
       <Name>CodeModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
