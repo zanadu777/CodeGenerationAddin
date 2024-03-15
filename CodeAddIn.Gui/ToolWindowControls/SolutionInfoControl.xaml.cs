@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AddIn.Core.VisualStudio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,14 @@ namespace CodeAddIn.Gui.ToolWindowControls
       set { SetValue(SelectedItemProperty, value); }
     }
 
+    public static readonly DependencyProperty VsItemProperty = DependencyProperty.Register(
+      nameof(VsItem), typeof(VsItem), typeof(SolutionInfoControl), new PropertyMetadata(default(VsItem)));
+
+    public VsItem VsItem
+    {
+      get { return (VsItem) GetValue(VsItemProperty); }
+      set { SetValue(VsItemProperty, value); }
+    }
     public SolutionInfoControl()
     {
       InitializeComponent();

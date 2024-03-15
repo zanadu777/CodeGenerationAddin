@@ -74,9 +74,6 @@
     </Compile>
     <Compile Include="ToolWindows\ProjectInfoToolWindow.cs" />
     <Compile Include="ToolWindows\SolutionInfoToolWindow.cs" />
-    <Compile Include="VisualStudio\VS.cs" />
-    <Compile Include="VisualStudio\VSItem.cs" />
-    <Compile Include="VisualStudio\VSItemType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -114,6 +111,10 @@
     <Content Include="Resources\DirtyClassesToolWindowCommand.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AddIn.Core\AddIn.Core.csproj">
+      <Project>{ed7b45ee-936a-48d5-88e9-f9422efa1e71}</Project>
+      <Name>AddIn.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeAddIn.Gui\CodeAddIn.Gui.csproj">
       <Project>{5749d5c9-c47c-4ab1-8d81-c7cdf931cab4}</Project>
       <Name>CodeAddIn.Gui</Name>

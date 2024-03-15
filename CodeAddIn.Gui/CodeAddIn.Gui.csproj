@@ -132,6 +132,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AddIn.Core\AddIn.Core.csproj">
+      <Project>{ed7b45ee-936a-48d5-88e9-f9422efa1e71}</Project>
+      <Name>AddIn.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeModel\CodeModel.csproj">
       <Project>{53e60414-9a5a-4db2-b8cd-0a1aa676ee09}</Project>
       <Name>CodeModel</Name>

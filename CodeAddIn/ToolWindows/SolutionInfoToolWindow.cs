@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using AddIn.Core.VisualStudio;
 using CodeAddIn.Gui.ToolWindowControls;
-using CodeAddIn.VisualStudio;
 using EnvDTE;
 
 
@@ -40,7 +40,7 @@ namespace CodeAddIn.ToolWindows
 
         var selectedItem = VS.GetSelectedProjectItem();
         solutionInfoControl.SelectedItem = selectedItem?.Name;
-
+        solutionInfoControl.VsItem = VS.SelectedItem;
         return control;
       }
     }
@@ -52,6 +52,7 @@ namespace CodeAddIn.ToolWindows
       ThreadHelper.ThrowIfNotOnUIThread();
       var selectedItem =VS.SelectedItem;
       solutionInfoControl.SelectedItem = $"{selectedItem?.Name} {selectedItem?.Type}";
+      solutionInfoControl.VsItem = VS.SelectedItem;
     }
 
     protected override void OnClose()

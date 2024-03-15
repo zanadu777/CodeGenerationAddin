@@ -17,8 +17,9 @@ using Microsoft.VisualStudio;
 using EnvDTE;
 using EnvDTE80;
 using System.Linq;
+using AddIn.Core.VisualStudio;
 using CodeAddIn.ToolWindows;
-using CodeAddIn.VisualStudio;
+
 
 namespace CodeAddIn
 {

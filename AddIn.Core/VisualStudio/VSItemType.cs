@@ -1,4 +1,4 @@
-﻿namespace CodeAddIn.VisualStudio
+﻿namespace AddIn.Core.VisualStudio
 {
   public enum VSItemType
   {
