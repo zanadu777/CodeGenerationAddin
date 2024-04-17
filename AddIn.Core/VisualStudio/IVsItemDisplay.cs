@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeAddIn.Gui.InfoWindows
+namespace AddIn.Core.VisualStudio
 {
-  public  class CsharpInfoVm
+  public interface IVsItemDisplay
   {
-    public string ClassName { get; set; }
+    VsItem Item {  set; }
   }
 }

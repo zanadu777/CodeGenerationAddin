@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CodeAddIn.Gui.InfoWindows;
+using CodeAddIn.Gui.ToolWindowControls.SelectionInfo;
 
 namespace CodeAddIn.Gui.DesignTime
 {
@@ -20,15 +21,26 @@ namespace CodeAddIn.Gui.DesignTime
       }
     }
 
-    public static CsharpInfoVm ClassInfoVm
+    public static CSharpInfoVm ClassInfoVm
     {
       get
       {
-        return new CsharpInfoVm
+        return new CSharpInfoVm
         {
-         ClassName = "NiceClass"
+          Name = "NiceClass"
         };
       }
     }
+
+    public static XamlInfoVm XamlInfoVm
+    {
+      get
+      {
+        return new XamlInfoVm
+        {
+          Name = "NiceXaml"
+        };
+      }
+    } 
   }
 }

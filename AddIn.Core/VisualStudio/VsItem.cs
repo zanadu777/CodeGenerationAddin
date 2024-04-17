@@ -7,7 +7,7 @@ namespace AddIn.Core.VisualStudio
   public class VsItem
   {
     public string Name { get; set; }
-    public VSItemType Type { get; set; }
+    public VsItemType Type { get; set; }
     public object Item { get; set; }
 
     public string Text
@@ -24,26 +24,26 @@ namespace AddIn.Core.VisualStudio
 
         switch (Type)
         {
-          case VSItemType.Solution:
+          case VsItemType.Solution:
             return "Solution";
-          case VSItemType.SolutionFolder:
+          case VsItemType.SolutionFolder:
             return "Solution Folder";
-          case VSItemType.Project:
+          case VsItemType.Project:
             return "Project";
-          case VSItemType.ProjectFolder:
+          case VsItemType.ProjectFolder:
             return "Project Folder";
-          case VSItemType.ProjectProperties:
+          case VsItemType.ProjectProperties:
             return "Project Properties";
-          case VSItemType.CSharpFile:
+          case VsItemType.CSharpFile:
             var path = ((ProjectItem)Item).FileNames[0];
             return File.ReadAllText(path);
-          case VSItemType.XamlFile:
+          case VsItemType.XamlFile:
             return "XAML File";
-          case VSItemType.CodeBehindCSharp:
+          case VsItemType.CodeBehindCSharp:
             return "Code Behind C#";
-          case VSItemType.ProjectDependencies:
+          case VsItemType.ProjectDependencies:
             return "Project Dependencies";
-          case VSItemType.ProjectReferences:
+          case VsItemType.ProjectReferences:
             return "Project References";
           default:
             return string.Empty;

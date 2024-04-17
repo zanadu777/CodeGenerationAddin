@@ -45,6 +45,7 @@ namespace CodeAddIn
   [ProvideMenuResource("Menus.ctmenu", 1)]
   [ProvideToolWindow(typeof(DirtyClassesToolWindow))]
   [ProvideToolWindow(typeof(SolutionInfoToolWindow))]
+  [ProvideToolWindow(typeof(SelectionInfoToolWindow))]
   public sealed class CodeAddInPackage : AsyncPackage
   {
     /// <summary>
@@ -74,6 +75,7 @@ namespace CodeAddIn
       commandService.AddCommand(PackageIds.ProjectInfoCommand, this.ExecuteInspectProject);
       commandService.AddCommand(PackageIds.CsharpInfoCommand, this.ExecuteCsharpInfo);
       commandService.AddCommand(PackageIds.CommandShowModified, this.ExecuteShowModified);
+      commandService.AddCommand(PackageIds.CommandSelectionInfo, DisplayToolWindow<SelectionInfoToolWindow>);
       //if (commandService != null)
       //{
       //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
@@ -87,30 +89,15 @@ namespace CodeAddIn
 
     private void ExecuteSolutionInfo(object sender, EventArgs e)
     {
-      //DTE dte = (DTE)GetService(typeof(DTE));
-      //SelectionEvents selectionEvents = dte.Events.SelectionEvents;
-      //selectionEvents.OnChange += SelectionChanged;
-      //{
-      //  var selectedElement = dte.GetSelectedClass();
-      //  var factory = new CodeModelFactory();
-      //  var data = factory.CreateClassInfoData(selectedElement);
-      //  //var selectedType = dte.GetSelectedType();
-      //  var selectedProjectItem = dte.GetSelectedProjectItem();
+      DisplayToolWindow<SolutionInfoToolWindow>(sender, e);
+      //var window = this.FindToolWindow(typeof(SolutionInfoToolWindow), 0, true) as SolutionInfoToolWindow;
+      //IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+      //ErrorHandler.ThrowOnFailure(windowFrame.Show());
+    }
 
-      //  if (selectedElement != null && selectedProjectItem != null)
-      //  {
-      //    string className = selectedElement.Name;
-      //    var csharpInfoVm = new CsharpInfoVm { ClassName = className };
-      //    var display = new CsharpInfo { DataContext = csharpInfoVm };
-      //    display.Show();
-      //  }
-      //  else
-      //  {
-      //    // No class is selected...
-      //  }
-      //};
-      var window = this.FindToolWindow(typeof(SolutionInfoToolWindow), 0, true) as SolutionInfoToolWindow;
- 
+    private void DisplayToolWindow<T>(object sender, EventArgs e) where T: ToolWindowPane
+    {
+      var window = FindToolWindow(typeof(T), 0, true) as T;
       IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
       ErrorHandler.ThrowOnFailure(windowFrame.Show());
     }
@@ -173,24 +160,24 @@ namespace CodeAddIn
 
     private void ExecuteCsharpInfo(object sender, EventArgs e)
     {
-      DTE dte = (DTE)GetService(typeof(DTE));
-      CodeClass2 selectedElement = dte.GetSelectedClass();
-      var factory = new CodeModelFactory();
-      var data = factory.CreateClassInfoData(selectedElement);
-      //var selectedType = dte.GetSelectedType();
-      var selectedProjectItem = dte.GetSelectedProjectItem();
+      //DTE dte = (DTE)GetService(typeof(DTE));
+      //CodeClass2 selectedElement = dte.GetSelectedClass();
+      //var factory = new CodeModelFactory();
+      //var data = factory.CreateClassInfoData(selectedElement);
+      ////var selectedType = dte.GetSelectedType();
+      //var selectedProjectItem = dte.GetSelectedProjectItem();
 
-      if (selectedElement != null && selectedProjectItem != null )
-      {
-        string className = selectedElement.Name;
-        var csharpInfoVm = new CsharpInfoVm { ClassName = className};
-        var display = new CsharpInfo {DataContext= csharpInfoVm };
-       display.Show();
-      }
-      else
-      {
-        // No class is selected...
-      }
+      //if (selectedElement != null && selectedProjectItem != null )
+      //{
+      //  string className = selectedElement.Name;
+      //  var csharpInfoVm = new CsharpInfoVm { ClassName = className};
+      //  var display = new CsharpInfo {DataContext= csharpInfoVm };
+      // display.Show();
+      //}
+      //else
+      //{
+      //  // No class is selected...
+      //}
     }
 
     private void ExecuteInspectProject(object sender, EventArgs e)
@@ -214,13 +201,17 @@ namespace CodeAddIn
       {
         var name = project.GetProjectName();
         sb.AppendLine(name);
-        var files = project.GetCSharpFiles();
+        
+        var items = project.AllProjectItems().ToList();
+        var classes = project.AllCompleteCodeClasses().ToList();
 
-        foreach (var file in files)
+        foreach (var item in items)
         {
-          sb.AppendLine($"    {file}");
+          sb.AppendLine($"  {item.Name}");
+          foreach (var codeClass in item.CodeClasses())
+            sb.AppendLine($"    {codeClass.Name}");
         }
-
+ 
       }
 
       var display = new TextDisplay {Text = sb.ToString()};

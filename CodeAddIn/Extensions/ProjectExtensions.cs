@@ -6,7 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using AddIn.Core;
 using CodeModel;
+ 
 
 namespace CodeAddIn.Extensions
 {
@@ -138,6 +140,15 @@ namespace CodeAddIn.Extensions
         }
         return dirtyClasses;
       }
+
+
+     // public static List<CompleteCodeClass> CompleteCodeClasses(this Project project)
+     // {
+     //   List<CompleteCodeClass> completeCodeClasses = new List<CompleteCodeClass>();
+
+     //// var items = project.AllProjectItems().ToList();
+     // return completeCodeClasses;
+     // }
 
 
   }

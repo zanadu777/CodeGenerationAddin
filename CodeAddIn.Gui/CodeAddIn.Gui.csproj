@@ -51,6 +51,18 @@
     <Compile Include="ToolWindowControls\ProjectInfoControl.xaml.cs">
       <DependentUpon>ProjectInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolWindowControls\SelectionInfo\CSharpInfoControl.xaml.cs">
+      <DependentUpon>CSharpInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindowControls\SelectionInfo\CSharpInfoVm.cs" />
+    <Compile Include="ToolWindowControls\SelectionInfo\NodeViewModel.cs" />
+    <Compile Include="ToolWindowControls\SelectionInfo\SelectionInfoControl.xaml.cs">
+      <DependentUpon>SelectionInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindowControls\SelectionInfo\XamlInfoControl.xaml.cs">
+      <DependentUpon>XamlInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindowControls\SelectionInfo\XamlInfoVm.cs" />
     <Compile Include="ToolWindowControls\SolutionInfoControl.xaml.cs">
       <DependentUpon>SolutionInfoControl.xaml</DependentUpon>
     </Compile>
@@ -85,7 +97,6 @@
     <Compile Include="InfoWindows\CsharpInfo.xaml.cs">
       <DependentUpon>CsharpInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InfoWindows\CsharpInfoVm.cs" />
     <Compile Include="InfoWindows\ProjectInfo.xaml.cs">
       <DependentUpon>ProjectInfo.xaml</DependentUpon>
     </Compile>
@@ -100,6 +111,18 @@
       <DependentUpon>TextDisplay.xaml</DependentUpon>
     </Compile>
     <Page Include="ToolWindowControls\ProjectInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolWindowControls\SelectionInfo\CSharpInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolWindowControls\SelectionInfo\SelectionInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolWindowControls\SelectionInfo\XamlInfoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

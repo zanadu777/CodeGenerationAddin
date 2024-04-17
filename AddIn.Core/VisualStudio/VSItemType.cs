@@ -1,6 +1,6 @@
 ﻿namespace AddIn.Core.VisualStudio
 {
-  public enum VSItemType
+  public enum VsItemType
   {
     Unknown,
     Solution,

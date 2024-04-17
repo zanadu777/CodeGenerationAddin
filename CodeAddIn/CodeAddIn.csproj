@@ -63,6 +63,7 @@
     <Compile Include="Extensions\IVsSolutionExtensions.cs" />
     <Compile Include="Extensions\OleMenuCommandServiceExtensions.cs" />
     <Compile Include="Extensions\ProjectExtensions.cs" />
+    <Compile Include="Extensions\ProjectItemExtensions.cs" />
     <Compile Include="Extensions\SolutionExtensions.cs" />
     <Compile Include="Helpers\CodeModelFactory.cs" />
     <Compile Include="Helpers\IsolatedStorageHelper.cs" />
@@ -73,6 +74,7 @@
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ToolWindows\ProjectInfoToolWindow.cs" />
+    <Compile Include="ToolWindows\SelectionInfoToolWindow.cs" />
     <Compile Include="ToolWindows\SolutionInfoToolWindow.cs" />
   </ItemGroup>
   <ItemGroup>
