@@ -38,7 +38,15 @@
       <Group guid="CmdSet" id="VsctMenuGroup" priority="0x0000">
         <Parent guid="CmdSet" id="VsctMenu" />
       </Group>
+      
+   <!--Editor Commands-->
+    <Group guid="CmdSet" id="EditorGroup" priority="0x0000">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+    </Group>
+      
     </Groups>
+
+
     
     <Menus>
       <!--Solution-->
@@ -185,11 +193,20 @@
       </Button>
       
 
-      <Button guid="guidCodeAddInPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0100" type="Button">
+      <Button guid="guidCodeAddInPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0000" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
         <Icon guid="guidImages2" id="bmpPic1" />
         <Strings>
-          <ButtonText>ToolWindow1</ButtonText>
+          <ButtonText>Tool Window 1</ButtonText>
+        </Strings>
+      </Button>
+
+      <!--Editor Commands-->
+      <Button guid="CmdSet" id="CommandProcessCode" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="EditorGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Process Selected Code</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -238,6 +255,9 @@
       
       
       <IDSymbol name="CommandVsctRoot" value="0x0104" />
+
+      <IDSymbol name="EditorGroup" value="0x1123" />
+        <IDSymbol name="CommandProcessCode" value="0x1124" />
 
     </GuidSymbol>
 

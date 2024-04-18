@@ -77,6 +77,9 @@
     <Compile Include="CompleteCodeClass.cs" />
     <Compile Include="CompleteCodeInterface.cs" />
     <Compile Include="Extensions\CodeClassExtensions.cs" />
+    <Compile Include="Extensions\CodeFunctionExtensions.cs" />
+    <Compile Include="Extensions\CodeInterfaceExtensions.cs" />
+    <Compile Include="Extensions\CompleteCodeInterfaceExtensions.cs" />
     <Compile Include="Extensions\UIHierarchyItemExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualStudio\IVsItemDisplay.cs" />

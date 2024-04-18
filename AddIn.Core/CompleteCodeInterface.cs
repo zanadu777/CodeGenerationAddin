@@ -21,5 +21,10 @@ namespace AddIn.Core
     {
       CodeInterfaces.AddRange(codeInterfaces);
     }
+
+    public List<CodeInterface> WithFileName(string fileName)
+    {
+      return CodeInterfaces.Where(c => c.ProjectItem.FileNames[0] == fileName).ToList();
+    }
   }
 }

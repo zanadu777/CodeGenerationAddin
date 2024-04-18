@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace CodeAddIn.Extensions
 {
-  public static  class DteExtensions
+  public static class DteExtensions
   {
     public static Project GetSelectedProject(this DTE dte)
     {
@@ -47,9 +48,34 @@ namespace CodeAddIn.Extensions
     //  }
 
     //  return null;
-    //}
+    public static CodeClass GetClassAtCursor(this DTE dte)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
 
-    public static  CodeClass2  GetSelectedClass(this DTE dte)
+      TextDocument textDoc = (TextDocument)dte.ActiveDocument.Object("TextDocument");
+      EditPoint editPoint = textDoc.Selection.ActivePoint.CreateEditPoint();
+      FileCodeModel fileCodeModel = dte.ActiveDocument.ProjectItem.FileCodeModel;
+
+      CodeElement element = fileCodeModel.CodeElementFromPoint(editPoint, vsCMElement.vsCMElementClass);
+
+      return element as CodeClass;
+    }
+
+
+    public static CodeFunction GetMethodAtCursor(this DTE dte)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      TextDocument textDoc = (TextDocument)dte.ActiveDocument.Object("TextDocument");
+      EditPoint editPoint = textDoc.Selection.ActivePoint.CreateEditPoint();
+      FileCodeModel fileCodeModel = dte.ActiveDocument.ProjectItem.FileCodeModel;
+
+      CodeElement element = fileCodeModel.CodeElementFromPoint(editPoint, vsCMElement.vsCMElementFunction);
+
+      return element as CodeFunction;
+    }
+
+    public static CodeClass2 GetSelectedClass(this DTE dte)
     {
       Window solutionExplorer = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);
       UIHierarchy solutionExplorerHierarchy = (UIHierarchy)solutionExplorer.Object;
@@ -85,14 +111,14 @@ namespace CodeAddIn.Extensions
       return null;
     }
 
-    public static  ProjectItem  GetSelectedProjectItem (this DTE dte)
+    public static ProjectItem GetSelectedProjectItem(this DTE dte)
     {
       foreach (SelectedItem selectedItem in dte.SelectedItems)
       {
         ProjectItem projectItem = selectedItem.ProjectItem;
         if (projectItem != null)
         {
-         return projectItem ;
+          return projectItem;
         }
       }
 

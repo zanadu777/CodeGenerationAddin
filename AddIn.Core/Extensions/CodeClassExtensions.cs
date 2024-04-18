@@ -46,21 +46,19 @@ namespace AddIn.Core.Extensions
       return groupedInterfaces;
     }
 
-    public static Dictionary<string, List<T>> GroupByFullName<T>(this IEnumerable<T> codeElements) where T : CodeElement
+    public static void AddFunctionToClass(this CodeClass codeClass, CodeFunction codeFunction, string newBody)
     {
       ThreadHelper.ThrowIfNotOnUIThread();
-      Dictionary<string, List<T>> groupedElements = new Dictionary<string, List<T>>();
 
-      foreach (var codeElement in codeElements)
+      if (codeClass != null && codeFunction != null)
       {
-        if (!groupedElements.ContainsKey(codeElement.FullName))
-          groupedElements[codeElement.FullName] = new List<T>();
+        var parameters = codeFunction.Parameters.Cast<CodeParameter>().Select(p => p.Type.AsString).ToArray();
+        var newFunction = codeClass.AddFunction(codeFunction.Name, vsCMFunction.vsCMFunctionFunction, codeFunction.Type, -1, codeFunction.Access);
 
-
-        groupedElements[codeElement.FullName].Add(codeElement);
+        EditPoint start = newFunction.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint();
+        EditPoint end = newFunction.GetEndPoint(vsCMPart.vsCMPartBody).CreateEditPoint();
+        start.ReplaceText(end, newBody, (int)vsEPReplaceTextOptions.vsEPReplaceTextKeepMarkers);
       }
-
-      return groupedElements;
     }
 
 

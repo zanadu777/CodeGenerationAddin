@@ -76,6 +76,7 @@ namespace CodeAddIn
       commandService.AddCommand(PackageIds.CsharpInfoCommand, this.ExecuteCsharpInfo);
       commandService.AddCommand(PackageIds.CommandShowModified, this.ExecuteShowModified);
       commandService.AddCommand(PackageIds.CommandSelectionInfo, DisplayToolWindow<SelectionInfoToolWindow>);
+      commandService.AddCommand(PackageIds.CommandProcessCode, this.ProcessCode);
       //if (commandService != null)
       //{
       //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
@@ -87,6 +88,17 @@ namespace CodeAddIn
       await VS.InitializeAsync(this);
     }
 
+    private void ProcessCode(object sender, EventArgs e)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+      DTE dte = (DTE)Package.GetGlobalService(typeof(DTE));
+      var codeClass = dte.GetClassAtCursor();
+      var method = dte.GetMethodAtCursor();
+      
+      var result = $"{codeClass.Name} {method.Name}";
+
+    }
+
     private void ExecuteSolutionInfo(object sender, EventArgs e)
     {
       DisplayToolWindow<SolutionInfoToolWindow>(sender, e);
@@ -95,7 +107,7 @@ namespace CodeAddIn
       //ErrorHandler.ThrowOnFailure(windowFrame.Show());
     }
 
-    private void DisplayToolWindow<T>(object sender, EventArgs e) where T: ToolWindowPane
+    private void DisplayToolWindow<T>(object sender, EventArgs e) where T : ToolWindowPane
     {
       var window = FindToolWindow(typeof(T), 0, true) as T;
       IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
@@ -108,7 +120,7 @@ namespace CodeAddIn
     //  Window solutionExplorer = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);
     //  UIHierarchy solutionExplorerHierarchy = (UIHierarchy)solutionExplorer.Object;
 
- 
+
     //  // Get selected items
     //  Array selectedItems = (Array)solutionExplorerHierarchy.SelectedItems;
     //  UIHierarchyItem selectedItem = selectedItems.Length > 0 ? (UIHierarchyItem)selectedItems.GetValue(0) : null;
@@ -132,7 +144,7 @@ namespace CodeAddIn
       var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
       var allProjects = solution.GetAllProjects().ToList();
       var allNames = allProjects.Select(h => h.GetProjectName()).ToList();
-      var filteredProjects = allProjects.Where(h =>   h.HasPhysicalLocation()).ToList();
+      var filteredProjects = allProjects.Where(h => h.HasPhysicalLocation()).ToList();
       var filteredNames = filteredProjects.Select(h => h.GetProjectName()).ToList();
       //StringBuilder sb = new StringBuilder();
       //DTE dte = (DTE)GetService(typeof(DTE));
@@ -187,7 +199,7 @@ namespace CodeAddIn
       Project selectedProject = (Project)projects.GetValue(0);
 
       var display = new ProjectInfo();
-      display.DataContext = new ProjectInfoVm{ ProjectName= selectedProject.Name };
+      display.DataContext = new ProjectInfoVm { ProjectName = selectedProject.Name };
       display.Show();
     }
 
@@ -201,7 +213,7 @@ namespace CodeAddIn
       {
         var name = project.GetProjectName();
         sb.AppendLine(name);
-        
+
         var items = project.AllProjectItems().ToList();
         var classes = project.AllCompleteCodeClasses().ToList();
 
@@ -211,10 +223,10 @@ namespace CodeAddIn
           foreach (var codeClass in item.CodeClasses())
             sb.AppendLine($"    {codeClass.Name}");
         }
- 
+
       }
 
-      var display = new TextDisplay {Text = sb.ToString()};
+      var display = new TextDisplay { Text = sb.ToString() };
       display.Show();
     }
 
