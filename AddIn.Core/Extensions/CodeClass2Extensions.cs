@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using EnvDTE;
 using EnvDTE80;
 
-namespace CodeAddIn.Extensions
+namespace AddIn.Core.Extensions
 {
   public static class CodeClass2Extensions
   {

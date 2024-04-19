@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.IO.IsolatedStorage;
 
-namespace CodeAddIn.Helpers
+namespace AddIn.Core.Helpers
 {
   public static class IsolatedStorageHelper
   {

@@ -1,13 +1,8 @@
-﻿using CodeModel;
-using EnvDTE;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EnvDTE;
 
-namespace CodeAddIn.Extensions
+namespace AddIn.Core.Extensions
 {
   public static class SolutionExtensions
   {
@@ -50,13 +45,6 @@ namespace CodeAddIn.Extensions
       return projects;
     }
 
-    public static List<DirtyClass> DirtyClasses(this EnvDTE.Solution solution)
-    {
-      List<DirtyClass> dirtyClasses = new List<DirtyClass>();
-      foreach (EnvDTE.Project project in solution.Projects(EProjectFilter.ExcludeVsProjectKindMisc))
-        dirtyClasses.AddRange(project.DirtyClasses());
-
-      return dirtyClasses;
-    }
+  
   }
 }

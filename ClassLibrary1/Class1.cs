@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeAddIn.Extensions
+namespace ClassLibrary1
 {
-  public  enum EProjectFilter
-  {
-    None,
-    ExcludeVsProjectKindMisc
-  }
+    public class Class1
+    {
+    }
 }

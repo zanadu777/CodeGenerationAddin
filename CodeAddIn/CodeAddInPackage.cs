@@ -1,23 +1,20 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using CodeAddIn.Extensions;
 using CodeAddIn.Gui;
 using CodeAddIn.Gui.InfoWindows;
-using CodeAddIn.Helpers;
-using CodeModel;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio;
 using EnvDTE;
-using EnvDTE80;
 using System.Linq;
+using AddIn.Core.Extensions;
 using AddIn.Core.VisualStudio;
+using CodeAddIn.Extensions;
+using CodeAddIn.Lib;
 using CodeAddIn.ToolWindows;
 
 
@@ -68,15 +65,16 @@ namespace CodeAddIn
       // Do any initialization that requires the UI thread after switching to the UI thread.
       await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
       await Command1.InitializeAsync(this);
+      CodeAddInPackageProxy.Package = this;
 
       var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
       commandService.AddCommand(PackageIds.CommandSolutionInfo, this.ExecuteSolutionInfo);
-      commandService.AddCommand(PackageIds.CommandInspectSolution, this.ExecuteInspectSolution);
-      commandService.AddCommand(PackageIds.ProjectInfoCommand, this.ExecuteInspectProject);
-      commandService.AddCommand(PackageIds.CsharpInfoCommand, this.ExecuteCsharpInfo);
-      commandService.AddCommand(PackageIds.CommandShowModified, this.ExecuteShowModified);
+      commandService.AddCommand(PackageIds.CommandInspectSolution, CodeAddInPackageProxy.ExecuteInspectSolution);
+      commandService.AddCommand(PackageIds.ProjectInfoCommand, CodeAddInPackageProxy.ExecuteInspectProject);
+      commandService.AddCommand(PackageIds.CsharpInfoCommand, CodeAddInPackageProxy.ExecuteCsharpInfo);
+      commandService.AddCommand(PackageIds.CommandShowModified, ExecuteShowModified);
       commandService.AddCommand(PackageIds.CommandSelectionInfo, DisplayToolWindow<SelectionInfoToolWindow>);
-      commandService.AddCommand(PackageIds.CommandProcessCode, this.ProcessCode);
+      commandService.AddCommand(PackageIds.CommandProcessCode, CodeAddInPackageProxy.ProcessCode);
       //if (commandService != null)
       //{
       //  var cmdId = new CommandID(PackageGuids.CmdSet, (int)PackageIds.CommandInspectSolution);
@@ -86,17 +84,6 @@ namespace CodeAddIn
 
       await DirtyClassesToolWindowCommand.InitializeAsync(this);
       await VS.InitializeAsync(this);
-    }
-
-    private void ProcessCode(object sender, EventArgs e)
-    {
-      ThreadHelper.ThrowIfNotOnUIThread();
-      DTE dte = (DTE)Package.GetGlobalService(typeof(DTE));
-      var codeClass = dte.GetClassAtCursor();
-      var method = dte.GetMethodAtCursor();
-      
-      var result = $"{codeClass.Name} {method.Name}";
-
     }
 
     private void ExecuteSolutionInfo(object sender, EventArgs e)

@@ -1,12 +1,8 @@
-﻿using CodeModel;
-using Microsoft.VisualStudio.Shell;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.Shell;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using CodeAddIn.Gui.ToolWindowControls;
 using AddIn.Core.VisualStudio;
 using CodeAddIn.Gui.ToolWindowControls.SelectionInfo;
 

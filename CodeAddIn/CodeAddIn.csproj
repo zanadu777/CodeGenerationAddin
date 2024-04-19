@@ -56,17 +56,8 @@
     <Compile Include="DirtyClassesToolWindowControl.xaml.cs">
       <DependentUpon>DirtyClassesToolWindowControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\CodeClass2Extensions.cs" />
-    <Compile Include="Extensions\DteExtensions.cs" />
-    <Compile Include="Extensions\EProjectFilter.cs" />
-    <Compile Include="Extensions\IVsHierarchyExtensions.cs" />
-    <Compile Include="Extensions\IVsSolutionExtensions.cs" />
+    <Compile Include="Extensions\DirtyClassExtensions.cs" />
     <Compile Include="Extensions\OleMenuCommandServiceExtensions.cs" />
-    <Compile Include="Extensions\ProjectExtensions.cs" />
-    <Compile Include="Extensions\ProjectItemExtensions.cs" />
-    <Compile Include="Extensions\SolutionExtensions.cs" />
-    <Compile Include="Helpers\CodeModelFactory.cs" />
-    <Compile Include="Helpers\IsolatedStorageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeAddInPackage.cs" />
     <Compile Include="SolutionEventsListener.cs" />
@@ -120,6 +111,10 @@
     <ProjectReference Include="..\CodeAddIn.Gui\CodeAddIn.Gui.csproj">
       <Project>{5749d5c9-c47c-4ab1-8d81-c7cdf931cab4}</Project>
       <Name>CodeAddIn.Gui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeAddIn.Lib\CodeAddIn.Lib.csproj">
+      <Project>{13910c26-a39f-4190-a74a-e7908ae5a5e2}</Project>
+      <Name>CodeAddIn.Lib</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeModel\CodeModel.csproj">
       <Project>{53e60414-9a5a-4db2-b8cd-0a1aa676ee09}</Project>

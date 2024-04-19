@@ -1,18 +1,13 @@
-﻿using EnvDTE80;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using CodeModel;
 using CodeModel.InfoData;
 using EnvDTE;
-using Microsoft.VisualStudio.PlatformUI;
+using EnvDTE80;
 
-namespace CodeAddIn.Helpers
+namespace AddIn.Core.Helpers
 {
   public class CodeModelFactory
   {
@@ -172,7 +167,6 @@ namespace CodeAddIn.Helpers
 
     #endregion
 
-
     #region Type (System.Type) via reflection
 
     public ClassInfoData CreateClassInfoData(Type type)
@@ -310,7 +304,5 @@ namespace CodeAddIn.Helpers
     }
 
     #endregion
-
-
   }
 }

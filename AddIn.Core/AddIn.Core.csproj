@@ -76,11 +76,21 @@
   <ItemGroup>
     <Compile Include="CompleteCodeClass.cs" />
     <Compile Include="CompleteCodeInterface.cs" />
+    <Compile Include="Extensions\CodeClass2Extensions.cs" />
     <Compile Include="Extensions\CodeClassExtensions.cs" />
     <Compile Include="Extensions\CodeFunctionExtensions.cs" />
     <Compile Include="Extensions\CodeInterfaceExtensions.cs" />
     <Compile Include="Extensions\CompleteCodeInterfaceExtensions.cs" />
+    <Compile Include="Extensions\DteExtensions.cs" />
+    <Compile Include="Extensions\EProjectFilter.cs" />
+    <Compile Include="Extensions\IVsHierarchyExtensions.cs" />
+    <Compile Include="Extensions\IVsSolutionExtensions.cs" />
+    <Compile Include="Extensions\ProjectExtensions.cs" />
+    <Compile Include="Extensions\ProjectItemExtensions.cs" />
+    <Compile Include="Extensions\SolutionExtensions.cs" />
     <Compile Include="Extensions\UIHierarchyItemExtensions.cs" />
+    <Compile Include="Helpers\CodeModelFactory.cs" />
+    <Compile Include="Helpers\IsolatedStorageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualStudio\IVsItemDisplay.cs" />
     <Compile Include="VisualStudio\VS.cs" />
@@ -98,7 +108,12 @@
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CodeModel\CodeModel.csproj">
+      <Project>{53e60414-9a5a-4db2-b8cd-0a1aa676ee09}</Project>
+      <Name>CodeModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

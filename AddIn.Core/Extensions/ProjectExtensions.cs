@@ -1,16 +1,10 @@
-﻿using EnvDTE;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using AddIn.Core;
-using CodeModel;
- 
+using EnvDTE;
 
-namespace CodeAddIn.Extensions
+namespace AddIn.Core.Extensions
 {
   public static class ProjectExtensions
   {
@@ -119,27 +113,7 @@ namespace CodeAddIn.Extensions
         return projectItems;
       }
 
-      public static List<DirtyClass> DirtyClasses(this Project project)
-      {
-        List<DirtyClass> dirtyClasses = new List<DirtyClass>();
-        foreach (EnvDTE.ProjectItem item in project.ProjectItems)
-        {
-          if (item.IsDirty)
-          {
-            DirtyClass dirtyClass = new DirtyClass
-            {
-              Name = item.Name,
-              FullName = item.get_FileNames(1),
-              LastModified = System.IO.File.GetLastWriteTime(item.get_FileNames(1))
-            };
-
-            var projectFullName = item.ContainingProject.FullName ;
-            dirtyClass.AssemblyName = new AssemblyName(projectFullName);
-            dirtyClasses.Add(dirtyClass);
-          }
-        }
-        return dirtyClasses;
-      }
+     
 
 
      // public static List<CompleteCodeClass> CompleteCodeClasses(this Project project)
