@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace AddIn.Core.Extensions
 {
@@ -21,6 +22,12 @@ namespace AddIn.Core.Extensions
       return activeProject;
     }
 
+    public static IVsSolution IVsSolution(this DTE dte)
+    {
+      ServiceProvider serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)dte);
+      IVsSolution solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
+      return solution;
+    }
 
     //public static CodeElement GetSelectedClass(this DTE dte)
     //{

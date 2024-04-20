@@ -101,7 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Command1.png" />
-    <Content Include="Resources\DirtyClassesToolWindowCommand.png" />
+    <Content Include="Resources\Lightning.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AddIn.Core\AddIn.Core.csproj">

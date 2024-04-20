@@ -48,6 +48,19 @@ namespace AddIn.Core.Extensions
       return projectItems;
     }
 
+    public static List<ProjectItem> ProjectItems(this IVsHierarchy projectHierarchy, Predicate<ProjectItem> filter)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      if (projectHierarchy == null || filter == null)
+        return new List<ProjectItem>();
+
+      var allProjectItems = projectHierarchy.AllProjectItems();
+      var filteredProjectItems = allProjectItems.Where(pi => filter(pi)).ToList();
+
+      return filteredProjectItems;
+    }
+
 
     public static List<CompleteCodeClass> AllCompleteCodeClasses(this IVsHierarchy projectHierarchy)
     {

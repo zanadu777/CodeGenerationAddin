@@ -123,7 +123,7 @@
 
       <Button guid="guidCodeAddInPackageCmdSet" id="cmdidDirtyClassesToolWindowCommand" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
-        <Icon guid="guidImages1" id="bmpPic1" />
+        <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>DirtyClassesToolWindow</ButtonText>
         </Strings>
@@ -195,7 +195,7 @@
 
       <Button guid="guidCodeAddInPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0000" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
-        <Icon guid="guidImages2" id="bmpPic1" />
+        <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Tool Window 1</ButtonText>
         </Strings>
@@ -204,7 +204,7 @@
       <!--Editor Commands-->
       <Button guid="CmdSet" id="CommandProcessCode" priority="0x0100" type="Button">
         <Parent guid="CmdSet" id="EditorGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
+        <Icon guid="lightningImages" id="goldGold" />
         <Strings>
           <ButtonText>Process Selected Code</ButtonText>
         </Strings>
@@ -213,8 +213,7 @@
 
     <Bitmaps>
       <Bitmap guid="guidImages" href="Resources\Command1.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
-      <Bitmap guid="guidImages1" href="Resources\DirtyClassesToolWindowCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
- 
+      <Bitmap guid="lightningImages" href="Resources\Lightning.png" usedList="goldRed, redGold, goldGold, redRed, gold, red" />
     </Bitmaps>
   </Commands>
 
@@ -275,22 +274,13 @@
       <IDSymbol value="257" name="cmdidToolWindow1Command" />
     </GuidSymbol>
   
-    <GuidSymbol value="{f11455bc-75cd-4f46-9038-69f6ad07ab7d}" name="guidImages1">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  
-    <GuidSymbol value="{76d1a8b3-e326-4028-a17c-67b53b2ef693}" name="guidImages2">
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    <GuidSymbol value="{76d1a8b3-e326-4028-a17c-67b53b2ef693}" name="lightningImages">
+      <IDSymbol name="goldRed" value="1" />
+      <IDSymbol name="redGold" value="2" />
+      <IDSymbol name="goldGold" value="3" />
+      <IDSymbol name="redRed" value="4" />
+      <IDSymbol name="gold" value="5" />
+      <IDSymbol name="red" value="6" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

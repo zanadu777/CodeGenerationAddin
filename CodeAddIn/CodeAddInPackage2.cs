@@ -24,11 +24,8 @@ namespace CodeAddIn
         public const string guidCodeAddInPackageCmdSetString = "34effc17-2057-42cb-899e-32db5af80e56";
         public static Guid guidCodeAddInPackageCmdSet = new Guid(guidCodeAddInPackageCmdSetString);
 
-        public const string guidImages1String = "f11455bc-75cd-4f46-9038-69f6ad07ab7d";
-        public static Guid guidImages1 = new Guid(guidImages1String);
-
-        public const string guidImages2String = "76d1a8b3-e326-4028-a17c-67b53b2ef693";
-        public static Guid guidImages2 = new Guid(guidImages2String);
+        public const string lightningImagesString = "76d1a8b3-e326-4028-a17c-67b53b2ef693";
+        public static Guid lightningImages = new Guid(lightningImagesString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -65,5 +62,11 @@ namespace CodeAddIn
         public const int bmpPicStrikethrough = 0x0006;
         public const int cmdidDirtyClassesToolWindowCommand = 0x0100;
         public const int cmdidToolWindow1Command = 0x0101;
+        public const int goldRed = 0x0001;
+        public const int redGold = 0x0002;
+        public const int goldGold = 0x0003;
+        public const int redRed = 0x0004;
+        public const int gold = 0x0005;
+        public const int red = 0x0006;
     }
 }

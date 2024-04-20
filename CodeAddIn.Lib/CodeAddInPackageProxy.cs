@@ -24,6 +24,9 @@ namespace CodeAddIn.Lib
       var codeClass = dte.GetClassAtCursor();
       var method = dte.GetMethodAtCursor();
 
+      var soln = dte.IVsSolution();
+      var items = soln.GetProjectItems(x => true);
+
       var result = $"{codeClass.Name} {method.Name}";
     }
 

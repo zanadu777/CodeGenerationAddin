@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -28,6 +29,15 @@ namespace AddIn.Core.Extensions
       }
 
       return projects;
+    }
+
+    public static List<ProjectItem> GetProjectItems(this IVsSolution solution, Predicate<ProjectItem> filter)
+    {
+      var projectItems = new List<ProjectItem>();
+      foreach (var project  in solution.GetProjects())
+        projectItems.AddRange(project.ProjectItems(filter));
+
+      return projectItems;
     }
   }
 }
