@@ -51,6 +51,9 @@
       <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
     <Reference Include="netstandard" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -76,15 +79,19 @@
   <ItemGroup>
     <Compile Include="CompleteCodeClass.cs" />
     <Compile Include="CompleteCodeInterface.cs" />
+    <Compile Include="DocumentState.cs" />
     <Compile Include="Extensions\CodeClass2Extensions.cs" />
     <Compile Include="Extensions\CodeClassExtensions.cs" />
     <Compile Include="Extensions\CodeFunctionExtensions.cs" />
     <Compile Include="Extensions\CodeInterfaceExtensions.cs" />
     <Compile Include="Extensions\CompleteCodeInterfaceExtensions.cs" />
+    <Compile Include="Extensions\DocumentStateExtensions.cs" />
     <Compile Include="Extensions\DteExtensions.cs" />
     <Compile Include="Extensions\EProjectFilter.cs" />
     <Compile Include="Extensions\IVsHierarchyExtensions.cs" />
     <Compile Include="Extensions\IVsSolutionExtensions.cs" />
+    <Compile Include="Extensions\JsonExtensions.cs" />
+    <Compile Include="Helpers\PathExtensions.cs" />
     <Compile Include="Extensions\ProjectExtensions.cs" />
     <Compile Include="Extensions\ProjectItemExtensions.cs" />
     <Compile Include="Extensions\SolutionExtensions.cs" />

@@ -39,5 +39,44 @@ namespace AddIn.Core.Extensions
 
       return projectItems;
     }
+
+
+    public static Dictionary<string, ProjectItem> GetProjectItemsByFileName(this IVsSolution solution, List<string> fileNames)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      var projectItemsByFileName = new Dictionary<string, ProjectItem>(StringComparer.OrdinalIgnoreCase);
+      var fileNamesToFind = new HashSet<string>(fileNames, StringComparer.OrdinalIgnoreCase);
+
+      foreach (var hierarchy in solution.GetProjects())
+      {
+        if (fileNamesToFind.Count == 0)
+        {
+          break; // All filenames have been found, so we can stop searching
+        }
+
+        hierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out object extObject);
+
+        if (extObject is EnvDTE.Project project)
+        {
+          foreach (ProjectItem projectItem in project.ProjectItems)
+          {
+            if (fileNamesToFind.Remove(projectItem.Name))
+            {
+              projectItemsByFileName[projectItem.Name] = projectItem;
+            }
+          }
+        }
+      }
+
+      return projectItemsByFileName;
+    }
+
+
+
+
+
+
+
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -141,6 +142,7 @@ namespace AddIn.Core.Extensions
 
       return selectedType;
     }
+
   }
 
 

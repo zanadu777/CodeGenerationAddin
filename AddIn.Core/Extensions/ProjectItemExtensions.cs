@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
@@ -79,6 +81,70 @@ namespace AddIn.Core.Extensions
       return interfaces;
     }
 
+    public static void OpenProjectItem(this ProjectItem projectItem, bool isScrolledToBottom)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
 
+      if (projectItem == null)
+        return;
+
+      // Open the project item
+      Window window = projectItem.Open(Constants.vsViewKindCode);
+      window.Visible = true;
+      window.Activate();
+
+      if (isScrolledToBottom && projectItem.Document != null)
+      {
+        // Get the TextDocument object
+        TextDocument textDoc = (TextDocument)projectItem.Document.Object("TextDocument");
+
+        // Get the EditPoint at the end of the document
+        EditPoint endPoint = textDoc.EndPoint.CreateEditPoint();
+
+        // Scroll to the end of the document
+        textDoc.Selection.MoveToPoint(endPoint, false);
+      }
+    }
+
+    public static void TransformText(this ProjectItem projectItem, Func<string, string> transform)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      if (projectItem == null || projectItem.Document == null)
+        return;
+
+      // Get the TextDocument object
+      TextDocument textDoc = (TextDocument)projectItem.Document.Object("TextDocument");
+
+      // Get the text of the document
+      string text = textDoc.StartPoint.CreateEditPoint().GetText(textDoc.EndPoint);
+
+      // Apply the transformation
+      string modifiedText = transform(text);
+
+      // Check if the text was modified
+      if (text != modifiedText)
+      {
+        // Start an undo context
+        projectItem.DTE.UndoContext.Open("Transform text");
+
+        try
+        {
+          // Replace the text of the document
+          textDoc.StartPoint.CreateEditPoint().ReplaceText(textDoc.EndPoint, modifiedText, (int)vsEPReplaceTextOptions.vsEPReplaceTextKeepMarkers);
+        }
+        finally
+        {
+          // Close the undo context
+          projectItem.DTE.UndoContext.Close();
+        }
+      }
+    }
+
+    public static string RemoveExtraBlankLines(string text)
+    {
+      // Replace multiple blank lines with a single blank line
+      return Regex.Replace(text, @"(\r?\n)\s*\1", "$1$1");
+    }
   }
 }
