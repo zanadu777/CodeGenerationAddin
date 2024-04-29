@@ -19,7 +19,7 @@ namespace VSAutomation.Commands
     /// <summary>
     /// Command ID.
     /// </summary>
-    public const int CommandId = 4129;
+    public const int CommandId = 0x2000;
 
     /// <summary>
     /// Command menu group (command set GUID).

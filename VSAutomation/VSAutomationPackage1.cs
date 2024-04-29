@@ -15,8 +15,8 @@ namespace VSAutomation
         public const string guidVSAutomationPackageString = "ca2c5815-341c-48d9-adf2-9a2863142717";
         public static Guid guidVSAutomationPackage = new Guid(guidVSAutomationPackageString);
 
-        public const string guidVSAutomationPackageCmdSetString = "52907988-07fb-4e2c-a1b1-ebcc504cb1f3";
-        public static Guid guidVSAutomationPackageCmdSet = new Guid(guidVSAutomationPackageCmdSetString);
+        public const string CmdSetString = "52907988-07fb-4e2c-a1b1-ebcc504cb1f3";
+        public static Guid CmdSet = new Guid(CmdSetString);
 
         public const string purpleRedLightningString = "c3ab46b9-399c-4768-98fe-6d1c318bb923";
         public static Guid purpleRedLightning = new Guid(purpleRedLightningString);
@@ -26,10 +26,12 @@ namespace VSAutomation
     /// </summary>
     internal sealed partial class PackageIds
     {
-        public const int MyMenuGroup = 0x1020;
-        public const int SyncWithActiveDocumentId = 0x0100;
-        public const int cmdidPersistSolutionOpenDocuments = 0x1021;
-        public const int cmdidRestoreSolutionOpenDocuments = 0x1022;
+        public const int VsAutomationGroup = 0x1020;
+        public const int VsAutomationMenu = 0x1030;
+        public const int VsAutomationMenuGroup = 0x1031;
+        public const int SyncWithActiveDocumentId = 0x2002;
+        public const int cmdidPersistSolutionOpenDocuments = 0x2000;
+        public const int cmdidRestoreSolutionOpenDocuments = 0x2001;
         public const int purpleRedCommand = 0x0001;
         public const int purpleRedMenu = 0x0002;
         public const int purpleRedDialog = 0x0003;
