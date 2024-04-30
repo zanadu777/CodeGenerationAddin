@@ -45,7 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddBreakpointsToAllMethodsCommand.cs" />
     <Compile Include="Commands\PersistSolutionOpenDocuments.cs" />
+    <Compile Include="Commands\RemoveBreakpointsFromDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\RestoreSolutionOpenDocuments.cs" />
     <Compile Include="Commands\SyncWithActiveDocument.cs" />

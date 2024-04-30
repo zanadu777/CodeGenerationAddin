@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -30,29 +31,6 @@ namespace AddIn.Core.Extensions
       return solution;
     }
 
-    //public static CodeElement GetSelectedClass(this DTE dte)
-    //{
-    //  Window solutionExplorer = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);
-    //  UIHierarchy solutionExplorerHierarchy = (UIHierarchy)solutionExplorer.Object;
-    //  Array selectedItems = (Array)solutionExplorerHierarchy.SelectedItems;
-
-    //  foreach (UIHierarchyItem selectedItem in selectedItems)
-    //  {
-    //    ProjectItem projectItem = selectedItem.Object as ProjectItem;
-    //    if (projectItem != null)
-    //    {
-    //      var prName = projectItem.Name;
-    //      foreach (CodeElement codeElement in projectItem.FileCodeModel.CodeElements)
-    //      {
-    //        if (codeElement.Kind == vsCMElement.vsCMElementClass)
-    //        {
-    //          return codeElement;
-    //        }
-    //      }
-    //    }
-    //  }
-
-    //  return null;
     public static CodeClass GetClassAtCursor(this DTE dte)
     {
       ThreadHelper.ThrowIfNotOnUIThread();
@@ -141,6 +119,65 @@ namespace AddIn.Core.Extensions
       var selectedType = selectedAssembly.GetType(selectedCodeElement.FullName);
 
       return selectedType;
+    }
+
+
+
+
+    public static void SetBreakpointsOnMethods(this DTE2 dte, Document document)
+    {
+      if (document != null)
+      {
+        TextDocument textDoc = document.Object("TextDocument") as TextDocument;
+        if (textDoc != null)
+        {
+          FileCodeModel fileCodeModel = document.ProjectItem.FileCodeModel;
+
+          var codeElements = document.ProjectItem.AllCodeElements();
+
+          List<CodeFunction> methods = codeElements.OfType<CodeFunction>().ToList();
+          foreach (var method in methods)
+            dte.SetBreakpointAtFunctionStart(method);
+        }
+      }
+    }
+
+    public static void SetBreakpointAtFunctionStart(this DTE2 dte, CodeFunction codeFunction)
+    {
+      if (codeFunction != null)
+      {
+        TextPoint startPoint = codeFunction.StartPoint;
+        if (startPoint != null)
+        {
+          // Check if there is already a breakpoint at this location
+          foreach (Breakpoint breakpoint in dte.Debugger.Breakpoints)
+          {
+            if (breakpoint.File == startPoint.Parent.Parent.FullName && breakpoint.FileLine == startPoint.Line)
+            {
+              // There is already a breakpoint at this location, so return without adding a new one
+              return;
+            }
+          }
+
+          // There is no breakpoint at this location, so add a new one
+          dte.Debugger.Breakpoints.Add("", startPoint.Parent.Parent.FullName, startPoint.Line);
+        }
+      }
+    }
+
+
+    public static void RemoveAllBreakpoints(this DTE dte, ProjectItem projectItem)
+    {
+      string filePath = projectItem.FileNames[0];
+
+      for (int i = dte.Debugger.Breakpoints.Count; i >= 1; i--)
+      {
+        Breakpoint breakpoint = dte.Debugger.Breakpoints.Item(i);
+        if (breakpoint.File == filePath)
+        {
+          breakpoint.Delete();
+        }
+      }
     }
 
   }

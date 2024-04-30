@@ -21,7 +21,7 @@ namespace AddIn.Core.Extensions
     }
 
     public static List<CodeClass> CodeClasses(this ProjectItem projectItem)
-    {
+    { 
       ThreadHelper.ThrowIfNotOnUIThread();
       List<CodeClass> classes = new List<CodeClass>();
 
@@ -145,6 +145,35 @@ namespace AddIn.Core.Extensions
     {
       // Replace multiple blank lines with a single blank line
       return Regex.Replace(text, @"(\r?\n)\s*\1", "$1$1");
+    }
+
+
+    public static List<CodeElement> AllCodeElements(this ProjectItem projectItem)
+    {
+      if (projectItem.FileCodeModel == null)
+      {
+        return new List<CodeElement>(); 
+      }
+
+      var result = new List<CodeElement>();
+      var stack = new Stack<CodeElements>();
+      stack.Push(projectItem.FileCodeModel.CodeElements);
+
+      while (stack.Count > 0)
+      {
+        CodeElements elements = stack.Pop();
+        foreach (CodeElement element in elements)
+        {
+          result.Add(element);
+
+          if (element.Children != null)
+          {
+            stack.Push(element.Children);
+          }
+        }
+      }
+
+      return result;
     }
   }
 }

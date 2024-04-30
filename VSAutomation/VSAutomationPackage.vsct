@@ -28,7 +28,7 @@
 
     <Buttons>
 
-      <Button guid="CmdSet" id="SyncWithActiveDocumentId" priority="0x0100" type="Button">
+      <Button guid="CmdSet" id="SyncWithActiveDocumentId" priority="0x0200" type="Button">
         <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
         <Icon guid="purpleRedLightning" id="purpleRedCommand" />
         <Strings>
@@ -36,23 +36,36 @@
           <ButtonText>SyncWithActiveDocument</ButtonText>
         </Strings>
       </Button>
-      <Button guid="CmdSet" id="cmdidPersistSolutionOpenDocuments" priority="0x0100" type="Button">
+      <Button guid="CmdSet" id="cmdidPersistSolutionOpenDocuments" priority="0x0201" type="Button">
         <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
         <Icon guid="purpleRedLightning" id="purpleRedCommand" />
         <Strings>
           <ButtonText>Invoke PersistSolutionOpenDocuments</ButtonText>
         </Strings>
       </Button>
-      <Button guid="CmdSet" id="cmdidRestoreSolutionOpenDocuments" priority="0x0101" type="Button">
+      <Button guid="CmdSet" id="cmdidRestoreSolutionOpenDocuments" priority="0x0202" type="Button">
         <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
         <Icon guid="purpleRedLightning" id="purpleRedCommand" />
         <Strings>
           <ButtonText>Invoke RestoreSolutionOpenDocuments</ButtonText>
         </Strings>
       </Button>
+      <Button guid="CmdSet" id="cmdidAddBreakpointsToAllMethodsCommand" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
+        <Icon guid="purpleRedLightning" id="purpleRedDialogCircle" />
+        <Strings>
+          <ButtonText>Add Breakpoints To All Methods in Active Document</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="CmdSet" id="cmdidRemoveBreakpointsFromDocument" priority="0x0101" type="Button">
+        <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
+        <Icon guid="purpleRedLightning" id="purpleRedDialogCircle" />
+        <Strings>
+          <ButtonText>Remove Breakpoints From Active Document</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
     <Bitmaps>
-
       <Bitmap guid="purpleRedLightning" href="Resources\PurpleRedLightningV2.png" usedList="purpleRedCommand, purpleRedMenu, purpleRedDialog, purpleRedDialogCircle, purpleRedDialogSquareDiamond, purpleRedCircleToolWindow, purpleRedToolWindow" />
     </Bitmaps>
   </Commands>
@@ -70,7 +83,9 @@
             <IDSymbol name="VsAutomationMenuGroup" value="0x1031" />
               <IDSymbol name="SyncWithActiveDocumentId" value="0x2002" />
               <IDSymbol name="cmdidPersistSolutionOpenDocuments" value="0x2000" />
-              <IDSymbol  name="cmdidRestoreSolutionOpenDocuments" value="0x2001"/>
+              <IDSymbol name="cmdidRestoreSolutionOpenDocuments" value="0x2001" />
+              <IDSymbol value="256" name="cmdidAddBreakpointsToAllMethodsCommand" />
+              <IDSymbol value="8195" name="cmdidRemoveBreakpointsFromDocument" />
     </GuidSymbol>
 
     <GuidSymbol name="purpleRedLightning" value="{c3ab46b9-399c-4768-98fe-6d1c318bb923}">
@@ -82,7 +97,7 @@
       <IDSymbol name="purpleRedCircleToolWindow" value="6" />
       <IDSymbol name="purpleRedToolWindow" value="7" />
     </GuidSymbol>
-  
+ 
  
   </Symbols>
 </CommandTable>

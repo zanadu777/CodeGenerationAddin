@@ -51,6 +51,8 @@ namespace VSAutomation
         await SyncWithActiveDocument.InitializeAsync(this);
         await PersistSolutionOpenDocuments.InitializeAsync(this);
         await RestoreSolutionOpenDocuments.InitializeAsync(this);
+        await VSAutomation.Commands.AddBreakpointsToAllMethodsCommand.InitializeAsync(this);
+        await VSAutomation.Commands.RemoveBreakpointsFromDocument.InitializeAsync(this);
     }
 
     #endregion

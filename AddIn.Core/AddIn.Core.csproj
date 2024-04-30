@@ -85,6 +85,7 @@
     <Compile Include="Extensions\CodeFunctionExtensions.cs" />
     <Compile Include="Extensions\CodeInterfaceExtensions.cs" />
     <Compile Include="Extensions\CompleteCodeInterfaceExtensions.cs" />
+    <Compile Include="Extensions\DocumentExtensions.cs" />
     <Compile Include="Extensions\DocumentStateExtensions.cs" />
     <Compile Include="Extensions\DteExtensions.cs" />
     <Compile Include="Extensions\EProjectFilter.cs" />
