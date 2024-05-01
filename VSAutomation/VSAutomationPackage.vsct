@@ -5,14 +5,19 @@
 
   <Extern href="vsshlids.h" />
   <Commands package="guidVSAutomationPackage">
-
+<!--Tools Menu-->  
     <Groups>
       <Group guid="CmdSet" id="VsAutomationGroup" priority="0x0000">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
       </Group>
 
-      <Group guid="CmdSet" id="VsAutomationMenuGroup" priority="0x0000">
-        <Parent guid="CmdSet" id="VsAutomationMenu" />
+        <Group guid="CmdSet" id="VsAutomationMenuGroup" priority="0x0000">
+          <Parent guid="CmdSet" id="VsAutomationMenu" />
+        </Group>
+ <!--Document Context Menu-->
+
+      <Group guid="CmdSet" id="DocumentRightClickGroup"  priority="0x0000">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
       </Group>
     </Groups>
 
@@ -27,27 +32,27 @@
     </Menus>
 
     <Buttons>
-
+      <!--Tools Menu-->
       <Button guid="CmdSet" id="SyncWithActiveDocumentId" priority="0x0200" type="Button">
         <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
         <Icon guid="purpleRedLightning" id="purpleRedCommand" />
         <Strings>
           <CommandName>VsAutomation.SyncWithActiveDocument</CommandName>
-          <ButtonText>SyncWithActiveDocument</ButtonText>
+          <ButtonText>Sync With Active Document</ButtonText>
         </Strings>
       </Button>
       <Button guid="CmdSet" id="cmdidPersistSolutionOpenDocuments" priority="0x0201" type="Button">
         <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
         <Icon guid="purpleRedLightning" id="purpleRedCommand" />
         <Strings>
-          <ButtonText>Invoke PersistSolutionOpenDocuments</ButtonText>
+          <ButtonText>Persist Solution Open Documents</ButtonText>
         </Strings>
       </Button>
       <Button guid="CmdSet" id="cmdidRestoreSolutionOpenDocuments" priority="0x0202" type="Button">
         <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
         <Icon guid="purpleRedLightning" id="purpleRedCommand" />
         <Strings>
-          <ButtonText>Invoke RestoreSolutionOpenDocuments</ButtonText>
+          <ButtonText>Restore Solution Open Documents</ButtonText>
         </Strings>
       </Button>
       <Button guid="CmdSet" id="cmdidAddBreakpointsToAllMethodsCommand" priority="0x0100" type="Button">
@@ -64,6 +69,33 @@
           <ButtonText>Remove Breakpoints From Active Document</ButtonText>
         </Strings>
       </Button>
+
+      <!--Document Context Menu-->
+      <Button guid="CmdSet" id="SyncWithActiveDocumentId" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="DocumentRightClickGroup" />
+        <Icon guid="purpleRedLightning" id="purpleRedCommand" />
+        <Strings>
+          <CommandName>VsAutomation.SyncWithActiveDocument</CommandName>
+          <ButtonText>Sync With Active Document</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="CmdSet" id="cmdidAddBreakpointsToAllMethodsCommand" priority="0x0101" type="Button">
+        <Parent guid="CmdSet" id="DocumentRightClickGroup" />
+        <Icon guid="purpleRedLightning" id="purpleRedDialogCircle" />
+        <Strings>
+          <ButtonText>Add Breakpoints To All Methods in Active Document</ButtonText>
+        </Strings>
+      </Button>
+      
+      <Button guid="CmdSet" id="cmdidRemoveBreakpointsFromDocument" priority="0x0102" type="Button">
+        <Parent guid="CmdSet" id="DocumentRightClickGroup" />
+        <Icon guid="purpleRedLightning" id="purpleRedDialogCircle" />
+        <Strings>
+          <ButtonText>Remove Breakpoints From Active Document</ButtonText>
+        </Strings>
+      </Button>
+      
     </Buttons>
     <Bitmaps>
       <Bitmap guid="purpleRedLightning" href="Resources\PurpleRedLightningV2.png" usedList="purpleRedCommand, purpleRedMenu, purpleRedDialog, purpleRedDialogCircle, purpleRedDialogSquareDiamond, purpleRedCircleToolWindow, purpleRedToolWindow" />
@@ -86,6 +118,8 @@
               <IDSymbol name="cmdidRestoreSolutionOpenDocuments" value="0x2001" />
               <IDSymbol value="256" name="cmdidAddBreakpointsToAllMethodsCommand" />
               <IDSymbol value="8195" name="cmdidRemoveBreakpointsFromDocument" />
+
+      <IDSymbol name ="DocumentRightClickGroup" value ="0x3000"/> 
     </GuidSymbol>
 
     <GuidSymbol name="purpleRedLightning" value="{c3ab46b9-399c-4768-98fe-6d1c318bb923}">

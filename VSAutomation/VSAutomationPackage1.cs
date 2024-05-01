@@ -34,6 +34,7 @@ namespace VSAutomation
         public const int cmdidRestoreSolutionOpenDocuments = 0x2001;
         public const int cmdidAddBreakpointsToAllMethodsCommand = 0x0100;
         public const int cmdidRemoveBreakpointsFromDocument = 0x2003;
+        public const int DocumentRightClickGroup = 0x3000;
         public const int purpleRedCommand = 0x0001;
         public const int purpleRedMenu = 0x0002;
         public const int purpleRedDialog = 0x0003;
