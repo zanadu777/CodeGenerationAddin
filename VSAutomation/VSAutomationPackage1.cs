@@ -20,6 +20,12 @@ namespace VSAutomation
 
         public const string purpleRedLightningString = "c3ab46b9-399c-4768-98fe-6d1c318bb923";
         public static Guid purpleRedLightning = new Guid(purpleRedLightningString);
+
+        public const string guidVSAutomationPackageCmdSetString = "ba70e522-da28-4b2d-a85d-12b4ab6b667e";
+        public static Guid guidVSAutomationPackageCmdSet = new Guid(guidVSAutomationPackageCmdSetString);
+
+        public const string guidImagesString = "81daabd9-ad8f-4289-b42f-4d94356c888c";
+        public static Guid guidImages = new Guid(guidImagesString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -42,5 +48,12 @@ namespace VSAutomation
         public const int purpleRedDialogSquareDiamond = 0x0005;
         public const int purpleRedCircleToolWindow = 0x0006;
         public const int purpleRedToolWindow = 0x0007;
+        public const int cmdidBreakPointToolWindowCommand = 0x0100;
+        public const int bmpPic1 = 0x0001;
+        public const int bmpPic2 = 0x0002;
+        public const int bmpPicSearch = 0x0003;
+        public const int bmpPicX = 0x0004;
+        public const int bmpPicArrows = 0x0005;
+        public const int bmpPicStrikethrough = 0x0006;
     }
 }

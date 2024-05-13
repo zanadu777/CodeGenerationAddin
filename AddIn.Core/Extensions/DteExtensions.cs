@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AddIn.Core.Records;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.SqlServer.Server;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -180,7 +182,28 @@ namespace AddIn.Core.Extensions
       }
     }
 
+    public static string SelectedText(this DTE2 dte)
+    {
+      if (dte.ActiveDocument == null)
+        return string.Empty;
+
+      TextDocument textDoc = (TextDocument)dte.ActiveDocument.Object("TextDocument");
+      EditPoint start = textDoc.Selection.TopPoint.CreateEditPoint();
+      EditPoint end = textDoc.Selection.BottomPoint.CreateEditPoint();
+      return start.GetText(end);
+    }
+
+    public static void GoTo(this DTE dte, SearchResult searchResult)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      var document = dte.ItemOperations.OpenFile(searchResult.Path, EnvDTE.Constants.vsViewKindTextView);
+      document.Activate();
+      dte.ExecuteCommand("Edit.GoTo", searchResult.Line.ToString());
+
+      var selection = (TextSelection)dte.ActiveDocument.Selection;
+      selection.MoveToLineAndOffset(searchResult.Line, searchResult.Col);
+      selection.EndOfLine(true);
+    }
   }
-
-
 }

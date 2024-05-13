@@ -16,8 +16,8 @@
         </Group>
  <!--Document Context Menu-->
 
-      <Group guid="CmdSet" id="DocumentRightClickGroup"  priority="0x0000">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+      <Group guid="CmdSet" id="DocumentRightClickGroup" priority="0x0000">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
       </Group>
     </Groups>
 
@@ -69,7 +69,13 @@
           <ButtonText>Remove Breakpoints From Active Document</ButtonText>
         </Strings>
       </Button>
-
+      <Button guid="guidVSAutomationPackageCmdSet" id="cmdidBreakPointToolWindowCommand" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="VsAutomationMenuGroup" />
+        <Icon guid="purpleRedLightning" id="purpleRedCircleToolWindow" />
+        <Strings>
+          <ButtonText>BreakPointToolWindow</ButtonText>
+        </Strings>
+      </Button>
       <!--Document Context Menu-->
       <Button guid="CmdSet" id="SyncWithActiveDocumentId" priority="0x0100" type="Button">
         <Parent guid="CmdSet" id="DocumentRightClickGroup" />
@@ -96,9 +102,11 @@
         </Strings>
       </Button>
       
+
     </Buttons>
     <Bitmaps>
-      <Bitmap guid="purpleRedLightning" href="Resources\PurpleRedLightningV2.png" usedList="purpleRedCommand, purpleRedMenu, purpleRedDialog, purpleRedDialogCircle, purpleRedDialogSquareDiamond, purpleRedCircleToolWindow, purpleRedToolWindow" />
+      <Bitmap guid="purpleRedLightning" href="Resources\PurpleRedLightningV2.png" 
+              usedList="purpleRedCommand, purpleRedMenu, purpleRedDialog, purpleRedDialogCircle, purpleRedDialogSquareDiamond, purpleRedCircleToolWindow, purpleRedToolWindow" />
     </Bitmaps>
   </Commands>
 
@@ -119,7 +127,7 @@
               <IDSymbol value="256" name="cmdidAddBreakpointsToAllMethodsCommand" />
               <IDSymbol value="8195" name="cmdidRemoveBreakpointsFromDocument" />
 
-      <IDSymbol name ="DocumentRightClickGroup" value ="0x3000"/> 
+      <IDSymbol name="DocumentRightClickGroup" value="0x3000" /> 
     </GuidSymbol>
 
     <GuidSymbol name="purpleRedLightning" value="{c3ab46b9-399c-4768-98fe-6d1c318bb923}">
@@ -133,5 +141,18 @@
     </GuidSymbol>
  
  
+  
+    <GuidSymbol value="{ba70e522-da28-4b2d-a85d-12b4ab6b667e}" name="guidVSAutomationPackageCmdSet">
+      <IDSymbol value="256" name="cmdidBreakPointToolWindowCommand" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{81daabd9-ad8f-4289-b42f-4d94356c888c}" name="guidImages">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
   </Symbols>
 </CommandTable>

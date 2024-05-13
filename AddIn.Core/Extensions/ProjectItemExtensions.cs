@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using AddIn.Core.Records;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
@@ -175,5 +177,157 @@ namespace AddIn.Core.Extensions
 
       return result;
     }
+
+    public static IEnumerable<ProjectItem> WhereText(this IEnumerable<ProjectItem> projectItems, Func<string, bool> filter)
+    {
+      return projectItems.Where(item =>
+      {
+        bool result = false;
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (File.Exists(filePath))
+          {
+            string content = File.ReadAllText(filePath);
+            result = filter(content);
+          }
+        }
+        return result;
+      });
+    }
+
+    public static IEnumerable<SearchResult> GetSearchResultsCaseSensitive(this IEnumerable<ProjectItem> projectItems, string searchText)
+    {
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (File.Exists(filePath))
+          {
+            int lineNum = 1;
+            foreach (var line in File.ReadLines(filePath))
+            {
+              if (line.Contains(searchText))
+              {
+                yield return new SearchResult
+                {
+                  Code = line,
+                  File = Path.GetFileName(filePath),
+                  Line = lineNum,
+                  Col = line.IndexOf(searchText),
+                  Path = filePath,
+                  Extension = Path.GetExtension(filePath),
+                  Project = item.ContainingProject.Name
+                };
+              }
+              lineNum++;
+            }
+          }
+        }
+      }
+    }
+
+
+    public static IEnumerable<SearchResult> GetSearchResultsCaseInsensitive(this IEnumerable<ProjectItem> projectItems, string searchText)
+    {
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (File.Exists(filePath))
+          {
+            int lineNum = 1;
+            foreach (var line in File.ReadLines(filePath))
+            {
+              if (line.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+              {
+                yield return new SearchResult
+                {
+                  Code = line,
+                  File = Path.GetFileName(filePath),
+                  Line = lineNum,
+                  Col = line.IndexOf(searchText, StringComparison.OrdinalIgnoreCase),
+                  Path = filePath,
+                  Extension = Path.GetExtension(filePath),
+                  Project = item.ContainingProject.Name
+                };
+              }
+              lineNum++;
+            }
+          }
+        }
+      }
+    }
+
+    public static IEnumerable<SearchResult> GetSearchResultsRegex(this IEnumerable<ProjectItem> projectItems, string regexPattern)
+    {
+      var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (File.Exists(filePath))
+          {
+            string content = File.ReadAllText(filePath);
+            var matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
+              int lineNum = content.Take(match.Index).Count(c => c == '\n') + 1;
+              int lastNewLine = content.LastIndexOf('\n', match.Index);
+              int col = match.Index - (lastNewLine == -1 ? 0 : lastNewLine + 1);
+              yield return new SearchResult
+              {
+                Code = match.Value,
+                File = Path.GetFileName(filePath),
+                Line = lineNum,
+                Col = col,
+                Path = filePath,
+                Extension = Path.GetExtension(filePath),
+                Project = item.ContainingProject.Name
+              };
+            }
+          }
+        }
+      }
+    }
+
+
+    public static IEnumerable<SearchResult> GetSearchResultsWholeWord(this IEnumerable<ProjectItem> projectItems, string searchText, bool isCaseSensitive = false)
+    {
+      var regexOptions = isCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
+      var regex = new Regex($@"\b{Regex.Escape(searchText)}\b", regexOptions);
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (File.Exists(filePath))
+          {
+            string content = File.ReadAllText(filePath);
+            var matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
+              int lineNum = content.Take(match.Index).Count(c => c == '\n') + 1;
+              int lastNewLine = content.LastIndexOf('\n', match.Index);
+              int col = match.Index - (lastNewLine == -1 ? 0 : lastNewLine + 1);
+              yield return new SearchResult
+              {
+                Code = match.Value,
+                File = Path.GetFileName(filePath),
+                Line = lineNum,
+                Col = col,
+                Path = filePath,
+                Extension = Path.GetExtension(filePath),
+                Project = item.ContainingProject.Name
+              };
+            }
+          }
+        }
+      }
+    }
+
   }
 }

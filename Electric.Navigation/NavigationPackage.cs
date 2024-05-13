@@ -1,11 +1,21 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.OLE.Interop;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.Win32;
 using System;
+using System.ComponentModel.Design;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
-using VSAutomation.Commands;
+using System.Threading.Tasks;
+using Electric.Navigation.Commands;
+using Electric.Navigation.ToolWindows;
 using Task = System.Threading.Tasks.Task;
 
-namespace VSAutomation
+namespace Electric.Navigation
 {
   /// <summary>
   /// This is the class that implements the package exposed by this assembly.
@@ -25,15 +35,27 @@ namespace VSAutomation
   /// </para>
   /// </remarks>
   [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-  [Guid(VSAutomationPackage.PackageGuidString)]
   [ProvideMenuResource("Menus.ctmenu", 1)]
-  [ProvideToolWindow(typeof(VSAutomation.ToolWindows.BreakPointToolWindow))]
-  public sealed class VSAutomationPackage : AsyncPackage
+  [Guid(PackageGuidString)]
+  //[SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+  [ProvideToolWindow(typeof(SearchToolWindow))]
+  public sealed class NavigationPackage : AsyncPackage
   {
     /// <summary>
-    /// VSAutomationPackage GUID string.
+    /// FindSelectedPackage GUID string.
     /// </summary>
-    public const string PackageGuidString = "ca2c5815-341c-48d9-adf2-9a2863142717";
+    public const string PackageGuidString = "0022995d-dbb7-45d2-8c38-243c4a429dc0";
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NavigationPackage"/> class.
+    /// </summary>
+    public NavigationPackage()
+    {
+      // Inside this method you can place any initialization code that does not require
+      // any Visual Studio service because at this point the package object is created but
+      // not sited yet inside Visual Studio environment. The place to do all the other
+      // initialization is the Initialize method.
+    }
 
     #region Package Members
 
@@ -49,13 +71,9 @@ namespace VSAutomation
       // When initialized asynchronously, the current thread may be a background thread at this point.
       // Do any initialization that requires the UI thread after switching to the UI thread.
       await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-        await SyncWithActiveDocument.InitializeAsync(this);
-        await PersistSolutionOpenDocuments.InitializeAsync(this);
-        await RestoreSolutionOpenDocuments.InitializeAsync(this);
-        await VSAutomation.Commands.AddBreakpointsToAllMethodsCommand.InitializeAsync(this);
-        await VSAutomation.Commands.RemoveBreakpointsFromDocument.InitializeAsync(this);
-        await VSAutomation.ToolWindows.BreakPointToolWindowCommand.InitializeAsync(this);
-    }
+      await FindSelectedCommand.InitializeAsync(this);
+      await SearchToolWindowCommand.InitializeAsync(this);
+     }
 
     #endregion
   }

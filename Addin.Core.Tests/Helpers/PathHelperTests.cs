@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using AddIn.Core.Extensions;
+﻿using AddIn.Core.Extensions;
 using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Addin.Core.Tests
+namespace Addin.Core.Tests.Helpers
 {
   [TestClass]
   public class PathHelperTests

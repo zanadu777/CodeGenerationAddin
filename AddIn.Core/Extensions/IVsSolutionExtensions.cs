@@ -10,6 +10,7 @@ namespace AddIn.Core.Extensions
   public static  class IVsSolutionExtensions
   {
 
+
     public static List<IVsHierarchy> GetProjects(this IVsSolution solution)
     {
       ThreadHelper.ThrowIfNotOnUIThread();
@@ -29,6 +30,11 @@ namespace AddIn.Core.Extensions
       }
 
       return projects;
+    }
+
+    public static List<ProjectItem> GetAllProjectItems(this IVsSolution solution)
+    {
+      return solution.GetProjectItems(x => true);
     }
 
     public static List<ProjectItem> GetProjectItems(this IVsSolution solution, Predicate<ProjectItem> filter)
