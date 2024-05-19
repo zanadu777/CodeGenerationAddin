@@ -62,6 +62,7 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,6 +95,7 @@
     <Compile Include="Extensions\CodeFunctionExtensions.cs" />
     <Compile Include="Extensions\CodeInterfaceExtensions.cs" />
     <Compile Include="Extensions\CompleteCodeInterfaceExtensions.cs" />
+    <Compile Include="Extensions\DependencyObjectExtensions.cs" />
     <Compile Include="Extensions\DocumentExtensions.cs" />
     <Compile Include="Extensions\DocumentStateExtensions.cs" />
     <Compile Include="Extensions\DteExtensions.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Hierarchy\GroupBy.cs" />
     <Compile Include="Hierarchy\ListEqualityComparer.cs" />
     <Compile Include="Hierarchy\PositionComparer.cs" />
+    <Compile Include="Hierarchy\TreeViewItemHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records\SearchResult.cs" />
     <Compile Include="VisualStudio\IVsItemDisplay.cs" />

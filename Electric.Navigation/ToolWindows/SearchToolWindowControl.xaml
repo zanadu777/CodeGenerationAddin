@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
              xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+             xmlns:core="clr-namespace:AddIn.Core.Hierarchy;assembly=AddIn.Core"
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
@@ -20,6 +21,8 @@
 
         <DockPanel DockPanel.Dock="Top">
             <Button DockPanel.Dock="Right" Click="Search">Search</Button>
+            <ComboBox x:Name="cmbPrevious" DockPanel.Dock="Right" Width="20" SelectionChanged="cmbPrevious_SelectionChanged"
+                      />
             <TextBox x:Name="searchText"  Text="{Binding ElementName=This, Path=SearchText}"/>
         </DockPanel>
 
@@ -56,7 +59,42 @@
                           SelectionMode="Single"
                         
                           />-->
-            <TreeView x:Name="tvSearchResults" Grid.Row="1" SelectedItemChanged="tvSearchResults_SelectedItemChanged" />
+            <TreeView x:Name="tvSearchResults" Grid.Row="1" 
+                      MouseDown="tvSearchResults_MouseDown" 
+                      MouseLeftButtonDown="tvSearchResults_MouseLeftButtonDown" 
+                      MouseLeftButtonUp="tvSearchResults_MouseLeftButtonUp" 
+                      MouseRightButtonDown="tvSearchResults_MouseRightButtonDown" 
+                      MouseRightButtonUp="tvSearchResults_MouseRightButtonUp" 
+                      SelectedItemChanged="tvSearchResults_SelectedItemChanged"  >
+<!--SelectedItemChanged="tvSearchResults_SelectedItemChanged"-->
+                <!--<TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=(core:TreeViewItemHelper.IsLeaf), RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Leaf Node Action" />
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=(core:TreeViewItemHelper.IsLeaf), RelativeSource={RelativeSource Self}}" Value="False">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Branch Node Action" />
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeView.ItemContainerStyle>-->
+
+
+
+            </TreeView>
 
 
 

@@ -15,5 +15,10 @@ namespace AddIn.Core.Records
     public string Path { get; set; }
     public string Extension { get; set; }
     public string Project { get; set; }
+
+    public override string ToString()
+    {
+      return $"{File} {Line}";
+    }
   };
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using AddIn.Core.Extensions;
 using AddIn.Core.Hierarchy;
 using AddIn.Core.Records;
@@ -45,6 +47,11 @@ namespace Electric.Navigation.ToolWindows
       SelectedSearchType = SearchTypes[0];
 
 
+      cmbPrevious.Items.Add("");
+      cmbPrevious.Items.Add("class");
+
+
+
       SearchLocations.Add(new SearchLocation
       {
         Name = "Entire Solution",
@@ -57,7 +64,10 @@ namespace Electric.Navigation.ToolWindows
         }
 
       });
-      SearchLocations.Add(new SearchLocation { Name = "Active Document", GetProjectItems = () =>
+      SearchLocations.Add(new SearchLocation
+      {
+        Name = "Active Document",
+        GetProjectItems = () =>
       {
         ThreadHelper.ThrowIfNotOnUIThread();
         return new List<ProjectItem> { dte.ActiveDocument.ProjectItem };
@@ -100,12 +110,15 @@ namespace Electric.Navigation.ToolWindows
 
     public string StatusMessage
     {
-      get => (string) GetValue(StatusMessageProperty);
+      get => (string)GetValue(StatusMessageProperty);
       set => SetValue(StatusMessageProperty, value);
     }
 
     private async void Search(object sender, RoutedEventArgs e)
     {
+      if (String.IsNullOrWhiteSpace(SearchText))
+        return;
+
       await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
       var swatch = Stopwatch.StartNew();
       var projectItems = SelectedSearchLocation.GetProjectItems();
@@ -152,20 +165,112 @@ namespace Electric.Navigation.ToolWindows
 
     private void tvSearchResults_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-      var treeViewItem  = e.NewValue as TreeViewItem;
+      var treeViewItem = e.NewValue as TreeViewItem;
       if (treeViewItem == null)
         return;
 
+      Debug.WriteLine(MethodBase.GetCurrentMethod()?.Name);
+      Debug.WriteLine("   " + NodeText(treeViewItem));
+    }
+
+    private void GoToAssociated(TreeViewItem treeViewItem)
+    {
       var searchResult = treeViewItem.Tag as SearchResult;
       if (searchResult == null)
         return;
 
-      dte.GoTo(searchResult); 
+      dte.GoTo(searchResult);
     }
 
     private void SearchToolWindowControl_OnLoaded(object sender, RoutedEventArgs e)
     {
- 
+
+    }
+
+    private void tvSearchResults_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      var treeview = sender as TreeView;
+      if (treeview == null)
+        return;
+
+      Debug.WriteLine(MethodBase.GetCurrentMethod()?.Name);
+      Debug.WriteLine(NodeText(treeview.SelectedItem as TreeViewItem));
+    }
+
+    private void tvSearchResults_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      var treeview = sender as TreeView;
+      if (treeview == null)
+        return;
+
+      Debug.WriteLine(MethodBase.GetCurrentMethod()?.Name);
+      Debug.WriteLine($"   {NodeText(treeview.SelectedItem as TreeViewItem)}");
+    }
+
+    private void tvSearchResults_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      var treeview = sender as TreeView;
+      if (treeview == null)
+        return;
+
+      Point mousePosition = e.GetPosition(treeview);
+      HitTestResult hitTestResult = VisualTreeHelper.HitTest(treeview, mousePosition);
+      var treeViewItemFromHit = hitTestResult.VisualHit.GetParentOfType<TreeViewItem>();
+
+      var treeViewItem = treeview.SelectedItem as TreeViewItem;
+      if (treeViewItem != treeViewItemFromHit)
+        treeViewItemFromHit.IsSelected = true;
+
+      Debug.WriteLine(MethodBase.GetCurrentMethod()?.Name);
+      Debug.WriteLine($"   {NodeText(treeViewItemFromHit)}");
+
+      if (treeViewItemFromHit is null)
+        return;
+
+      GoToAssociated(treeViewItemFromHit);
+    }
+
+    private void tvSearchResults_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      var treeview = sender as TreeView;
+      if (treeview == null)
+        return;
+
+      Debug.WriteLine(MethodBase.GetCurrentMethod()?.Name);
+      Debug.WriteLine($"   {NodeText(treeview.SelectedItem as TreeViewItem)}");
+    }
+
+    private void tvSearchResults_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+      var treeview = sender as TreeView;
+      if (treeview == null)
+        return;
+
+      Debug.WriteLine(MethodBase.GetCurrentMethod()?.Name);
+      Debug.WriteLine($"   {NodeText(treeview.SelectedItem as TreeViewItem)}");
+    }
+
+    private string NodeText(TreeViewItem item)
+    {
+      if (item != null && item?.Tag == null)
+        return item.Header.ToString();
+
+      else
+        return ((SearchResult) item.Tag).ToString();
+    }
+
+
+    private void cmbPrevious_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      var previous = sender as ComboBox;
+      if (sender is null)
+        return;
+
+      var selected = e.AddedItems[0] as string;
+      if (!string.IsNullOrWhiteSpace(selected))
+        this.SearchText = selected;
+
+    
     }
   }
 }

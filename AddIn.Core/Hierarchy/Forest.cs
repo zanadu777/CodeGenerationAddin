@@ -90,6 +90,7 @@ namespace AddIn.Core.Hierarchy
           Header = LeafHeader(leaf),
           Tag = leaf
         };
+        TreeViewItemHelper.SetIsLeaf(tvLeaf,true);
         item.Items.Add(tvLeaf);
       }
 
