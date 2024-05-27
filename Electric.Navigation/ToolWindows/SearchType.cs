@@ -12,6 +12,6 @@ namespace Electric.Navigation.ToolWindows
   {
     public string Name { get; set; }
 
-    public Func<IEnumerable<ProjectItem>, string , IEnumerable<SearchResult>> GetSearchResults { get; set; }
+    public Func<IEnumerable<ProjectItem>, string,IDictionary<string, string> , IEnumerable<SearchResult>> GetSearchResults { get; set; }
   }
 }

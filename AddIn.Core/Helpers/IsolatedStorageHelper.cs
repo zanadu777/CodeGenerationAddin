@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.IO.IsolatedStorage;
+using System.Threading.Tasks;
+using MessagePack;
 
 namespace AddIn.Core.Helpers
 {
@@ -38,5 +40,37 @@ namespace AddIn.Core.Helpers
         }
       }
     }
+
+    public static async Task SerializeToIsolatedStorageAsync<T>(T obj, string filePath)
+    {
+      using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain())
+      {
+        using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Create, storage))
+        {
+          await MessagePackSerializer.SerializeAsync(stream, obj);
+        }
+      }
+    }
+
+    public static async Task<T> DeserializeFromIsolatedStorageAsync<T>(string filePath)
+    {
+      using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain())
+      {
+        if (!storage.FileExists(filePath))
+        {
+          return default(T);
+        }
+
+        using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Open, storage))
+        {
+          if (stream.Length == 0)
+            return default(T);
+
+          return await MessagePackSerializer.DeserializeAsync<T>(stream);
+        }
+      }
+    }
   }
+
+
 }

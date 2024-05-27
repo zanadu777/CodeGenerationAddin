@@ -205,5 +205,14 @@ namespace AddIn.Core.Extensions
       selection.MoveToLineAndOffset(searchResult.Line, searchResult.Col);
       selection.EndOfLine(true);
     }
+
+
+    public static IEnumerable<ProjectItem> GetOpenProjectItems(this DTE dte)
+    {
+      return dte.Windows
+        .OfType<Window>()
+        .Where(window => window.Type == vsWindowType.vsWindowTypeDocument)
+        .Select(window => window.ProjectItem);
+    }
   }
 }

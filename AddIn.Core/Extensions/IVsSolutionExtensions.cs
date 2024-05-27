@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
@@ -23,7 +24,7 @@ namespace AddIn.Core.Extensions
       while (enumHierarchies.Next(1, hierarchy, out uint fetched) == VSConstants.S_OK && fetched == 1)
       {
         hierarchy[0].GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out object extObject);
-        if (extObject is EnvDTE.Project project && project.Name != "Miscellaneous Files")
+        if (extObject is EnvDTE.Project project && project.Kind != "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}" && project.Name != "Miscellaneous Files")
         {
           projects.Add(hierarchy[0]);
         }

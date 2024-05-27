@@ -1,16 +1,24 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using AddIn.Core.Extensions;
+using AddIn.Core.Helpers;
 using AddIn.Core.Hierarchy;
 using AddIn.Core.Records;
 using EnvDTE;
+using MessagePack;
+using MessagePack.Formatters;
+using MessagePack.Resolvers;
 using Microsoft.VisualStudio.Shell;
 
 namespace Electric.Navigation.ToolWindows
@@ -21,63 +29,32 @@ namespace Electric.Navigation.ToolWindows
   public partial class SearchToolWindowControl : UserControl
   {
     private DTE dte;
+
+    #region Properties
     public ObservableCollection<SearchType> SearchTypes { get; set; } = new ObservableCollection<SearchType>();
     public ObservableCollection<SearchLocation> SearchLocations { get; set; } = new ObservableCollection<SearchLocation>();
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SearchToolWindowControl"/> class.
-    /// </summary>
-    public SearchToolWindowControl()
+
+    private string currentSolutionName;
+    public static readonly DependencyProperty LastNSearchesProperty = DependencyProperty.Register(
+      nameof(LastNSearches), typeof(LastN<string>), typeof(SearchToolWindowControl), new PropertyMetadata(new LastN<string>(12)));
+
+    public LastN<string> LastNSearches
     {
-      this.InitializeComponent();
-      dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE;
-      SearchTypes.Add(new SearchType { Name = "Case Insensitive", GetSearchResults = (p, s) => p.GetSearchResultsCaseInsensitive(s) });
-      SearchTypes.Add(new SearchType
-      {
-        Name = "Case Sensitive",
-        GetSearchResults = (p, s) =>
-        {
-          var filteredItems = p.WhereText(t => t.Contains(s));
-          return filteredItems.GetSearchResultsCaseSensitive(s);
-        }
-      });
+      get { return (LastN<string>)GetValue(LastNSearchesProperty); }
+      set { SetValue(LastNSearchesProperty, value); }
+    }
 
-      SearchTypes.Add(new SearchType { Name = "Regex", GetSearchResults = (p, s) => p.GetSearchResultsRegex(s) });
-      SearchTypes.Add(new SearchType { Name = "Whole Word (Case Insensitive)", GetSearchResults = (p, s) => p.GetSearchResultsWholeWord(s, false) });
-      SearchTypes.Add(new SearchType { Name = "Whole Word (Case Sensitive)", GetSearchResults = (p, s) => p.GetSearchResultsWholeWord(s, true) });
-      SelectedSearchType = SearchTypes[0];
+    public static readonly DependencyProperty isPreviousSearchAvailableProperty = DependencyProperty.Register(
+      nameof(IsPreviousSearchAvailable), typeof(bool), typeof(SearchToolWindowControl), new PropertyMetadata(default(bool)));
 
-
-      cmbPrevious.Items.Add("");
-      cmbPrevious.Items.Add("class");
-
-
-
-      SearchLocations.Add(new SearchLocation
-      {
-        Name = "Entire Solution",
-        GetProjectItems = () =>
-        {
-          ThreadHelper.ThrowIfNotOnUIThread();
-          var solution = dte.IVsSolution();
-          var projectItems = solution.GetAllProjectItems();
-          return projectItems;
-        }
-
-      });
-      SearchLocations.Add(new SearchLocation
-      {
-        Name = "Active Document",
-        GetProjectItems = () =>
-      {
-        ThreadHelper.ThrowIfNotOnUIThread();
-        return new List<ProjectItem> { dte.ActiveDocument.ProjectItem };
-      }
-      });
-      SelectedSearchLocation = SearchLocations[0];
+    public bool IsPreviousSearchAvailable
+    {
+      get { return (bool)GetValue(isPreviousSearchAvailableProperty); }
+      set { SetValue(isPreviousSearchAvailableProperty, value); }
     }
 
     public static readonly DependencyProperty selectedSearchTypeProperty = DependencyProperty.Register(
-      nameof(SelectedSearchType), typeof(SearchType), typeof(SearchToolWindowControl), new PropertyMetadata(default(SearchType)));
+         nameof(SelectedSearchType), typeof(SearchType), typeof(SearchToolWindowControl), new PropertyMetadata(default(SearchType)));
 
     public SearchType SelectedSearchType
     {
@@ -114,6 +91,119 @@ namespace Electric.Navigation.ToolWindows
       set => SetValue(StatusMessageProperty, value);
     }
 
+    public static readonly DependencyProperty SearchResultsItemsProperty = DependencyProperty.Register(
+      nameof(SearchResultsItems), typeof(List<TreeViewItem>), typeof(SearchToolWindowControl), new PropertyMetadata(default(List<TreeViewItem>)));
+
+    public List<TreeViewItem> SearchResultsItems
+    {
+      get { return (List<TreeViewItem>) GetValue(SearchResultsItemsProperty); }
+      set { SetValue(SearchResultsItemsProperty, value); }
+    }
+    #endregion
+
+    static SearchToolWindowControl()
+    {
+      var options = MessagePackSerializerOptions.Standard.WithResolver(CompositeResolver.Create(
+        new IMessagePackFormatter[] { new LastNFormatter<string>() }, // Add your formatter here.
+        new[] { StandardResolver.Instance }
+      ));
+
+      MessagePackSerializer.DefaultOptions = options;
+    }
+
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchToolWindowControl"/> class.
+    /// </summary>
+    public SearchToolWindowControl()
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      this.InitializeComponent();
+      dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE;
+      currentSolutionName = Path.GetFileNameWithoutExtension(dte.Solution.FullName);
+      //SearchText
+      if (!string.IsNullOrWhiteSpace(currentSolutionName))
+        InitializeLastNSearchesAsync(currentSolutionName);
+
+      //SearchTypes
+      SearchTypes.Add(new SearchType { Name = "Case Insensitive", GetSearchResults = (p, s, d) => p.GetSearchResultsCaseInsensitiveParallel(s, d) });
+      SearchTypes.Add(new SearchType { Name = "Case Sensitive", GetSearchResults = (p, s, d) => p.GetSearchResultsCaseSensitive(s, d) });
+      SearchTypes.Add(new SearchType { Name = "Regex", GetSearchResults = (p, s, d) => p.GetSearchResultsRegexParallel(s, d) });
+      SearchTypes.Add(new SearchType { Name = "Whole Word (Case Insensitive)", GetSearchResults = (p, s,d) => p.GetSearchResultsWholeWord(s,d, false) });
+      SearchTypes.Add(new SearchType { Name = "Whole Word (Case Sensitive)", GetSearchResults = (p, s, d) => p.GetSearchResultsWholeWord(s, d, true) });
+      SelectedSearchType = SearchTypes[0];
+
+      //SearchLocation
+      InitializeSearchLocation();
+
+      var solutionEvents = dte.Events.SolutionEvents;
+      solutionEvents.Opened += SolutionOpened;
+    }
+
+    private void SolutionOpened()
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+      currentSolutionName = Path.GetFileNameWithoutExtension(dte.Solution.FullName);
+      InitializeLastNSearchesAsync(currentSolutionName);
+      tvSearchResults.Items.Clear();
+
+    }
+
+    public void InitializeSearchLocation()
+    {
+
+      SearchLocations.Add(new SearchLocation
+      {
+        Name = "Entire Solution",
+        GetProjectItems = () =>
+        {
+          ThreadHelper.ThrowIfNotOnUIThread();
+          var solution = dte.IVsSolution();
+          var projectItems = solution.GetAllProjectItems();
+          return projectItems;
+        }
+
+      });
+
+      SearchLocations.Add(new SearchLocation
+      {
+        Name = "Active Document",
+        GetProjectItems = () =>
+      {
+        ThreadHelper.ThrowIfNotOnUIThread();
+        return new List<ProjectItem> { dte.ActiveDocument.ProjectItem };
+      }
+      });
+
+      SearchLocations.Add(new SearchLocation
+      {
+        Name = "Open Documents",
+        GetProjectItems = () =>
+        {
+          ThreadHelper.ThrowIfNotOnUIThread();
+          return new List<ProjectItem>(dte.GetOpenProjectItems());
+        }
+      });
+
+      SelectedSearchLocation = SearchLocations[0];
+    }
+
+#pragma warning disable VSTHRD100
+#pragma warning disable VSTHRD200
+    private async void InitializeLastNSearchesAsync(string solutionName)
+#pragma warning restore VSTHRD200
+#pragma warning restore VSTHRD100
+    {
+      var lastNSearches = await IsolatedStorageHelper.DeserializeFromIsolatedStorageAsync<LastN<string>>($"Electric.Navigation.LastNSearches.{solutionName}");
+      if (lastNSearches != null)
+        LastNSearches = lastNSearches;
+      else
+        LastNSearches = new LastN<string>(12);
+
+      IsPreviousSearchAvailable = LastNSearches.Items.Any();
+    }
+
     private async void Search(object sender, RoutedEventArgs e)
     {
       if (String.IsNullOrWhiteSpace(SearchText))
@@ -121,10 +211,12 @@ namespace Electric.Navigation.ToolWindows
 
       await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
       var swatch = Stopwatch.StartNew();
-      var projectItems = SelectedSearchLocation.GetProjectItems();
+      var projectItems = SelectedSearchLocation.GetProjectItems().Where(p => p.FileCount > 0).ToList();
 
-      SearchResults = SelectedSearchType.GetSearchResults(projectItems, SearchText).ToList();
+      var filenames = projectItems.DistinctFileNames().ToList();
+      var contentDictP = GetNameDictFileContentsParallel(filenames);
 
+      SearchResults = SelectedSearchType.GetSearchResults(projectItems, SearchText, contentDictP).ToList();
 
       var forest = new Forest<SearchResult>();
       forest.GroupBys.Add(new GroupBy<SearchResult> { GroupByMethod = x => x.Project });
@@ -133,12 +225,40 @@ namespace Electric.Navigation.ToolWindows
       forest.LeafHeader = x => x.Code;
 
       forest.Add(SearchResults);
-      var items = forest.ExportToTreeViewItems();
+      SearchResultsItems = forest.ExportToTreeViewItems();
       tvSearchResults.Items.Clear();
-      foreach (var item in items)
-        tvSearchResults.Items.Add(item);
+      tvSearchResults.ItemsSource = SearchResultsItems;
 
+      LastNSearches.Add(SearchText);
       StatusMessage = $"Search Completed and found {SearchResults.Count()} matches in {swatch.Elapsed.TotalSeconds:F2}";
+
+      var name = Path.GetFileNameWithoutExtension(dte.Solution.FullName);
+      await IsolatedStorageHelper.SerializeToIsolatedStorageAsync(LastNSearches, $"Electric.Navigation.LastNSearches.{name}");
+      IsPreviousSearchAvailable = true;
+    }
+
+    private bool IsFileEmpty(string fileName)
+    {
+      using (var fileStream = File.OpenRead(fileName))
+      {
+        return fileStream.ReadByte() == -1;
+      }
+    }
+
+    private ConcurrentDictionary<string, string> GetNameDictFileContentsParallel(IEnumerable<string> fileNames)
+    {
+      var fileContentsDict = new ConcurrentDictionary<string, string>();
+
+      Parallel.ForEach(fileNames, fileName =>
+      {
+        if (!File.Exists(fileName))
+          return;
+
+        string fileText = File.ReadAllText(fileName);
+        fileContentsDict[fileName] = fileText;
+      });
+
+      return fileContentsDict;
     }
 
     private void resultsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -153,13 +273,13 @@ namespace Electric.Navigation.ToolWindows
       dlg.FileName = "Document"; // Default file name
       dlg.DefaultExt = ".json"; // Default file extension
       dlg.Filter = "JSON documents (.json)|*.json"; // Filter files by extension
-      Nullable<bool> result = dlg.ShowDialog();
+      bool? result = dlg.ShowDialog();
 
       if (result == true)
       {
         string filename = dlg.FileName;
         string json = Newtonsoft.Json.JsonConvert.SerializeObject(SearchResults);
-        System.IO.File.WriteAllText(filename, json);
+        File.WriteAllText(filename, json);
       }
     }
 
@@ -213,6 +333,7 @@ namespace Electric.Navigation.ToolWindows
       if (treeview == null)
         return;
 
+      //for reasons unknown the selection changed event does not always occur. This corrects that.
       Point mousePosition = e.GetPosition(treeview);
       HitTestResult hitTestResult = VisualTreeHelper.HitTest(treeview, mousePosition);
       var treeViewItemFromHit = hitTestResult.VisualHit.GetParentOfType<TreeViewItem>();
@@ -252,25 +373,26 @@ namespace Electric.Navigation.ToolWindows
 
     private string NodeText(TreeViewItem item)
     {
-      if (item != null && item?.Tag == null)
+      if (item == null)
+        return string.Empty;
+
+      if (item.Tag == null)
         return item.Header.ToString();
 
       else
-        return ((SearchResult) item.Tag).ToString();
+        return ((SearchResult)item.Tag).ToString();
     }
 
 
     private void cmbPrevious_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      var previous = sender as ComboBox;
-      if (sender is null)
+
+      if (e.AddedItems.Count <= 0)
         return;
 
       var selected = e.AddedItems[0] as string;
       if (!string.IsNullOrWhiteSpace(selected))
         this.SearchText = selected;
-
-    
     }
   }
 }

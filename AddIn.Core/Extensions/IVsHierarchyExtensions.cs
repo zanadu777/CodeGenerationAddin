@@ -52,11 +52,17 @@ namespace AddIn.Core.Extensions
     {
       ThreadHelper.ThrowIfNotOnUIThread();
 
-      if (projectHierarchy == null || filter == null)
+      if (projectHierarchy == null)
         return new List<ProjectItem>();
 
-      var allProjectItems = projectHierarchy.AllProjectItems();
-      var filteredProjectItems = allProjectItems.Where(pi => filter(pi)).ToList();
+      List<ProjectItem> allProjectItems = projectHierarchy.AllProjectItems();
+
+      // Alter the filter to exclude folders
+      Predicate<ProjectItem> filterExcludingFolders = pi => pi.FileCount> 0  && (filter == null || filter(pi));
+
+      var filteredProjectItems = allProjectItems
+        .Where(pi => filterExcludingFolders(pi))
+        .ToList();
 
       return filteredProjectItems;
     }

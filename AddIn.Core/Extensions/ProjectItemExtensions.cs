@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using AddIn.Core.Records;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
@@ -228,6 +230,41 @@ namespace AddIn.Core.Extensions
       }
     }
 
+    public static IEnumerable<SearchResult> GetSearchResultsCaseSensitive(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents)
+    {
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (fileContents.TryGetValue(filePath, out string content))
+          {
+            using (var reader = new StringReader(content))
+            {
+              string line;
+              int lineNum = 1;
+              while ((line = reader.ReadLine()) != null)
+              {
+                if (line.Contains(searchText))
+                {
+                  yield return new SearchResult
+                  {
+                    Code = line,
+                    File = Path.GetFileName(filePath),
+                    Line = lineNum,
+                    Col = line.IndexOf(searchText),
+                    Path = filePath,
+                    Extension = Path.GetExtension(filePath),
+                    Project = item.ContainingProject.Name
+                  };
+                }
+                lineNum++;
+              }
+            }
+          }
+        }
+      }
+    }
 
     public static IEnumerable<SearchResult> GetSearchResultsCaseInsensitive(this IEnumerable<ProjectItem> projectItems, string searchText)
     {
@@ -259,6 +296,83 @@ namespace AddIn.Core.Extensions
           }
         }
       }
+    }
+
+
+    public static IEnumerable<SearchResult> GetSearchResultsCaseInsensitive(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents)
+    {
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (fileContents.TryGetValue(filePath, out string content))
+          {
+            using (var reader = new StringReader(content))
+            {
+              string line;
+              int lineNum = 1;
+              while ((line = reader.ReadLine()) != null)
+              {
+                if (line.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                  yield return new SearchResult
+                  {
+                    Code = line,
+                    File = Path.GetFileName(filePath),
+                    Line = lineNum,
+                    Col = line.IndexOf(searchText, StringComparison.OrdinalIgnoreCase),
+                    Path = filePath,
+                    Extension = Path.GetExtension(filePath),
+                    Project = item.ContainingProject.Name
+                  };
+                }
+                lineNum++;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    public static ConcurrentBag<SearchResult> GetSearchResultsCaseInsensitiveParallel(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents)
+    {
+      var results = new ConcurrentBag<SearchResult>();
+
+      Parallel.ForEach(projectItems, item =>
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (fileContents.TryGetValue(filePath, out string content))
+          {
+            using (var reader = new StringReader(content))
+            {
+              string line;
+              int lineNum = 1;
+              while ((line = reader.ReadLine()) != null)
+              {
+                if (line.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                  results.Add(new SearchResult
+                  {
+                    Code = line,
+                    File = Path.GetFileName(filePath),
+                    Line = lineNum,
+                    Col = line.IndexOf(searchText, StringComparison.OrdinalIgnoreCase),
+                    Path = filePath,
+                    Extension = Path.GetExtension(filePath),
+                    Project = item.ContainingProject.Name
+                  });
+                }
+                lineNum++;
+              }
+            }
+          }
+        }
+      });
+
+      return results;
     }
 
     public static IEnumerable<SearchResult> GetSearchResultsRegex(this IEnumerable<ProjectItem> projectItems, string regexPattern)
@@ -294,6 +408,43 @@ namespace AddIn.Core.Extensions
       }
     }
 
+    public static ConcurrentBag<SearchResult> GetSearchResultsRegexParallel(this IEnumerable<ProjectItem> projectItems, string regexPattern, IDictionary<string, string> fileContents)
+    {
+      var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+      var results = new ConcurrentBag<SearchResult>();
+
+      Parallel.ForEach(projectItems, item =>
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (fileContents.TryGetValue(filePath, out string content))
+          {
+            var matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
+              int lineNum = content.Take(match.Index).Count(c => c == '\n') + 1;
+              int lastNewLine = content.LastIndexOf('\n', match.Index);
+              int col = match.Index - (lastNewLine == -1 ? 0 : lastNewLine + 1);
+              results.Add(new SearchResult
+              {
+                Code = match.Value,
+                File = Path.GetFileName(filePath),
+                Line = lineNum,
+                Col = col,
+                Path = filePath,
+                Extension = Path.GetExtension(filePath),
+                Project = item.ContainingProject.Name
+              });
+            }
+          }
+        }
+      });
+
+      return results;
+    }
+
+
 
     public static IEnumerable<SearchResult> GetSearchResultsWholeWord(this IEnumerable<ProjectItem> projectItems, string searchText, bool isCaseSensitive = false)
     {
@@ -327,6 +478,59 @@ namespace AddIn.Core.Extensions
           }
         }
       }
+    }
+
+
+    public static IEnumerable<SearchResult> GetSearchResultsWholeWord(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents, bool isCaseSensitive = false)
+    {
+      var regexOptions = isCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
+      var regex = new Regex($@"\b{Regex.Escape(searchText)}\b", regexOptions);
+      foreach (var item in projectItems)
+      {
+        if (item.FileCount > 0)
+        {
+          string filePath = item.FileNames[0];
+          if (fileContents.TryGetValue(filePath, out string content))
+          {
+            var matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
+              int lineNum = content.Take(match.Index).Count(c => c == '\n') + 1;
+              int lastNewLine = content.LastIndexOf('\n', match.Index);
+              int col = match.Index - (lastNewLine == -1 ? 0 : lastNewLine + 1);
+              yield return new SearchResult
+              {
+                Code = match.Value,
+                File = Path.GetFileName(filePath),
+                Line = lineNum,
+                Col = col,
+                Path = filePath,
+                Extension = Path.GetExtension(filePath),
+                Project = item.ContainingProject.Name
+              };
+            }
+          }
+        }
+      }
+    }
+
+
+    public static IEnumerable<string>  DistinctFileNames(this IEnumerable<ProjectItem> projectItems)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      var fileNames = new List<string>();
+
+      foreach (var projectItem in projectItems)
+      {
+        for (short i = 1; i <= projectItem.FileCount; i++)
+        {
+          string fileName = projectItem.FileNames[i];
+          fileNames.Add(fileName);
+        }
+      }
+
+      return fileNames.Distinct();
     }
 
   }
