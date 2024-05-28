@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Management.Instrumentation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AddIn.Core.Extensions
+namespace AddIn.Core.Helpers
 {
   public static  class PathHelper
   {

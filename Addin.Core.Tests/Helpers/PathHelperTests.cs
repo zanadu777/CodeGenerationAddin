@@ -1,4 +1,5 @@
 ﻿using AddIn.Core.Extensions;
+using AddIn.Core.Helpers;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

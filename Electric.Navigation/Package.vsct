@@ -21,16 +21,24 @@
       
       <Button guid="CmdSet" id="SearchToolWindowCommand" priority="0x0100" type="Button">
         <Parent guid="CmdSet" id="ToolsMenuGroup" />
-        <Icon guid="goldAqua_Lightning" id="toolWindow" />
+        <Icon guid="goldAqua_Lightning" id="ga_toolWindow" />
         <Strings>
           <ButtonText>Display Search ToolWindow</ButtonText>
+        </Strings>
+      </Button>
+      
+      <Button guid="CmdSet" id="SolutionHistoryWindowCommand" priority="0x0101" type="Button">
+        <Parent guid="CmdSet" id="ToolsMenuGroup" />
+        <Icon guid="goldAqua_Lightning" id="ga_toolWindow" />
+        <Strings>
+          <ButtonText>Display Solution History ToolWindow</ButtonText>
         </Strings>
       </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
     <Bitmaps>
-      <Bitmap guid="goldAqua_Lightning" href="Resources\GoldAquaLightningV2.png" usedList="command, menu, dialog, dialogCircle, dialogSquareDiamond, circleToolWindow, toolWindow" />
+      <Bitmap guid="goldAqua_Lightning" href="Resources\GoldAquaLightningV2.png" usedList="command, menu, dialog, dialogCircle, dialogSquareDiamond, circleToolWindow, ga_toolWindow" />
     </Bitmaps>
   </Commands>
 
@@ -43,6 +51,7 @@
       <IDSymbol name="ToolsMenuGroup" value="0x1020" />
       <IDSymbol name="FindSelectedCommand" value="0x0101" />
        <IDSymbol name="SearchToolWindowCommand" value="0x0102" />
+       <IDSymbol name="SolutionHistoryWindowCommand" value="0x0103"/>
     </GuidSymbol>
 
     <!--<GuidSymbol value="{ba70e522-da28-4b2d-a85d-12b4ab6b667e}" name="guidVSAutomationPackageCmdSet">
@@ -56,7 +65,11 @@
       <IDSymbol name="dialogCircle" value="4" />
       <IDSymbol name="dialogSquareDiamond" value="5" />
       <IDSymbol name="circleToolWindow" value="6" />
-      <IDSymbol name="toolWindow" value="7" />
+      <IDSymbol name="ga_toolWindow" value="7" />
     </GuidSymbol>
+  
+     
+      
+    
   </Symbols>
 </CommandTable>

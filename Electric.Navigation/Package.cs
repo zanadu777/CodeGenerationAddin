@@ -29,12 +29,13 @@ namespace Electric.Navigation
         public const int ToolsMenuGroup = 0x1020;
         public const int FindSelectedCommand = 0x0101;
         public const int SearchToolWindowCommand = 0x0102;
+        public const int SolutionHistoryWindowCommand = 0x0103;
         public const int command = 0x0001;
         public const int menu = 0x0002;
         public const int dialog = 0x0003;
         public const int dialogCircle = 0x0004;
         public const int dialogSquareDiamond = 0x0005;
         public const int circleToolWindow = 0x0006;
-        public const int toolWindow = 0x0007;
+        public const int ga_toolWindow = 0x0007;
     }
 }

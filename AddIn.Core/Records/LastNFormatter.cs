@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using AddIn.Core.Records;
 using MessagePack;
 using MessagePack.Formatters;
+
+namespace AddIn.Core.Records;
 
 public class LastNFormatter<T> : IMessagePackFormatter<LastN<T>>
 {

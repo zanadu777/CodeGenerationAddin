@@ -59,6 +59,11 @@
       <DependentUpon>Package.vsct</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolWindows\SolutionHistoryToolWindow.cs" />
+    <Compile Include="ToolWindows\SolutionHistoryToolWindowCommand.cs" />
+    <Compile Include="ToolWindows\SolutionHistoryToolWindowControl.xaml.cs">
+      <DependentUpon>SolutionHistoryToolWindowControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolWindows\SearchLocation.cs" />
     <Compile Include="ToolWindows\SearchToolWindow.cs" />
     <Compile Include="ToolWindows\SearchToolWindowCommand.cs" />
@@ -124,6 +129,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ToolWindows\SolutionHistoryToolWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ToolWindows\SearchToolWindowControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

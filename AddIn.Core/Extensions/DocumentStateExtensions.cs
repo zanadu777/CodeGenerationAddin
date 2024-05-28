@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using AddIn.Core.Helpers;
 using EnvDTE;
 using Newtonsoft.Json;
  
