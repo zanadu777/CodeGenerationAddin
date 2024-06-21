@@ -1,7 +1,8 @@
-﻿using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
+using System;
+using System.Runtime.InteropServices;
 
-namespace Electric.Navigation.ToolWindows
+namespace Electric.Logging
 {
   /// <summary>
   /// This class implements the tool window exposed by this package and hosts a user control.
@@ -14,20 +15,20 @@ namespace Electric.Navigation.ToolWindows
   /// implementation of the IVsUIElementPane interface.
   /// </para>
   /// </remarks>
-  [Guid("6447d0e7-2a2f-4974-b90a-735dfab17c40")]
-  public class SolutionHistoryToolWindow : ToolWindowPane
+  [Guid("c0815a37-da47-4e1c-bbc5-0a3471088b06")]
+  public class LoggingToolWindow : ToolWindowPane
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="SolutionHistoryToolWindow"/> class.
+    /// Initializes a new instance of the <see cref="LoggingToolWindow"/> class.
     /// </summary>
-    public SolutionHistoryToolWindow() : base(null)
+    public LoggingToolWindow() : base(null)
     {
-      this.Caption = "SolutionHistoryToolWindow";
+      this.Caption = "LoggingToolWindow";
 
       // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
       // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
       // the object returned by the Content property.
-      this.Content = new SolutionHistoryToolWindowControl();
+      this.Content = new LoggingToolWindowControl();
     }
   }
 }

@@ -39,7 +39,6 @@ namespace Electric.Navigation
   [Guid(PackageGuidString)]
   //[SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
   [ProvideToolWindow(typeof(SearchToolWindow))]
-  [ProvideToolWindow(typeof(SolutionHistoryToolWindow))]
   public sealed class NavigationPackage : AsyncPackage
   {
     /// <summary>
@@ -74,7 +73,6 @@ namespace Electric.Navigation
       await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
       await FindSelectedCommand.InitializeAsync(this);
       await SearchToolWindowCommand.InitializeAsync(this);
-        await SolutionHistoryToolWindowCommand.InitializeAsync(this);
      }
 
     #endregion

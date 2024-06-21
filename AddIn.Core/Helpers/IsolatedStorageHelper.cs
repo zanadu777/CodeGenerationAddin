@@ -52,6 +52,15 @@ namespace AddIn.Core.Helpers
       }
     }
 
+
+    public static void SerializeToIsolatedStorage<T>(T obj, string filePath)
+    {
+      using IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
+      using IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Create, storage);
+
+      MessagePackSerializer.Serialize(stream, obj);
+    }
+
     public static async Task<T> DeserializeFromIsolatedStorageAsync<T>(string filePath)
     {
       using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain())
@@ -66,8 +75,38 @@ namespace AddIn.Core.Helpers
           if (stream.Length == 0)
             return default(T);
 
-          return await MessagePackSerializer.DeserializeAsync<T>(stream);
+          try
+          {
+            var deserialized = await MessagePackSerializer.DeserializeAsync<T>(stream);
+            return deserialized;
+          }
+          catch
+          {
+            return default(T);
+          }
         }
+      }
+    }
+
+
+    public static T DeserializeFromIsolatedStorage<T>(string filePath)
+    {
+      using IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
+      if (!storage.FileExists(filePath))
+        return default(T);
+ 
+      using IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Open, storage);
+      if (stream.Length == 0)
+        return default(T);
+
+      try
+      {
+        var deserialized =   MessagePackSerializer.Deserialize <T>(stream);
+        return deserialized;
+      }
+      catch
+      {
+        return default(T);
       }
     }
   }

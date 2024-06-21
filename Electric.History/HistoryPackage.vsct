@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+
+  <Commands package="guidHistoryPackage">
+
+    <Groups>
+      <Group guid="CmdSet" id="ToolsMenuGroup" priority="0x0000">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+    
+    <Buttons>
+      <Button guid="CmdSet" id="SolutionHistoryToolWindowCommand" priority="0x0100" type="Button">
+        <Parent guid="CmdSet" id="ToolsMenuGroup"/>
+        <Icon guid="guidImages" id="go_toolWindow" />
+        <Strings>
+          <ButtonText>Solution History Tool Window</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\GoldOrangeLightningV2.png"  usedList="command, menu, dialog, dialogCircle, dialogSquareDiamond, circleToolWindow, go_toolWindow"/>
+    </Bitmaps>
+  </Commands>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidHistoryPackage" value="{d554680b-4922-4b6d-835b-cd8a32a5575b}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="CmdSet" value="{d1b739ef-7229-4839-b150-389d74cd915b}">
+      <IDSymbol name="ToolsMenuGroup" value="0x0101"/>
+      <IDSymbol name="SolutionHistoryToolWindowCommand" value="0x0100" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages" value="{73b877da-a11f-4cfa-a736-9afcc585266f}" >
+      <IDSymbol name="command" value="1" />
+      <IDSymbol name="menu" value="2" />
+      <IDSymbol name="dialog" value="3" />
+      <IDSymbol name="dialogCircle" value="4" />
+      <IDSymbol name="dialogSquareDiamond" value="5" />
+      <IDSymbol name="circleToolWindow" value="6" />
+      <IDSymbol name="go_toolWindow" value="7" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

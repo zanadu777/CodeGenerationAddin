@@ -22,11 +22,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{509EBBC2-310C-45E4-8934-02E2EB14740A}</ProjectGuid>
+    <ProjectGuid>{73261CA7-3E58-4690-A4CA-30E4E0BEA091}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeAddIn</RootNamespace>
-    <AssemblyName>CodeAddIn</AssemblyName>
+    <RootNamespace>Electric.History</RootNamespace>
+    <AssemblyName>Electric.History</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
@@ -59,28 +59,23 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CodeAddInPackage2.cs">
+    <Compile Include="HistoryPackage1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CodeAddInPackage.vsct</DependentUpon>
+      <DependentUpon>HistoryPackage.vsct</DependentUpon>
     </Compile>
-    <Compile Include="Command1.cs" />
-    <Compile Include="DirtyClassesToolWindow.cs" />
-    <Compile Include="DirtyClassesToolWindowCommand.cs" />
-    <Compile Include="DirtyClassesToolWindowControl.xaml.cs">
-      <DependentUpon>DirtyClassesToolWindowControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\DirtyClassExtensions.cs" />
-    <Compile Include="Extensions\OleMenuCommandServiceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CodeAddInPackage.cs" />
-    <Compile Include="SolutionEventsListener.cs" />
-    <Compile Include="TestUserControl.xaml.cs">
-      <DependentUpon>TestUserControl.xaml</DependentUpon>
+    <Compile Include="HistoryPackage.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\SolutionHistory.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\SolutionHistoryControl.xaml.cs">
+      <DependentUpon>SolutionHistoryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolWindows\ProjectInfoToolWindow.cs" />
-    <Compile Include="ToolWindows\SelectionInfoToolWindow.cs" />
-    <Compile Include="ToolWindows\SolutionInfoToolWindow.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\SolutionHistoryItem.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\SolutionHistoryToolWindow.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\SolutionHistoryToolWindowCommand.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\SolutionHistoryToolWindowControl.xaml.cs">
+      <DependentUpon>SolutionHistoryToolWindowControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -98,55 +93,46 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MessagePack">
+      <Version>2.5.168</Version>
+    </PackageReference>
+    <PackageReference Include="MessagePack.Annotations">
+      <Version>2.5.168</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.9.3174" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.10.2185" />
   </ItemGroup>
   <ItemGroup>
-    <VSCTCompile Include="CodeAddInPackage.vsct">
+    <Page Include="ToolWindows\SolutionHistory\SolutionHistoryControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToolWindows\SolutionHistory\SolutionHistoryToolWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="HistoryPackage.vsct">
       <Generator>VsctGenerator</Generator>
       <ResourceName>Menus.ctmenu</ResourceName>
-      <LastGenOutput>CodeAddInPackage2.cs</LastGenOutput>
+      <LastGenOutput>HistoryPackage1.cs</LastGenOutput>
     </VSCTCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Command1.png" />
-    <Content Include="Resources\Lightning.png" />
+    <Content Include="Resources\GoldOrangeLightningV2.png" />
+    <Content Include="Resources\SolutionHistoryToolWindowCommand.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AddIn.Core\AddIn.Core.csproj">
       <Project>{ed7b45ee-936a-48d5-88e9-f9422efa1e71}</Project>
       <Name>AddIn.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeAddIn.Gui\CodeAddIn.Gui.csproj">
-      <Project>{5749d5c9-c47c-4ab1-8d81-c7cdf931cab4}</Project>
-      <Name>CodeAddIn.Gui</Name>
+    <ProjectReference Include="..\Electric.Navigation.Controls\Electric.Navigation.Controls.csproj">
+      <Project>{5c177203-a1fa-4e16-994b-f70c8d4566da}</Project>
+      <Name>Electric.Navigation.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeAddIn.Lib\CodeAddIn.Lib.csproj">
-      <Project>{13910c26-a39f-4190-a74a-e7908ae5a5e2}</Project>
-      <Name>CodeAddIn.Lib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeModel\CodeModel.csproj">
-      <Project>{53e60414-9a5a-4db2-b8cd-0a1aa676ee09}</Project>
-      <Name>CodeModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="DirtyClassesToolWindowControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

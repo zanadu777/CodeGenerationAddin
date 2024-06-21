@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
+using System;
 using System.Windows.Controls;
 
-namespace Electric.Navigation.ToolWindows
+namespace Electric.History.ToolWindows.SolutionHistory
 {
   /// <summary>
   /// Interaction logic for SolutionHistoryToolWindowControl.
@@ -12,9 +13,11 @@ namespace Electric.Navigation.ToolWindows
     /// <summary>
     /// Initializes a new instance of the <see cref="SolutionHistoryToolWindowControl"/> class.
     /// </summary>
-    public SolutionHistoryToolWindowControl()
+    public SolutionHistoryToolWindowControl(IServiceProvider serviceProvider)
     {
       this.InitializeComponent();
+      var control = new SolutionHistoryControl(serviceProvider);
+      MainPanel.Children.Add(control);
     }
 
     /// <summary>
