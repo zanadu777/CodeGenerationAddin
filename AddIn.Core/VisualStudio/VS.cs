@@ -21,6 +21,7 @@ namespace AddIn.Core.VisualStudio
 
     public static ProjectItem GetSelectedProjectItem()
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       try
       {
         Window solutionExplorer = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);

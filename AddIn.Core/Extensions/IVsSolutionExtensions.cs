@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
@@ -33,6 +34,26 @@ namespace AddIn.Core.Extensions
       return projects;
     }
 
+    public static Project Project(this IVsSolution solution, string projectName)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+
+      Guid emptyGuid = Guid.Empty;
+      solution.GetProjectEnum((uint)__VSENUMPROJFLAGS.EPF_LOADEDINSOLUTION, ref emptyGuid, out IEnumHierarchies enumHierarchies);
+
+      IVsHierarchy[] hierarchy = new IVsHierarchy[1];
+      while (enumHierarchies.Next(1, hierarchy, out uint fetched) == VSConstants.S_OK && fetched == 1)
+      {
+        hierarchy[0].GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out object extObject);
+        if (extObject is EnvDTE.Project project && project.Name.Equals(projectName, StringComparison.OrdinalIgnoreCase))
+        {
+          return project;
+        }
+      }
+
+      return null;
+    }
+
     public static List<ProjectItem> GetAllProjectItems(this IVsSolution solution)
     {
       return solution.GetProjectItems(x => true);
@@ -40,6 +61,7 @@ namespace AddIn.Core.Extensions
 
     public static List<ProjectItem> GetProjectItems(this IVsSolution solution, Predicate<ProjectItem> filter)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var projectItems = new List<ProjectItem>();
       foreach (var project  in solution.GetProjects())
         projectItems.AddRange(project.ProjectItems(filter));

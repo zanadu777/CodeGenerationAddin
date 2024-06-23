@@ -46,7 +46,7 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Build.Framework.17.9.5\lib\net472\Microsoft.Build.Framework.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Build.Framework.17.10.4\lib\net472\Microsoft.Build.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IO.Redist, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.Redist.6.0.0\lib\net472\Microsoft.IO.Redist.dll</HintPath>
@@ -98,8 +98,8 @@
     <Reference Include="Microsoft.VisualStudio.Telemetry, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Telemetry.17.9.305\lib\net45\Microsoft.VisualStudio.Telemetry.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Threading, Version=17.9.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Threading.17.9.28\lib\net472\Microsoft.VisualStudio.Threading.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=17.10.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.Threading.17.10.48\lib\net472\Microsoft.VisualStudio.Threading.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Utilities, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Utilities.17.9.37000\lib\net472\Microsoft.VisualStudio.Utilities.dll</HintPath>
@@ -234,14 +234,14 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.BannedApiAnalyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.ServiceHub.Analyzers.4.4.22\analyzers\Microsoft.ServiceHub.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Composition.Analyzers.17.7.40\analyzers\dotnet\Microsoft.VisualStudio.Composition.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CSharp.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.17.7.32\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.SDK.Analyzers.17.7.32\analyzers\cs\Microsoft.VisualStudio.SDK.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CSharp.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -250,10 +250,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.17.7.32\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.SDK.Analyzers.17.7.32\build\Microsoft.VisualStudio.SDK.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets" Condition="Exists('..\packages\Microsoft.CodeAnalysis.BannedApiAnalyzers.3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.targets')" />
-  <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.9.28\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
-  <Import Project="..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.16.10.10\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.SDK.Analyzers.17.7.32\build\Microsoft.VisualStudio.SDK.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.SDK.Analyzers.17.7.32\build\Microsoft.VisualStudio.SDK.Analyzers.targets')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.10.48\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
 </Project>

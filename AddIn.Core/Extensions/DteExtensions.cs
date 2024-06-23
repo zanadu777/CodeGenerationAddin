@@ -15,6 +15,7 @@ namespace AddIn.Core.Extensions
   {
     public static Project GetSelectedProject(this DTE dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       Project activeProject = null;
 
       Array activeSolutionProjects = (Array)dte.ActiveSolutionProjects;
@@ -28,6 +29,7 @@ namespace AddIn.Core.Extensions
 
     public static IVsSolution IVsSolution(this DTE dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       ServiceProvider serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)dte);
       IVsSolution solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
       return solution;
@@ -62,6 +64,7 @@ namespace AddIn.Core.Extensions
 
     public static CodeClass2 GetSelectedClass(this DTE dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       Window solutionExplorer = dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer);
       UIHierarchy solutionExplorerHierarchy = (UIHierarchy)solutionExplorer.Object;
       Array selectedItems = (Array)solutionExplorerHierarchy.SelectedItems;
@@ -98,6 +101,7 @@ namespace AddIn.Core.Extensions
 
     public static ProjectItem GetSelectedProjectItem(this DTE dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       foreach (SelectedItem selectedItem in dte.SelectedItems)
       {
         ProjectItem projectItem = selectedItem.ProjectItem;
@@ -112,6 +116,7 @@ namespace AddIn.Core.Extensions
 
     public static Type GetSelectedType(this DTE dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var selectedCodeElement = dte.GetSelectedClass();
 
       var selectedProject = dte.GetSelectedProject();
@@ -123,11 +128,79 @@ namespace AddIn.Core.Extensions
       return selectedType;
     }
 
+    public static CodeClass2 CodeClassAt(this DTE dte, ProjectItemLocation location)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
 
+      if (dte == null)
+        throw new ArgumentNullException(nameof(dte));
+      if (location == null)
+        throw new ArgumentNullException(nameof(location));
+
+      Project targetProject = dte.Solution.Projects.Cast<Project>()
+        .FirstOrDefault(proj => proj.Name.Equals(location.ProjectName, StringComparison.OrdinalIgnoreCase));
+
+      if (targetProject == null)
+        return null;
+
+      ProjectItem projectItem = targetProject.ProjectItems.Cast<ProjectItem>()
+        .FirstOrDefault(item => item.Name.Equals(Path.GetFileName(location.SolutionRelativePath), StringComparison.OrdinalIgnoreCase));
+
+      if (projectItem == null)
+        return null;
+
+      FileCodeModel2 fileCodeModel = projectItem.FileCodeModel as FileCodeModel2;
+      if (fileCodeModel == null)
+        return null;
+
+      foreach (CodeElement element in fileCodeModel.CodeElements)
+      {
+        CodeClass2 codeClass = GetCodeClassFromElements(element, location.NameSpace, location.TypeName);
+        if (codeClass != null)
+          return codeClass;
+      }
+
+      return null;
+    }
+
+    private static CodeClass2 GetCodeClassFromElements(CodeElement element, string nameSpace, string typeName)
+    {
+      ThreadHelper.ThrowIfNotOnUIThread();
+      Stack<CodeElement> elements = new Stack<CodeElement>();
+      elements.Push(element);
+
+      while (elements.Count > 0)
+      {
+        CodeElement currentElement = elements.Pop();
+
+        if (currentElement is CodeNamespace ns && ns.FullName == nameSpace)
+          foreach (CodeElement childElement in ns.Members)
+            elements.Push(childElement);
+
+        else if (currentElement is CodeClass2 codeClass && codeClass.FullName == $"{nameSpace}.{typeName}")
+          return codeClass;
+
+        else if (currentElement.Kind == vsCMElement.vsCMElementNamespace || currentElement.Kind == vsCMElement.vsCMElementClass)
+        {
+          CodeElements children = null;
+          if (currentElement is CodeNamespace namespaceElement)
+            children = namespaceElement.Members;
+          else if (currentElement is CodeClass2 classElement)
+            children = classElement.Members;
+
+          if (children != null)
+            foreach (CodeElement childElement in children)
+              elements.Push(childElement);
+        }
+      }
+
+      return null;
+    }
 
 
     public static void SetBreakpointsOnMethods(this DTE2 dte, Document document)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (document != null)
       {
         TextDocument textDoc = document.Object("TextDocument") as TextDocument;
@@ -146,6 +219,7 @@ namespace AddIn.Core.Extensions
 
     public static void SetBreakpointAtFunctionStart(this DTE2 dte, CodeFunction codeFunction)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (codeFunction != null)
       {
         TextPoint startPoint = codeFunction.StartPoint;
@@ -170,6 +244,7 @@ namespace AddIn.Core.Extensions
 
     public static void RemoveAllBreakpoints(this DTE dte, ProjectItem projectItem)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       string filePath = projectItem.FileNames[0];
 
       for (int i = dte.Debugger.Breakpoints.Count; i >= 1; i--)
@@ -184,6 +259,7 @@ namespace AddIn.Core.Extensions
 
     public static string SelectedText(this DTE2 dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (dte.ActiveDocument == null)
         return string.Empty;
 
@@ -209,6 +285,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<ProjectItem> GetOpenProjectItems(this DTE dte)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       return dte.Windows
         .OfType<Window>()
         .Where(window => window.Type == vsWindowType.vsWindowTypeDocument)

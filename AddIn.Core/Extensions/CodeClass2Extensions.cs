@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace AddIn.Core.Extensions
 {
@@ -9,6 +10,7 @@ namespace AddIn.Core.Extensions
 
     public static void GetDetails(this CodeClass2 codeClass)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       string name = codeClass.Name; // The name of the class
       string fullName = codeClass.FullName; // The full name of the class, including namespace
       CodeElements members = codeClass.Members; // The members (methods, properties, etc.) of the class
@@ -24,6 +26,7 @@ namespace AddIn.Core.Extensions
 
     public static List<CodeProperty2> GetProperties(this CodeClass2 codeClass)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var properties = new List<CodeProperty2>();
 
       foreach (CodeElement member in codeClass.Members)
@@ -41,6 +44,7 @@ namespace AddIn.Core.Extensions
     }
     public static List<CodeFunction2> GetMethods(this CodeClass2 codeClass)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var methods = new List<CodeFunction2>();
 
       foreach (CodeElement member in codeClass.Members)
@@ -56,6 +60,7 @@ namespace AddIn.Core.Extensions
     }
     public static List<CodeVariable> GetFields(this CodeClass2 codeClass)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var fields = new List<CodeVariable>();
 
       foreach (CodeElement member in codeClass.Members)
@@ -72,6 +77,7 @@ namespace AddIn.Core.Extensions
 
     public static List<CodeEvent> GetEvents(this CodeClass2 codeClass)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var events = new List<CodeEvent>();
 
       foreach (CodeElement member in codeClass.Members)

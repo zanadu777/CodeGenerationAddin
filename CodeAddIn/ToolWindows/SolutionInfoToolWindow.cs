@@ -57,6 +57,7 @@ namespace CodeAddIn.ToolWindows
 
     protected override void OnClose()
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       // Unsubscribe from the event when the tool window is closed
       VS.SelectionEvents.OnChange -= SelectionChanged;
 

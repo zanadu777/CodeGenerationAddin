@@ -96,6 +96,7 @@ namespace CodeAddIn
 
     private void DisplayToolWindow<T>(object sender, EventArgs e) where T : ToolWindowPane
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var window = FindToolWindow(typeof(T), 0, true) as T;
       IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
       ErrorHandler.ThrowOnFailure(windowFrame.Show());
@@ -126,7 +127,7 @@ namespace CodeAddIn
 
     private void ExecuteShowModified(object sender, EventArgs e)
     {
-
+      ThreadHelper.ThrowIfNotOnUIThread();
       var serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)Package.GetGlobalService(typeof(Microsoft.VisualStudio.OLE.Interop.IServiceProvider)));
       var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
       var allProjects = solution.GetAllProjects().ToList();
@@ -181,6 +182,7 @@ namespace CodeAddIn
 
     private void ExecuteInspectProject(object sender, EventArgs e)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       DTE dte = (DTE)GetService(typeof(DTE));
       Array projects = (Array)dte.ActiveSolutionProjects;
       Project selectedProject = (Project)projects.GetValue(0);
@@ -192,6 +194,7 @@ namespace CodeAddIn
 
     private void ExecuteInspectSolution(object sender, EventArgs e)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       StringBuilder sb = new StringBuilder();
       IVsSolution solution = (IVsSolution)GetService(typeof(SVsSolution));
       var projects = solution.GetProjects();

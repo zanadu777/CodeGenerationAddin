@@ -154,6 +154,7 @@ namespace AddIn.Core.Extensions
 
     public static List<CodeElement> AllCodeElements(this ProjectItem projectItem)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (projectItem.FileCodeModel == null)
       {
         return new List<CodeElement>(); 
@@ -182,6 +183,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<ProjectItem> WhereText(this IEnumerable<ProjectItem> projectItems, Func<string, bool> filter)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       return projectItems.Where(item =>
       {
         bool result = false;
@@ -200,6 +202,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsCaseSensitive(this IEnumerable<ProjectItem> projectItems, string searchText)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       foreach (var item in projectItems)
       {
         if (item.FileCount > 0)
@@ -232,6 +235,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsCaseSensitive(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       foreach (var item in projectItems)
       {
         if (item.FileCount > 0)
@@ -268,6 +272,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsCaseInsensitive(this IEnumerable<ProjectItem> projectItems, string searchText)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       foreach (var item in projectItems)
       {
         if (item.FileCount > 0)
@@ -301,6 +306,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsCaseInsensitive(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       foreach (var item in projectItems)
       {
         if (item.FileCount > 0)
@@ -337,6 +343,7 @@ namespace AddIn.Core.Extensions
 
     public static ConcurrentBag<SearchResult> GetSearchResultsCaseInsensitiveParallel(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var results = new ConcurrentBag<SearchResult>();
 
       Parallel.ForEach(projectItems, item =>
@@ -377,6 +384,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsRegex(this IEnumerable<ProjectItem> projectItems, string regexPattern)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
       foreach (var item in projectItems)
       {
@@ -410,6 +418,7 @@ namespace AddIn.Core.Extensions
 
     public static ConcurrentBag<SearchResult> GetSearchResultsRegexParallel(this IEnumerable<ProjectItem> projectItems, string regexPattern, IDictionary<string, string> fileContents)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
       var results = new ConcurrentBag<SearchResult>();
 
@@ -448,6 +457,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsWholeWord(this IEnumerable<ProjectItem> projectItems, string searchText, bool isCaseSensitive = false)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var regexOptions = isCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
       var regex = new Regex($@"\b{Regex.Escape(searchText)}\b", regexOptions);
       foreach (var item in projectItems)
@@ -483,6 +493,7 @@ namespace AddIn.Core.Extensions
 
     public static IEnumerable<SearchResult> GetSearchResultsWholeWord(this IEnumerable<ProjectItem> projectItems, string searchText, IDictionary<string, string> fileContents, bool isCaseSensitive = false)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var regexOptions = isCaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
       var regex = new Regex($@"\b{Regex.Escape(searchText)}\b", regexOptions);
       foreach (var item in projectItems)

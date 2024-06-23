@@ -1,6 +1,7 @@
 ﻿using AddIn.Core.Extensions;
 using CodeModel;
 using EnvDTE;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace CodeAddIn.Extensions
 
     public static List<DirtyClass> DirtyClasses(this Project project)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       List<DirtyClass> dirtyClasses = new List<DirtyClass>();
       foreach (EnvDTE.ProjectItem item in project.ProjectItems)
       {

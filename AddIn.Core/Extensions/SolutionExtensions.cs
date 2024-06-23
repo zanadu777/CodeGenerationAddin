@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using EnvDTE;
+using Microsoft.VisualStudio.Shell;
 
 namespace AddIn.Core.Extensions
 {
@@ -8,6 +9,7 @@ namespace AddIn.Core.Extensions
   {
     public static void BuildIfDirty(this Solution solution)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       try
       {
         if (solution.SolutionBuild.LastBuildInfo != 0)
@@ -23,6 +25,7 @@ namespace AddIn.Core.Extensions
 
     public static List<Project> Projects(this Solution solution, EProjectFilter filter)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       foreach (Project project in solution.Projects)
         Debug.WriteLine($"{project.Name} {project.Kind}");
 

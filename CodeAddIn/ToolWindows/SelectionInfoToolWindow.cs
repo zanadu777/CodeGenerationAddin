@@ -16,6 +16,7 @@ namespace CodeAddIn.ToolWindows
 
     public SelectionInfoToolWindow() : base(null)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       this.Caption = "Current Selection";
       VS.SelectionEvents.OnChange += SelectionChanged;
     }

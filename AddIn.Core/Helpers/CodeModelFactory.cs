@@ -6,6 +6,7 @@ using System.Reflection;
 using CodeModel.InfoData;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace AddIn.Core.Helpers
 {
@@ -16,6 +17,7 @@ namespace AddIn.Core.Helpers
     #region CodeClass2
     public ClassInfoData CreateClassInfoData(CodeClass2 codeClass)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var outputFileName = codeClass.ProjectItem.ContainingProject.Properties.Item("OutputFileName").Value.ToString();
       var assemblyName = Path.GetFileName(outputFileName);
 
@@ -57,6 +59,7 @@ namespace AddIn.Core.Helpers
 
     public AttributeInfoData CreateAttributeInfoData(CodeAttribute2 attribute)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var attributeInfoData = new AttributeInfoData
       {
         Name = attribute.Name,
@@ -71,6 +74,7 @@ namespace AddIn.Core.Helpers
 
     public PropertyInfoData CreatePropertyInfoData(CodeProperty2 property)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var propertyInfoData = new PropertyInfoData
       {
         Name = property.Name,
@@ -89,6 +93,7 @@ namespace AddIn.Core.Helpers
 
     public EventInfoData CreateEventInfoData(CodeEvent codeEvent)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var eventInfoData = new EventInfoData
       {
         Name = codeEvent.Name,
@@ -105,6 +110,7 @@ namespace AddIn.Core.Helpers
 
     public MethodInfoData CreateMethodInfoData(CodeFunction codeFunction)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var methodInfoData = new MethodInfoData
       {
         Name = codeFunction.Name,
@@ -135,6 +141,7 @@ namespace AddIn.Core.Helpers
 
     public ParameterInfoData CreateParameterInfoData(CodeParameter2 parameter)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var parameterInfoData = new ParameterInfoData
       {
         Name = parameter.Name,
@@ -151,6 +158,7 @@ namespace AddIn.Core.Helpers
 
     public FieldInfoData CreateFieldInfoData(CodeVariable codeVariable)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       var fieldInfoData = new FieldInfoData
       {
         Name = codeVariable.Name,

@@ -206,6 +206,7 @@ namespace Electric.Navigation.ToolWindows
 
     private async void Search(object sender, RoutedEventArgs e)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (String.IsNullOrWhiteSpace(SearchText))
         return;
 

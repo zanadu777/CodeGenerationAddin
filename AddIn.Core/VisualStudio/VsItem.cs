@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using EnvDTE;
-using Microsoft.VisualStudio.TextManager.Interop;
+using Microsoft.VisualStudio.Shell;
 
 namespace AddIn.Core.VisualStudio
 {
@@ -14,6 +14,7 @@ namespace AddIn.Core.VisualStudio
     {
       get
       {
+        ThreadHelper.ThrowIfNotOnUIThread();
         if (Item is null)
           return string.Empty;
 
@@ -48,7 +49,6 @@ namespace AddIn.Core.VisualStudio
           default:
             return string.Empty;
         }
-        return string.Empty;
       }
     }
 

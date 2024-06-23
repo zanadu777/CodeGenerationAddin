@@ -1,5 +1,6 @@
 ﻿using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace AddIn.Core
 
     public List<CodeInterface> WithFileName(string fileName)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       return CodeInterfaces.Where(c => c.ProjectItem.FileNames[0] == fileName).ToList();
     }
   }

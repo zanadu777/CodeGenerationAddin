@@ -12,6 +12,7 @@ namespace AddIn.Core.Extensions
   {
     public static List<ProjectItem> AllProjectItems(this IVsHierarchy projectHierarchy)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (!projectHierarchy.IsProject())
         return new List<ProjectItem>();
 
@@ -70,6 +71,7 @@ namespace AddIn.Core.Extensions
 
     public static List<CompleteCodeClass> AllCompleteCodeClasses(this IVsHierarchy projectHierarchy)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (!projectHierarchy.IsProject())
         return new List<CompleteCodeClass>();
 
@@ -82,6 +84,7 @@ namespace AddIn.Core.Extensions
 
     public static List<CompleteCodeInterface> AllCompleteCodeInterfaces(this IVsHierarchy projectHierarchy)
     {
+      ThreadHelper.ThrowIfNotOnUIThread();
       if (!projectHierarchy.IsProject())
         return new List<CompleteCodeInterface>();
 
