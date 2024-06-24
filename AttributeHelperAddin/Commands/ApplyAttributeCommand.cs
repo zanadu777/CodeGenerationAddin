@@ -86,7 +86,7 @@ namespace AttributeHelperAddin.Commands
     //private void Execute(object sender, EventArgs e)
     //{
     //  ThreadHelper.ThrowIfNotOnUIThread();
-    //  var loaction  = WindowsFormsFileSource.DeserializeFile< ProjectItemLocation>();
+    //  var loaction  = WindowsFormsFileSource.DeserializeFile< CodeElementLocation>();
 
     //}
 
@@ -101,10 +101,10 @@ namespace AttributeHelperAddin.Commands
     {
       await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
       DTE2 dte = await this.package.GetDTE2Async();
-      var location = WindowsFormsFileSource.DeserializeFile<ProjectItemLocation>();
+      var specification = WindowsFormsFileSource.DeserializeFile<ApplyAttributeSpecification>();
      
-      var codeClass = dte.CodeClassAt(location);
-
+      var codeType = dte.CodeTypeAt(specification.TargetLocation);
+      codeType.SetAttributeOfMembers(specification.AttributeName, specification.SignatureArgumentPairs);
     }
   }
 }

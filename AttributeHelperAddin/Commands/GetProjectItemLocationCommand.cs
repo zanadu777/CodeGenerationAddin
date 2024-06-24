@@ -101,7 +101,7 @@ namespace AttributeHelperAddin.Commands
       await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
       DTE2 dte = (DTE2)await ServiceProvider.GetServiceAsync(typeof(DTE));
 
-      var projectItemLocation = dte.ActiveDocument.ProjectItemLocation();
+      var projectItemLocation = dte.ActiveDocument.CodeElementLocation();
       string json = JsonConvert.SerializeObject(projectItemLocation, Formatting.Indented);
       System.Windows.Clipboard.SetText(json);
     }

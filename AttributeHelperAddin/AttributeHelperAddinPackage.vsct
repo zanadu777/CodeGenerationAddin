@@ -63,7 +63,7 @@
         <Parent guid="guidAttributeHelperAddinPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="dialog" />
         <Strings>
-          <ButtonText>Get ProjectItemLocation</ButtonText>
+          <ButtonText>Get CodeElementLocation</ButtonText>
         </Strings>
       </Button>
     </Buttons>

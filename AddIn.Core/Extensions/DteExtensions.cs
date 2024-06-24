@@ -128,7 +128,7 @@ namespace AddIn.Core.Extensions
       return selectedType;
     }
 
-    public static CodeClass2 CodeClassAt(this DTE dte, ProjectItemLocation location)
+    public static CodeType CodeTypeAt(this DTE dte, CodeElementLocation location)
     {
       ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -155,15 +155,15 @@ namespace AddIn.Core.Extensions
 
       foreach (CodeElement element in fileCodeModel.CodeElements)
       {
-        CodeClass2 codeClass = GetCodeClassFromElements(element, location.NameSpace, location.TypeName);
-        if (codeClass != null)
-          return codeClass;
+        CodeType codeType = GetCodeTypeFromElements(element, location.NameSpace, location.TypeName);
+        if (codeType != null)
+          return codeType;
       }
 
       return null;
     }
 
-    private static CodeClass2 GetCodeClassFromElements(CodeElement element, string nameSpace, string typeName)
+    private static CodeType GetCodeTypeFromElements(CodeElement element, string nameSpace, string typeName)
     {
       ThreadHelper.ThrowIfNotOnUIThread();
       Stack<CodeElement> elements = new Stack<CodeElement>();
@@ -177,16 +177,16 @@ namespace AddIn.Core.Extensions
           foreach (CodeElement childElement in ns.Members)
             elements.Push(childElement);
 
-        else if (currentElement is CodeClass2 codeClass && codeClass.FullName == $"{nameSpace}.{typeName}")
-          return codeClass;
+        else if (currentElement is CodeType codeType && codeType.FullName == $"{nameSpace}.{typeName}")
+          return codeType;
 
-        else if (currentElement.Kind == vsCMElement.vsCMElementNamespace || currentElement.Kind == vsCMElement.vsCMElementClass)
+        else if (currentElement.Kind == vsCMElement.vsCMElementNamespace || currentElement is CodeType)
         {
           CodeElements children = null;
           if (currentElement is CodeNamespace namespaceElement)
             children = namespaceElement.Members;
-          else if (currentElement is CodeClass2 classElement)
-            children = classElement.Members;
+          else if (currentElement is CodeType typeElement)
+            children = typeElement.Members;
 
           if (children != null)
             foreach (CodeElement childElement in children)

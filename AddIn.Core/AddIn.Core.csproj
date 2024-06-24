@@ -125,6 +125,7 @@
     <Compile Include="Extensions\CodeClassExtensions.cs" />
     <Compile Include="Extensions\CodeFunctionExtensions.cs" />
     <Compile Include="Extensions\CodeInterfaceExtensions.cs" />
+    <Compile Include="Extensions\CodeTypeExtensions.cs" />
     <Compile Include="Extensions\CompleteCodeInterfaceExtensions.cs" />
     <Compile Include="Extensions\DependencyObjectExtensions.cs" />
     <Compile Include="Extensions\DocumentExtensions.cs" />
@@ -151,7 +152,7 @@
     <Compile Include="Hierarchy\ListEqualityComparer.cs" />
     <Compile Include="Hierarchy\PositionComparer.cs" />
     <Compile Include="Hierarchy\TreeViewItemHelper.cs" />
-    <Compile Include="ProjectItemLocation.cs" />
+    <Compile Include="CodeElementLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records\LastN.cs" />
     <Compile Include="Records\LastNFormatter.cs" />

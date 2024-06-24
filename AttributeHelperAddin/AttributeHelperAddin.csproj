@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AttributeHelperAddinPackage.vsct</DependentUpon>
     </Compile>
+    <Compile Include="Commands\ApplyAttributeCommandSpecification.cs" />
     <Compile Include="Commands\GetProjectItemLocationCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AttributeHelperAddinPackage.cs" />
