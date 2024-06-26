@@ -86,5 +86,21 @@ namespace Electric.History.ToolWindows.SolutionHistory
     {
 
     }
+
+    private void SetIcon(object sender, RoutedEventArgs e)
+    {
+      if (sender is MenuItem menuItem)
+      {
+        var contextMenu = menuItem.Parent as ContextMenu;
+        if (contextMenu?.PlacementTarget is DataGrid grid)
+        {
+          var selectedItems = grid.SelectedItems.Cast<SolutionHistoryItem>().ToList(); ;
+
+          var dialog = new IconSelectorDialog();
+          dialog.ShowDialog();
+
+        }
+      }
+    }
   }
 }

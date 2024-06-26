@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="Electric.History.ToolWindows.SolutionHistory.IconPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Electric.History.ToolWindows.SolutionHistory"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+ 
+
+    <DrawingImage x:Key="orangeGoldBoltsDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,-2.97291,-1.10532">
+            <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+          </DrawingGroup>
+          <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,4.02709,-1.10532">
+            <GeometryDrawing Brush="#FFFB6442" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="orangeGoldCircleBoltDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1">
+            <DrawingGroup Opacity="1" Transform="1.19909,0,0,1.19465,-97.7867,-3.05097">
+              <GeometryDrawing Brush="#FFFB6442">
+                <GeometryDrawing.Geometry>
+                  <EllipseGeometry RadiusX="4.134" RadiusY="4.134" Center="87.418,8.351" />
+                </GeometryDrawing.Geometry>
+              </GeometryDrawing>
+            </DrawingGroup>
+            <DrawingGroup Opacity="1" Transform="1,0,0,0.978939,0.491352,-0.990068">
+              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="orangeGoldSquareBoltDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1">
+            <DrawingGroup Opacity="1" Transform="1.23355,0,0,1.29813,-61.8575,-3.55647">
+              <GeometryDrawing Brush="#FFFB6442">
+                <GeometryDrawing.Geometry>
+                  <RectangleGeometry RadiusX="0" RadiusY="0" Rect="51.754,4.176,8.192,7.864" />
+                </GeometryDrawing.Geometry>
+              </GeometryDrawing>
+            </DrawingGroup>
+            <DrawingGroup Opacity="1" Transform="1,0,0,0.978939,0.527086,-0.990068">
+              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+
+    <DrawingImage x:Key="goldOrangeBoltDotsDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1">
+            <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,-2.88173,-1.12108">
+              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+            </DrawingGroup>
+            <DrawingGroup Opacity="1" Transform="1.05988,0,0,1.04291,-34.2377,-6.61091">
+              <GeometryDrawing Brush="#FFFB6442">
+                <GeometryDrawing.Geometry>
+                  <EllipseGeometry RadiusX="1.426" RadiusY="1.46" Center="40.426,13.449" />
+                </GeometryDrawing.Geometry>
+              </GeometryDrawing>
+            </DrawingGroup>
+            <DrawingGroup Opacity="1" Transform="1.05988,0,0,1.04291,-30.376,-6.61091">
+              <GeometryDrawing Brush="#FFFB6442">
+                <GeometryDrawing.Geometry>
+                  <EllipseGeometry RadiusX="1.426" RadiusY="1.46" Center="40.426,13.449" />
+                </GeometryDrawing.Geometry>
+              </GeometryDrawing>
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="goldOrangeBoltHamburgerDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1" Transform="1,0,0,1,-3.55271E-15,-0.984241">
+            <DrawingGroup Opacity="1">
+              <DrawingGroup Opacity="1">
+                <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,-2.90888,-0.121076">
+                  <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+                </DrawingGroup>
+                <DrawingGroup Opacity="1" Transform="0.981714,0,0,1.04548,-0.780485,-0.444151">
+                  <GeometryDrawing Brush="#FFFB6442">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry RadiusX="0" RadiusY="0" Rect="8.898,7.045,6.091,1.982" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup Opacity="1" Transform="0.993905,0,0,1.00874,-0.888957,3.79872">
+                  <GeometryDrawing Brush="#FFFB6442">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry RadiusX="0" RadiusY="0" Rect="8.898,7.045,6.091,1.982" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingGroup>
+                <DrawingGroup Opacity="1" Transform="0.971556,0,0,0.996296,-0.690092,-4.02235">
+                  <GeometryDrawing Brush="#FFFB6442">
+                    <GeometryDrawing.Geometry>
+                      <RectangleGeometry RadiusX="0" RadiusY="0" Rect="8.898,7.045,6.091,1.982" />
+                    </GeometryDrawing.Geometry>
+                  </GeometryDrawing>
+                </DrawingGroup>
+              </DrawingGroup>
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="goldOrangeBoltDotDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1">
+            <DrawingGroup Opacity="1" Transform="2.17339,0,0,2.13858,-77.0735,-21.0714">
+              <GeometryDrawing Brush="#FFFB6442">
+                <GeometryDrawing.Geometry>
+                  <EllipseGeometry RadiusX="1.426" RadiusY="1.46" Center="40.426,13.449" />
+                </GeometryDrawing.Geometry>
+              </GeometryDrawing>
+            </DrawingGroup>
+            <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,-2.78587,-1.12108">
+              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="goldOrangeBoltDiamondDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1">
+            <DrawingGroup Opacity="1" Transform="0.410666,0.409145,-0.433772,0.432165,-8.80037,-19.3156">
+              <GeometryDrawing Brush="#FFFB6442">
+                <GeometryDrawing.Geometry>
+                  <RectangleGeometry RadiusX="0" RadiusY="0" Rect="51.754,4.176,8.192,7.864" />
+                </GeometryDrawing.Geometry>
+              </GeometryDrawing>
+            </DrawingGroup>
+            <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,-2.90638,-1.12108">
+              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="boltDrawingImage">
+      <DrawingImage.Drawing>
+        <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
+          <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,0.527086,-1.12108">
+            <DrawingGroup Opacity="1">
+              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+            </DrawingGroup>
+          </DrawingGroup>
+        </DrawingGroup>
+      </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <ImageBrush x:Key="MyImageBrush" ImageSource="{StaticResource orangeGoldSquareBoltDrawingImage}"/>
+  </UserControl.Resources>
+  <Grid>
+    <Rectangle Width="200" Height="200" Fill="{StaticResource MyImageBrush}" />
+  </Grid>
+</UserControl>

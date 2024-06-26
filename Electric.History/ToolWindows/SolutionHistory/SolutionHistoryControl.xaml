@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:history="clr-namespace:Electric.History"
+             xmlns:solutionHistory="clr-namespace:Electric.History.ToolWindows.SolutionHistory"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <solutionHistory:IconToBrushConverter x:Key="IconToBrushConverter"/>
+  </UserControl.Resources>
 
   <DockPanel>
     <DockPanel Dock="Top" Height="23">
@@ -40,6 +44,14 @@
                 IsReadOnly="True" 
                 SelectionUnit="FullRow">
         <DataGrid.Columns>
+          <DataGridTemplateColumn Header="">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <Rectangle Width="20" Height="20" Fill="{Binding Path=SolutionIcon, Converter={StaticResource IconToBrushConverter}}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
           <DataGridTextColumn Header =" SolutionName" Binding="{Binding SolutionName}"/>
           <DataGridTextColumn Header="Last Accessed" Binding="{Binding MostRecentOpen, StringFormat=\{0:MM/dd/yyyy\}}" />
           <DataGridTextColumn Header="Time Opened" Binding="{Binding MostRecentOpen, StringFormat=\{0:hh:mm:ss tt\}}" Visibility="Collapsed"/>
@@ -48,6 +60,7 @@
         <DataGrid.ContextMenu>
           <ContextMenu>
             <MenuItem Header="Toggle Time Opened Visibility" Click="ToggleTimeOpenedVisibility"/>
+            <MenuItem Header="Set Icon"  Click="SetIcon" />
           </ContextMenu>
         </DataGrid.ContextMenu>
       </DataGrid>

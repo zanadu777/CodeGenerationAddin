@@ -153,6 +153,7 @@
     <Compile Include="Hierarchy\PositionComparer.cs" />
     <Compile Include="Hierarchy\TreeViewItemHelper.cs" />
     <Compile Include="CodeElementLocation.cs" />
+    <Compile Include="Icons\BrushBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Records\LastN.cs" />
     <Compile Include="Records\LastNFormatter.cs" />

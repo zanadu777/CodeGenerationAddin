@@ -38,7 +38,11 @@ namespace Electric.History.ToolWindows.SolutionHistory
     }
 
     [Key(5)] 
-    public  string  SolutionPath  { get; set; }  
+    public  string  SolutionPath  { get; set; }
+
+
+    [Key(6)]
+    public Icon SolutionIcon { get; set; }
 
  
     public event PropertyChangedEventHandler PropertyChanged;
