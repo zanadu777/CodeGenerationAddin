@@ -68,7 +68,15 @@ namespace Electric.History
 
       SolutionHistory = await IsolatedStorageHelper.DeserializeFromIsolatedStorageAsync<SolutionHistory>(saveLocation) ?? new SolutionHistory();
       SolutionHistory.SolutionCleared += SolutionHistory_SolutionCleared;
-                       
+      SolutionHistory.SolutionUpdated += SolutionHistory_SolutionUpdated;
+    }
+
+    private void SolutionHistory_SolutionUpdated(object sender, EventArgs e)
+    {
+      JoinableTaskFactory.Run(async () =>
+      {
+        await IsolatedStorageHelper.SerializeToIsolatedStorageAsync(SolutionHistory, saveLocation);
+      });
     }
 
     private void SolutionHistory_SolutionCleared(object sender, EventArgs e)

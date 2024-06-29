@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HistoryPackage.cs" />
+    <Compile Include="ToolWindows\DesignTime\DesignTimeData.cs" />
     <Compile Include="ToolWindows\SolutionHistory\Icon.cs" />
     <Compile Include="ToolWindows\SolutionHistory\IconPicker.xaml.cs">
       <DependentUpon>IconPicker.xaml</DependentUpon>
@@ -73,6 +74,8 @@
     <Compile Include="ToolWindows\SolutionHistory\IconSelectorDialog.xaml.cs">
       <DependentUpon>IconSelectorDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolWindows\SolutionHistory\IconSelectorDialogVm.cs" />
+    <Compile Include="ToolWindows\SolutionHistory\IconSet.cs" />
     <Compile Include="ToolWindows\SolutionHistory\IconToBrushConverter.cs" />
     <Compile Include="ToolWindows\SolutionHistory\SolutionHistory.cs" />
     <Compile Include="ToolWindows\SolutionHistory\SolutionHistoryControl.xaml.cs">

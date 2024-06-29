@@ -3,14 +3,11 @@ using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.VisualStudio.Shell;
 
 namespace Electric.History.ToolWindows.SolutionHistory
 {
@@ -96,11 +93,19 @@ namespace Electric.History.ToolWindows.SolutionHistory
         {
           var selectedItems = grid.SelectedItems.Cast<SolutionHistoryItem>().ToList(); ;
 
-          var dialog = new IconSelectorDialog();
-          dialog.ShowDialog();
+          var dialog = new IconSelectorDialog( );
 
+         var dialogResult= dialog.ShowDialog();
+         if (dialogResult==true)
+           foreach (var item in selectedItems)
+             item.SolutionIcon = dialog.SelectedIcon;
+         else
+           foreach (var item in selectedItems)
+             item.SolutionIcon = null;
         }
       }
+
+      HistoryPackage.SolutionHistory.UpdateSolution();
     }
   }
 }

@@ -67,6 +67,12 @@ namespace Electric.History.ToolWindows.SolutionHistory
       SolutionUpdated?.Invoke(this, e);
     }
 
+    public void UpdateSolution()
+    {
+      SolutionUpdated?.Invoke(this, EventArgs.Empty);
+    }
+
+
     protected virtual void OnSolutionCleared(EventArgs e)
     {
       SolutionCleared?.Invoke(this, e);

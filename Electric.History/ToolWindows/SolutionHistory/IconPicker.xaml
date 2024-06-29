@@ -167,7 +167,7 @@
         <DrawingGroup ClipGeometry="M0,0 V14 H15 V0 H0 Z">
           <DrawingGroup Opacity="1" Transform="1,0,0,0.996296,0.527086,-1.12108">
             <DrawingGroup Opacity="1">
-              <GeometryDrawing Brush="#FFFFBA00" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
+              <GeometryDrawing Brush="#FFD41C2C" Geometry="F0 M15,14z M0,0z M8.017,1.109L2.973,9.101 6.059,9.118 4.966,15.151 10.046,7.09 7.029,7.142 8.017,1.109z" />
             </DrawingGroup>
           </DrawingGroup>
         </DrawingGroup>

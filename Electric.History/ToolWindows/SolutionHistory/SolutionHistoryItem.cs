@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using MessagePack;
 using Microsoft.VisualStudio.Shell;
 
@@ -12,6 +13,7 @@ namespace Electric.History.ToolWindows.SolutionHistory
   {
     private DateTime mostRecentOpen;
     private int openCount;
+    private Icon solutionIcon;
 
     [Key(0)]
     public string SolutionName { get; set; }
@@ -42,9 +44,12 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
 
     [Key(6)]
-    public Icon SolutionIcon { get; set; }
+    public Icon SolutionIcon
+    {
+      get => solutionIcon;
+      set => SetField(ref solutionIcon, value);
+    }
 
- 
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

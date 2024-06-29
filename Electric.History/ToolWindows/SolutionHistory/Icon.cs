@@ -13,5 +13,8 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
     [Key(2)]
     public string Color2 { get; set; }
+
+    [IgnoreMember]
+    public bool IsSelectable => Shape != "none";
   }
 }
