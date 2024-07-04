@@ -43,13 +43,10 @@ namespace AddIn.Core.Helpers
 
     public static async Task SerializeToIsolatedStorageAsync<T>(T obj, string filePath)
     {
-      using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain())
-      {
-        using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Create, storage))
-        {
-          await MessagePackSerializer.SerializeAsync(stream, obj);
-        }
-      }
+      using IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
+      using IsolatedStorageFileStream stream = new IsolatedStorageFileStream(filePath, FileMode.Create, storage);
+
+      await MessagePackSerializer.SerializeAsync(stream, obj);
     }
 
 

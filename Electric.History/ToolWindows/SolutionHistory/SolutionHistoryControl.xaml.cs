@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using AddIn.Core.Helpers;
 
 namespace Electric.History.ToolWindows.SolutionHistory
 {
@@ -81,7 +82,8 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
     private void ClearAll(object sender, RoutedEventArgs e)
     {
-
+      HistoryPackage.SolutionHistory.Solutions.Clear();
+      HistoryPackage.SolutionHistory.UpdateSolution();
     }
 
     private void SetIcon(object sender, RoutedEventArgs e)
@@ -93,17 +95,32 @@ namespace Electric.History.ToolWindows.SolutionHistory
         {
           var selectedItems = grid.SelectedItems.Cast<SolutionHistoryItem>().ToList(); ;
 
-          var dialog = new IconSelectorDialog( );
+          var dialog = new IconSelectorDialog();
 
-         var dialogResult= dialog.ShowDialog();
-         if (dialogResult==true)
-           foreach (var item in selectedItems)
-             item.SolutionIcon = dialog.SelectedIcon;
-         else
-           foreach (var item in selectedItems)
-             item.SolutionIcon = null;
+          var dialogResult = dialog.ShowDialog();
+          if (dialogResult == true)
+            foreach (var item in selectedItems)
+              item.SolutionIcon = dialog.SelectedIcon;
+          else
+            foreach (var item in selectedItems)
+              item.SolutionIcon = null;
         }
       }
+
+      HistoryPackage.SolutionHistory.UpdateSolution();
+    }
+
+    private void SaveAsClick(object sender, RoutedEventArgs e)
+    {
+      WpfFileSource.SerializeToFile(HistoryPackage.SolutionHistory);
+    }
+
+    private void LoadFromClick(object sender, RoutedEventArgs e)
+    {
+      var updatedHistory = WpfFileSource.DeserializeFile<SolutionHistory>();
+      HistoryPackage.SolutionHistory.Solutions.Clear();
+      foreach (var item in updatedHistory.Solutions)
+        HistoryPackage.SolutionHistory.Solutions.Add(item);
 
       HistoryPackage.SolutionHistory.UpdateSolution();
     }

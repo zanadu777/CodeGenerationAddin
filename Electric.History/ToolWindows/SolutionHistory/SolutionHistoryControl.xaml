@@ -14,35 +14,37 @@
   <DockPanel>
     <DockPanel Dock="Top" Height="23">
       <Expander DockPanel.Dock ="Right" ExpandDirection="Left" IsExpanded="False">
-          <Grid VerticalAlignment="Center">
-                    <CheckBox>Include Loads from History</CheckBox>
-          </Grid>
+        <Grid VerticalAlignment="Center">
+          <CheckBox>Include Loads from History</CheckBox>
+        </Grid>
       </Expander>
       <Menu DockPanel.Dock="Left" VerticalAlignment="Center">
         <MenuItem Header="File">
-          <MenuItem Header="Save as ..."   />
-          <MenuItem Header="Load from ..."   />
+          <MenuItem Header="Save as ..." Click="SaveAsClick"   />
+          <MenuItem Header="Load from ..." Click="LoadFromClick"   />
           <MenuItem Header ="Clear">
-            <MenuItem Header="All" Checked="ClearAll" />
+            <MenuItem Header="All" Click="ClearAll" />
           </MenuItem>
         </MenuItem>
       </Menu>
-      
-</DockPanel>
+
+    </DockPanel>
 
     <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="13*"/>
+        <ColumnDefinition Width="787*"/>
+      </Grid.ColumnDefinitions>
       <DataGrid x:Name="HistoryGrid" 
                 Loaded="HistoryGrid_Loaded"
                 CanUserAddRows="False" 
                 MouseDoubleClick="HistoryGrid_OnMouseDoubleClick" 
-                HorizontalAlignment="Stretch" 
-                VerticalAlignment="Stretch" 
                 Background="#FFFFFFF2" 
                 AlternatingRowBackground="#FFF8F0CE" 
                 AlternationCount="1" 
                 AutoGenerateColumns="False"
                 IsReadOnly="True" 
-                SelectionUnit="FullRow">
+                SelectionUnit="FullRow" Grid.ColumnSpan="2">
         <DataGrid.Columns>
           <DataGridTemplateColumn Header="">
             <DataGridTemplateColumn.CellTemplate>
