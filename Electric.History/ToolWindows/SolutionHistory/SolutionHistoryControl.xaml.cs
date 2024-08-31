@@ -2,10 +2,12 @@
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using AddIn.Core.Helpers;
@@ -88,26 +90,35 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
     private void SetIcon(object sender, RoutedEventArgs e)
     {
+      var selectedItems = SelectedItems(sender, e);
+      var dialog = new IconSelectorDialog();
+
+      var dialogResult = dialog.ShowDialog();
+      if (dialogResult == true)
+        foreach (var item in selectedItems)
+          item.SolutionIcon = dialog.SelectedIcon;
+      else
+        foreach (var item in selectedItems)
+          item.SolutionIcon = null;
+
+      HistoryPackage.SolutionHistory.UpdateSolution();
+    }
+
+
+    private List<SolutionHistoryItem> SelectedItems(object sender, RoutedEventArgs e)
+    {
       if (sender is MenuItem menuItem)
       {
         var contextMenu = menuItem.Parent as ContextMenu;
         if (contextMenu?.PlacementTarget is DataGrid grid)
         {
-          var selectedItems = grid.SelectedItems.Cast<SolutionHistoryItem>().ToList(); ;
-
-          var dialog = new IconSelectorDialog();
-
-          var dialogResult = dialog.ShowDialog();
-          if (dialogResult == true)
-            foreach (var item in selectedItems)
-              item.SolutionIcon = dialog.SelectedIcon;
-          else
-            foreach (var item in selectedItems)
-              item.SolutionIcon = null;
+          var selectedItems = grid.SelectedItems.Cast<SolutionHistoryItem>().ToList();
+          return selectedItems;
         }
+
       }
 
-      HistoryPackage.SolutionHistory.UpdateSolution();
+      return new List<SolutionHistoryItem>();
     }
 
     private void SaveAsClick(object sender, RoutedEventArgs e)
@@ -121,6 +132,16 @@ namespace Electric.History.ToolWindows.SolutionHistory
       HistoryPackage.SolutionHistory.Solutions.Clear();
       foreach (var item in updatedHistory.Solutions)
         HistoryPackage.SolutionHistory.Solutions.Add(item);
+
+      HistoryPackage.SolutionHistory.UpdateSolution();
+    }
+
+    private void Remove(object sender, RoutedEventArgs e)
+    {
+      var selectedItems = SelectedItems(sender, e);
+
+      foreach (var solution in selectedItems)
+        HistoryPackage.SolutionHistory.Solutions.Remove(solution);
 
       HistoryPackage.SolutionHistory.UpdateSolution();
     }

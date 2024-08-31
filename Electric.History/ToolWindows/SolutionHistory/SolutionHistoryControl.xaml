@@ -26,6 +26,10 @@
             <MenuItem Header="All" Click="ClearAll" />
           </MenuItem>
         </MenuItem>
+        <MenuItem Header="View">
+          <MenuItem  Header="Time Opened"  Click="ToggleTimeOpenedVisibility"/>
+
+        </MenuItem>
       </Menu>
 
     </DockPanel>
@@ -63,6 +67,7 @@
           <ContextMenu>
             <MenuItem Header="Toggle Time Opened Visibility" Click="ToggleTimeOpenedVisibility"/>
             <MenuItem Header="Set Icon"  Click="SetIcon" />
+            <MenuItem  Header="Remove" Click="Remove"/>
           </ContextMenu>
         </DataGrid.ContextMenu>
       </DataGrid>
