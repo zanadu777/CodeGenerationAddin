@@ -27,8 +27,8 @@
           </MenuItem>
         </MenuItem>
         <MenuItem Header="View">
-          <MenuItem  Header="Time Opened"  Click="ToggleTimeOpenedVisibility"/>
-
+          <MenuItem  Header="Full Path"  Click="ToggleFullPathVisibility" IsChecked ="False"/>
+          <MenuItem  Header="Time Opened"  Click="ToggleTimeOpenedVisibility" IsChecked ="False"/>
         </MenuItem>
       </Menu>
 
@@ -58,14 +58,15 @@
             </DataGridTemplateColumn.CellTemplate>
           </DataGridTemplateColumn>
 
-          <DataGridTextColumn Header =" SolutionName" Binding="{Binding SolutionName}"/>
+          <DataGridTextColumn Header ="SolutionName" Binding="{Binding SolutionName}"/>
+          <DataGridTextColumn Header ="Full Path" Binding="{Binding SolutionPath}"  Visibility="Collapsed"/>
           <DataGridTextColumn Header="Last Accessed" Binding="{Binding MostRecentOpen, StringFormat=\{0:MM/dd/yyyy\}}" />
           <DataGridTextColumn Header="Time Opened" Binding="{Binding MostRecentOpen, StringFormat=\{0:hh:mm:ss tt\}}" Visibility="Collapsed"/>
           <DataGridTextColumn  Header ="Times Opened" Binding ="{Binding OpenCount}"/>
         </DataGrid.Columns>
         <DataGrid.ContextMenu>
           <ContextMenu>
-            <MenuItem Header="Toggle Time Opened Visibility" Click="ToggleTimeOpenedVisibility"/>
+            <MenuItem Header="Open in new Window"  Click="OpenInNewWindow" />
             <MenuItem Header="Set Icon"  Click="SetIcon" />
             <MenuItem  Header="Remove" Click="Remove"/>
           </ContextMenu>

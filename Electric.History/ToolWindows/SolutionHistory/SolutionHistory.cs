@@ -22,7 +22,7 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
 
     [IgnoreMember]
-    public ObservableCollection<SolutionHistoryItem> Solutions { get; private set; } = new ObservableCollection<SolutionHistoryItem>();
+    public ObservableCollection<SolutionHistoryItem> Solutions { get; private set; } = new();
 
     public void AddOpenEvent(string currentSolutionFullName, DateTime timeOpened)
     {

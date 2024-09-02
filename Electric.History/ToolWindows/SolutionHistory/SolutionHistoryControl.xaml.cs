@@ -41,11 +41,22 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
     private void ToggleTimeOpenedVisibility(object sender, RoutedEventArgs e)
     {
-      var timeOpenedColumn = HistoryGrid.Columns.FirstOrDefault(c => c.Header.ToString() == "Time Opened");
-      if (timeOpenedColumn != null)
+      ToggleColumnVisibility("Time Opened");
+    }
+
+    private void ToggleColumnVisibility(string columnHeader)
+    {
+      var column = HistoryGrid.Columns.FirstOrDefault(c => c.Header.ToString() == columnHeader);
+      if (column != null)
       {
-        timeOpenedColumn.Visibility = timeOpenedColumn.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        column.Visibility = column.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
       }
+    }
+
+
+    private void ToggleFullPathVisibility(object sender, RoutedEventArgs e)
+    {
+      ToggleColumnVisibility("Full Path");
     }
 
     private async void HistoryGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -145,5 +156,44 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
       HistoryPackage.SolutionHistory.UpdateSolution();
     }
+
+    private async void OpenInNewWindow(object sender, RoutedEventArgs e)
+    {
+      await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+      var selectedItems = SelectedItems(sender, e);
+
+      if (selectedItems.Count > 0)
+      {
+        var item = selectedItems.First();
+        var solutionPath = item.SolutionPath;
+
+        if (!string.IsNullOrEmpty(solutionPath))
+        {
+          try
+          {
+            var vsPath = await GetVisualStudioPathAsync();
+
+            if (!string.IsNullOrEmpty(vsPath))
+              System.Diagnostics.Process.Start(vsPath, $"\"{solutionPath}\"");
+            else
+              MessageBox.Show("Visual Studio executable not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          }
+          catch (Exception ex)
+          {
+            MessageBox.Show($"Failed to open solution in a new instance of Visual Studio. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          }
+        }
+      }
+    }
+
+    private async Task<string> GetVisualStudioPathAsync()
+    {
+
+      await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+      var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
+      string vsPath = currentProcess.MainModule.FileName;
+      return vsPath;
+    }
+
   }
 }
