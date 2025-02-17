@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using MessagePack;
+using Newtonsoft.Json;
 
 namespace Electric.History.ToolWindows.SolutionHistory
 {
@@ -22,6 +23,7 @@ namespace Electric.History.ToolWindows.SolutionHistory
 
 
     [IgnoreMember]
+    [JsonIgnore]
     public ObservableCollection<SolutionHistoryItem> Solutions { get; private set; } = new();
 
     public void AddOpenEvent(string currentSolutionFullName, DateTime timeOpened)
