@@ -25,6 +25,7 @@
           <MenuItem Header ="Clear">
             <MenuItem Header="All" Click="ClearAll" />
           </MenuItem>
+          <MenuItem  Header ="Show Version"  Click="ShowVersion"/>
         </MenuItem>
         <MenuItem Header="View">
           <MenuItem  Header="Full Path"  Click="ToggleFullPathVisibility" IsChecked ="False"/>

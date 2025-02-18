@@ -11,6 +11,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using AddIn.Core.Helpers;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.ExtensionManager;
+using Microsoft.VisualStudio.Shell;
+
 
 namespace Electric.History.ToolWindows.SolutionHistory
 {
@@ -147,6 +151,7 @@ namespace Electric.History.ToolWindows.SolutionHistory
       HistoryPackage.SolutionHistory.UpdateSolution();
     }
 
+ 
     private void Remove(object sender, RoutedEventArgs e)
     {
       var selectedItems = SelectedItems(sender, e);
@@ -195,5 +200,36 @@ namespace Electric.History.ToolWindows.SolutionHistory
       return vsPath;
     }
 
+    private async void ShowVersion(object sender, RoutedEventArgs e)
+    {
+      await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+      try
+      {
+        IVsExtensionManager extensionManager = await AsyncServiceProvider.GlobalProvider.GetServiceAsync(typeof(SVsExtensionManager)) as IVsExtensionManager;
+        if (extensionManager != null)
+        {
+          var installedExtensions = extensionManager.GetInstalledExtensions();
+          var extension = installedExtensions.FirstOrDefault(ext => ext.Header.Identifier == "Electric.History.7531b605-879e-4a53-bfb7-842f7cad1ba4"); 
+          if (extension != null)
+          {
+            string version = extension.Header.Version.ToString();
+            MessageBox.Show($"Version: {version}", "Version", MessageBoxButton.OK, MessageBoxImage.Information);
+          }
+          else
+          {
+            MessageBox.Show("Extension not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+          }
+        }
+        else
+        {
+          MessageBox.Show("Failed to get the extension manager service.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show($"Failed to get VSIX version. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
   }
 }

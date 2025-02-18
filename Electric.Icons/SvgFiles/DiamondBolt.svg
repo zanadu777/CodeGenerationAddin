@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 15 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(5.28535,0,0,0.875,-493.64,-0.0468227)">
+        <g id="BoltInDiamond">
+            <g>
+                <g transform="matrix(0.165552,0,0,1,80.1605,0.0535117)">
+                    <path d="M80,8L88,0L96,8L88,16L80,8Z" style="fill:rgb(252,204,68);"/>
+                </g>
+                <g transform="matrix(0.165552,0,0,1,80.1605,0.0535117)">
+                    <path d="M88,0L84,10L88,9L88,16L92,6L88,7L88,0Z" style="fill:rgb(212,28,44);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
